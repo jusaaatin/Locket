@@ -1,0 +1,784 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D01A55522C1CB54C00C0B98D /* addProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A55512C1CB54C00C0B98D /* addProfileButton.swift */; };
+		D01A55562C1DFF3000C0B98D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A55552C1DFF3000C0B98D /* Models.swift */; };
+		D01A555A2C1F65AC00C0B98D /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A55592C1F65AC00C0B98D /* AddProfileView.swift */; };
+		D01A55602C20175100C0B98D /* RelationshipStatusPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A555F2C20175100C0B98D /* RelationshipStatusPickerButton.swift */; };
+		D01A55622C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A55612C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift */; };
+		D052DF452C2DA30300AAFB0F /* AddProfileViewNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D052DF442C2DA30300AAFB0F /* AddProfileViewNotes.swift */; };
+		D070B70F2C1A116600442B16 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B70C2C1A116600442B16 /* HomeView.swift */; };
+		D070B7102C1A116600442B16 /* HomeViewProfilePreview04.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B70D2C1A116600442B16 /* HomeViewProfilePreview04.swift */; };
+		D070B7122C1B5AAC00442B16 /* HomeViewSearchFilter03.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter03.swift */; };
+		D070B7152C1B684400442B16 /* Filterbutton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B7142C1B684400442B16 /* Filterbutton.swift */; };
+		D079763B2C25644F00CC35BF /* AddProfileViewPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079763A2C25644F00CC35BF /* AddProfileViewPerson.swift */; };
+		D079763D2C25683A00CC35BF /* AddProfileColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079763C2C25683A00CC35BF /* AddProfileColorPicker.swift */; };
+		D07976412C25E6F400CC35BF /* AddProfileViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07976402C25E6F400CC35BF /* AddProfileViewImages.swift */; };
+		D07F15EB2C1BF0C3001D1538 /* FilterButtonLeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07F15EA2C1BF0C3001D1538 /* FilterButtonLeading.swift */; };
+		D07F15ED2C1C0D7D001D1538 /* filterButtonTrailingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07F15EC2C1C0D7D001D1538 /* filterButtonTrailingRow.swift */; };
+		D095B3802C16031E007532E2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B37F2C16031E007532E2 /* ProfileView.swift */; };
+		D095B3822C160C58007532E2 /* ProfileViewHeaderImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3812C160C58007532E2 /* ProfileViewHeaderImage.swift */; };
+		D095B3842C162F62007532E2 /* ProfileViewName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3832C162F62007532E2 /* ProfileViewName.swift */; };
+		D095B3882C16EAA0007532E2 /* ProfileViewHeader01.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3872C16EAA0007532E2 /* ProfileViewHeader01.swift */; };
+		D095B38A2C16EEB3007532E2 /* ProfileViewInfo03.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */; };
+		D095B38C2C16F7EE007532E2 /* Universal Declarations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B38B2C16F7ED007532E2 /* Universal Declarations.swift */; };
+		D0A8F5422C15FD1200429F1B /* LocketApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5412C15FD1200429F1B /* LocketApp.swift */; };
+		D0A8F5442C15FD1200429F1B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5432C15FD1200429F1B /* ContentView.swift */; };
+		D0A8F5482C15FD1300429F1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A8F5472C15FD1300429F1B /* Assets.xcassets */; };
+		D0A8F54C2C15FD1300429F1B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A8F54B2C15FD1300429F1B /* Preview Assets.xcassets */; };
+		D0A8F5562C15FD1300429F1B /* LocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5552C15FD1300429F1B /* LocketTests.swift */; };
+		D0A8F5602C15FD1300429F1B /* LocketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F55F2C15FD1300429F1B /* LocketUITests.swift */; };
+		D0A8F5622C15FD1300429F1B /* LocketUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */; };
+		D0DF90762C240DE100803AED /* AddProfileViewNewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */; };
+		D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90772C24133700803AED /* AddProfileViewSocials.swift */; };
+		D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */; };
+		D0DF907E2C249FDB00803AED /* RelationshipStartDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907D2C249FDB00803AED /* RelationshipStartDatePicker.swift */; };
+		D0FB04FE2C189AC6006BC164 /* tabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FB04FD2C189AC6006BC164 /* tabBar.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D0A8F5522C15FD1300429F1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0A8F5362C15FD1200429F1B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0A8F53D2C15FD1200429F1B;
+			remoteInfo = Locket;
+		};
+		D0A8F55C2C15FD1300429F1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0A8F5362C15FD1200429F1B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0A8F53D2C15FD1200429F1B;
+			remoteInfo = Locket;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D01A55512C1CB54C00C0B98D /* addProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addProfileButton.swift; sourceTree = "<group>"; };
+		D01A55552C1DFF3000C0B98D /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		D01A55592C1F65AC00C0B98D /* AddProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
+		D01A555F2C20175100C0B98D /* RelationshipStatusPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipStatusPickerButton.swift; sourceTree = "<group>"; };
+		D01A55612C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipStatusPickerButtonRow.swift; sourceTree = "<group>"; };
+		D052DF442C2DA30300AAFB0F /* AddProfileViewNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewNotes.swift; sourceTree = "<group>"; };
+		D070B70C2C1A116600442B16 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		D070B70D2C1A116600442B16 /* HomeViewProfilePreview04.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewProfilePreview04.swift; sourceTree = "<group>"; };
+		D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSearchFilter03.swift; sourceTree = "<group>"; };
+		D070B7142C1B684400442B16 /* Filterbutton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filterbutton.swift; sourceTree = "<group>"; };
+		D079763A2C25644F00CC35BF /* AddProfileViewPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewPerson.swift; sourceTree = "<group>"; };
+		D079763C2C25683A00CC35BF /* AddProfileColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileColorPicker.swift; sourceTree = "<group>"; };
+		D07976402C25E6F400CC35BF /* AddProfileViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewImages.swift; sourceTree = "<group>"; };
+		D07F15EA2C1BF0C3001D1538 /* FilterButtonLeading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButtonLeading.swift; sourceTree = "<group>"; };
+		D07F15EC2C1C0D7D001D1538 /* filterButtonTrailingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterButtonTrailingRow.swift; sourceTree = "<group>"; };
+		D095B37F2C16031E007532E2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		D095B3812C160C58007532E2 /* ProfileViewHeaderImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewHeaderImage.swift; sourceTree = "<group>"; };
+		D095B3832C162F62007532E2 /* ProfileViewName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewName.swift; sourceTree = "<group>"; };
+		D095B3872C16EAA0007532E2 /* ProfileViewHeader01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewHeader01.swift; sourceTree = "<group>"; };
+		D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewInfo03.swift; sourceTree = "<group>"; };
+		D095B38B2C16F7ED007532E2 /* Universal Declarations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Universal Declarations.swift"; sourceTree = "<group>"; };
+		D0A8F53E2C15FD1200429F1B /* Locket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Locket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0A8F5412C15FD1200429F1B /* LocketApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketApp.swift; sourceTree = "<group>"; };
+		D0A8F5432C15FD1200429F1B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D0A8F5472C15FD1300429F1B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0A8F5492C15FD1300429F1B /* Locket.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Locket.entitlements; sourceTree = "<group>"; };
+		D0A8F54B2C15FD1300429F1B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D0A8F5512C15FD1300429F1B /* LocketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0A8F5552C15FD1300429F1B /* LocketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketTests.swift; sourceTree = "<group>"; };
+		D0A8F55B2C15FD1300429F1B /* LocketUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocketUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0A8F55F2C15FD1300429F1B /* LocketUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketUITests.swift; sourceTree = "<group>"; };
+		D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewNewSocials.swift; sourceTree = "<group>"; };
+		D0DF90772C24133700803AED /* AddProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewSocials.swift; sourceTree = "<group>"; };
+		D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewRelationships.swift; sourceTree = "<group>"; };
+		D0DF907D2C249FDB00803AED /* RelationshipStartDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipStartDatePicker.swift; sourceTree = "<group>"; };
+		D0FB04FD2C189AC6006BC164 /* tabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabBar.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D0A8F53B2C15FD1200429F1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A8F54E2C15FD1300429F1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A8F5582C15FD1300429F1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D01A555D2C20171F00C0B98D /* AddProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				D01A55592C1F65AC00C0B98D /* AddProfileView.swift */,
+				D079763A2C25644F00CC35BF /* AddProfileViewPerson.swift */,
+				D07976402C25E6F400CC35BF /* AddProfileViewImages.swift */,
+				D0DF90772C24133700803AED /* AddProfileViewSocials.swift */,
+				D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */,
+				D052DF442C2DA30300AAFB0F /* AddProfileViewNotes.swift */,
+				D01A555E2C20173400C0B98D /* Subcomponents */,
+			);
+			path = AddProfileView;
+			sourceTree = "<group>";
+		};
+		D01A555E2C20173400C0B98D /* Subcomponents */ = {
+			isa = PBXGroup;
+			children = (
+				D079763C2C25683A00CC35BF /* AddProfileColorPicker.swift */,
+				D0DF907D2C249FDB00803AED /* RelationshipStartDatePicker.swift */,
+				D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */,
+				D01A555F2C20175100C0B98D /* RelationshipStatusPickerButton.swift */,
+				D01A55612C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift */,
+			);
+			path = Subcomponents;
+			sourceTree = "<group>";
+		};
+		D070B70E2C1A116600442B16 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				D070B70C2C1A116600442B16 /* HomeView.swift */,
+				D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter03.swift */,
+				D070B70D2C1A116600442B16 /* HomeViewProfilePreview04.swift */,
+				D070B7132C1B683500442B16 /* Subcomponents */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		D070B7132C1B683500442B16 /* Subcomponents */ = {
+			isa = PBXGroup;
+			children = (
+				D070B7142C1B684400442B16 /* Filterbutton.swift */,
+				D07F15EC2C1C0D7D001D1538 /* filterButtonTrailingRow.swift */,
+				D07F15EA2C1BF0C3001D1538 /* FilterButtonLeading.swift */,
+			);
+			path = Subcomponents;
+			sourceTree = "<group>";
+		};
+		D095B38D2C17193F007532E2 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				D095B37F2C16031E007532E2 /* ProfileView.swift */,
+				D095B3872C16EAA0007532E2 /* ProfileViewHeader01.swift */,
+				D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */,
+				D095B38E2C17194B007532E2 /* Subcomponents */,
+			);
+			path = ProfileView;
+			sourceTree = "<group>";
+		};
+		D095B38E2C17194B007532E2 /* Subcomponents */ = {
+			isa = PBXGroup;
+			children = (
+				D095B3832C162F62007532E2 /* ProfileViewName.swift */,
+				D095B3812C160C58007532E2 /* ProfileViewHeaderImage.swift */,
+			);
+			path = Subcomponents;
+			sourceTree = "<group>";
+		};
+		D0A8F5352C15FD1200429F1B = {
+			isa = PBXGroup;
+			children = (
+				D0A8F5402C15FD1200429F1B /* Locket */,
+				D0A8F5542C15FD1300429F1B /* LocketTests */,
+				D0A8F55E2C15FD1300429F1B /* LocketUITests */,
+				D0A8F53F2C15FD1200429F1B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D0A8F53F2C15FD1200429F1B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D0A8F53E2C15FD1200429F1B /* Locket.app */,
+				D0A8F5512C15FD1300429F1B /* LocketTests.xctest */,
+				D0A8F55B2C15FD1300429F1B /* LocketUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D0A8F5402C15FD1200429F1B /* Locket */ = {
+			isa = PBXGroup;
+			children = (
+				D01A55552C1DFF3000C0B98D /* Models.swift */,
+				D095B38B2C16F7ED007532E2 /* Universal Declarations.swift */,
+				D0A8F5412C15FD1200429F1B /* LocketApp.swift */,
+				D0A8F5432C15FD1200429F1B /* ContentView.swift */,
+				D0FB04FD2C189AC6006BC164 /* tabBar.swift */,
+				D01A55512C1CB54C00C0B98D /* addProfileButton.swift */,
+				D070B70E2C1A116600442B16 /* HomeView */,
+				D095B38D2C17193F007532E2 /* ProfileView */,
+				D01A555D2C20171F00C0B98D /* AddProfileView */,
+				D0A8F5472C15FD1300429F1B /* Assets.xcassets */,
+				D0A8F5492C15FD1300429F1B /* Locket.entitlements */,
+				D0A8F54A2C15FD1300429F1B /* Preview Content */,
+			);
+			path = Locket;
+			sourceTree = "<group>";
+		};
+		D0A8F54A2C15FD1300429F1B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D0A8F54B2C15FD1300429F1B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D0A8F5542C15FD1300429F1B /* LocketTests */ = {
+			isa = PBXGroup;
+			children = (
+				D0A8F5552C15FD1300429F1B /* LocketTests.swift */,
+			);
+			path = LocketTests;
+			sourceTree = "<group>";
+		};
+		D0A8F55E2C15FD1300429F1B /* LocketUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D0A8F55F2C15FD1300429F1B /* LocketUITests.swift */,
+				D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */,
+			);
+			path = LocketUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D0A8F53D2C15FD1200429F1B /* Locket */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0A8F5652C15FD1300429F1B /* Build configuration list for PBXNativeTarget "Locket" */;
+			buildPhases = (
+				D0A8F53A2C15FD1200429F1B /* Sources */,
+				D0A8F53B2C15FD1200429F1B /* Frameworks */,
+				D0A8F53C2C15FD1200429F1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Locket;
+			productName = Locket;
+			productReference = D0A8F53E2C15FD1200429F1B /* Locket.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D0A8F5502C15FD1300429F1B /* LocketTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0A8F5682C15FD1300429F1B /* Build configuration list for PBXNativeTarget "LocketTests" */;
+			buildPhases = (
+				D0A8F54D2C15FD1300429F1B /* Sources */,
+				D0A8F54E2C15FD1300429F1B /* Frameworks */,
+				D0A8F54F2C15FD1300429F1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D0A8F5532C15FD1300429F1B /* PBXTargetDependency */,
+			);
+			name = LocketTests;
+			productName = LocketTests;
+			productReference = D0A8F5512C15FD1300429F1B /* LocketTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D0A8F55A2C15FD1300429F1B /* LocketUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0A8F56B2C15FD1300429F1B /* Build configuration list for PBXNativeTarget "LocketUITests" */;
+			buildPhases = (
+				D0A8F5572C15FD1300429F1B /* Sources */,
+				D0A8F5582C15FD1300429F1B /* Frameworks */,
+				D0A8F5592C15FD1300429F1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D0A8F55D2C15FD1300429F1B /* PBXTargetDependency */,
+			);
+			name = LocketUITests;
+			productName = LocketUITests;
+			productReference = D0A8F55B2C15FD1300429F1B /* LocketUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D0A8F5362C15FD1200429F1B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					D0A8F53D2C15FD1200429F1B = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					D0A8F5502C15FD1300429F1B = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = D0A8F53D2C15FD1200429F1B;
+					};
+					D0A8F55A2C15FD1300429F1B = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = D0A8F53D2C15FD1200429F1B;
+					};
+				};
+			};
+			buildConfigurationList = D0A8F5392C15FD1200429F1B /* Build configuration list for PBXProject "Locket" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D0A8F5352C15FD1200429F1B;
+			productRefGroup = D0A8F53F2C15FD1200429F1B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D0A8F53D2C15FD1200429F1B /* Locket */,
+				D0A8F5502C15FD1300429F1B /* LocketTests */,
+				D0A8F55A2C15FD1300429F1B /* LocketUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D0A8F53C2C15FD1200429F1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0A8F54C2C15FD1300429F1B /* Preview Assets.xcassets in Resources */,
+				D0A8F5482C15FD1300429F1B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A8F54F2C15FD1300429F1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A8F5592C15FD1300429F1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D0A8F53A2C15FD1200429F1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D070B70F2C1A116600442B16 /* HomeView.swift in Sources */,
+				D07976412C25E6F400CC35BF /* AddProfileViewImages.swift in Sources */,
+				D070B7102C1A116600442B16 /* HomeViewProfilePreview04.swift in Sources */,
+				D070B7122C1B5AAC00442B16 /* HomeViewSearchFilter03.swift in Sources */,
+				D095B3802C16031E007532E2 /* ProfileView.swift in Sources */,
+				D095B38C2C16F7EE007532E2 /* Universal Declarations.swift in Sources */,
+				D095B3842C162F62007532E2 /* ProfileViewName.swift in Sources */,
+				D052DF452C2DA30300AAFB0F /* AddProfileViewNotes.swift in Sources */,
+				D0DF90762C240DE100803AED /* AddProfileViewNewSocials.swift in Sources */,
+				D079763B2C25644F00CC35BF /* AddProfileViewPerson.swift in Sources */,
+				D01A55522C1CB54C00C0B98D /* addProfileButton.swift in Sources */,
+				D095B3822C160C58007532E2 /* ProfileViewHeaderImage.swift in Sources */,
+				D079763D2C25683A00CC35BF /* AddProfileColorPicker.swift in Sources */,
+				D01A555A2C1F65AC00C0B98D /* AddProfileView.swift in Sources */,
+				D01A55622C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift in Sources */,
+				D0DF907E2C249FDB00803AED /* RelationshipStartDatePicker.swift in Sources */,
+				D0A8F5442C15FD1200429F1B /* ContentView.swift in Sources */,
+				D095B3882C16EAA0007532E2 /* ProfileViewHeader01.swift in Sources */,
+				D07F15EB2C1BF0C3001D1538 /* FilterButtonLeading.swift in Sources */,
+				D095B38A2C16EEB3007532E2 /* ProfileViewInfo03.swift in Sources */,
+				D07F15ED2C1C0D7D001D1538 /* filterButtonTrailingRow.swift in Sources */,
+				D01A55602C20175100C0B98D /* RelationshipStatusPickerButton.swift in Sources */,
+				D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */,
+				D0A8F5422C15FD1200429F1B /* LocketApp.swift in Sources */,
+				D01A55562C1DFF3000C0B98D /* Models.swift in Sources */,
+				D0FB04FE2C189AC6006BC164 /* tabBar.swift in Sources */,
+				D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */,
+				D070B7152C1B684400442B16 /* Filterbutton.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A8F54D2C15FD1300429F1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0A8F5562C15FD1300429F1B /* LocketTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0A8F5572C15FD1300429F1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0A8F5622C15FD1300429F1B /* LocketUITestsLaunchTests.swift in Sources */,
+				D0A8F5602C15FD1300429F1B /* LocketUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D0A8F5532C15FD1300429F1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0A8F53D2C15FD1200429F1B /* Locket */;
+			targetProxy = D0A8F5522C15FD1300429F1B /* PBXContainerItemProxy */;
+		};
+		D0A8F55D2C15FD1300429F1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0A8F53D2C15FD1200429F1B /* Locket */;
+			targetProxy = D0A8F55C2C15FD1300429F1B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D0A8F5632C15FD1300429F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
+			};
+			name = Debug;
+		};
+		D0A8F5642C15FD1300429F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
+			};
+			name = Release;
+		};
+		D0A8F5662C15FD1300429F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Locket/Locket.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Locket/Preview Content\"";
+				DEVELOPMENT_TEAM = 58LJ72DY7U;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Locket;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jusaaatin.Locket;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D0A8F5672C15FD1300429F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Locket/Locket.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Locket/Preview Content\"";
+				DEVELOPMENT_TEAM = 58LJ72DY7U;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Locket;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jusaaatin.Locket;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D0A8F5692C15FD1300429F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 58LJ72DY7U;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jusaaatin.LocketTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Locket.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Locket";
+			};
+			name = Debug;
+		};
+		D0A8F56A2C15FD1300429F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 58LJ72DY7U;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jusaaatin.LocketTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Locket.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Locket";
+			};
+			name = Release;
+		};
+		D0A8F56C2C15FD1300429F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 58LJ72DY7U;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jusaaatin.LocketUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Locket;
+			};
+			name = Debug;
+		};
+		D0A8F56D2C15FD1300429F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 58LJ72DY7U;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jusaaatin.LocketUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Locket;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D0A8F5392C15FD1200429F1B /* Build configuration list for PBXProject "Locket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0A8F5632C15FD1300429F1B /* Debug */,
+				D0A8F5642C15FD1300429F1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0A8F5652C15FD1300429F1B /* Build configuration list for PBXNativeTarget "Locket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0A8F5662C15FD1300429F1B /* Debug */,
+				D0A8F5672C15FD1300429F1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0A8F5682C15FD1300429F1B /* Build configuration list for PBXNativeTarget "LocketTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0A8F5692C15FD1300429F1B /* Debug */,
+				D0A8F56A2C15FD1300429F1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0A8F56B2C15FD1300429F1B /* Build configuration list for PBXNativeTarget "LocketUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0A8F56C2C15FD1300429F1B /* Debug */,
+				D0A8F56D2C15FD1300429F1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D0A8F5362C15FD1200429F1B /* Project object */;
+}
