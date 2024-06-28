@@ -20,7 +20,6 @@ struct AddProfileView: View {
     //person
     @State private var name: String = ""
     @State private var accentColor: Color = Color("Foreground-match")
-    @State private var resolvedAccentColor: Color.Resolved = Color.Resolved(red: 1.0, green: 1.0, blue: 1.0)
     @State private var accentColorIsDefaultForeground: Bool = true //true means foregroundmatch false means any other color
     @State private var birthday: Date = .now
     
@@ -46,14 +45,12 @@ struct AddProfileView: View {
     
     @State private var demoColor: Color = .white
     
-    func colorToResolved() {
-        if accentColor != Color("Foreground-match") {
-            accentColorIsDefaultForeground = false
-            resolvedAccentColor = accentColor.resolve(in: environment)
-        } else {
-            accentColorIsDefaultForeground = true
-        }
-    }
+    //checklistOk
+    @State private var nameNotOk = false
+    @State private var birthdayNotOk = false
+    @State private var thumbnailNotOk = false
+    
+    @State private var birthdayChanged = false
     
     func saveToSocialsArray() {
         for i in 0...additionalSocialsCount {
@@ -65,6 +62,15 @@ struct AddProfileView: View {
         let currentDate: Date = .now
         let currentSince1970 = currentDate.timeIntervalSince1970
         return Int(currentSince1970)
+    }
+    
+    func checklistOk() -> Bool {
+        if name != "" && shownThumbnail != Data() && birthday != .now {
+            // compulsory fields filled in: ok
+            return true
+        } else {
+            return false
+        }
     }
     
     var body: some View {
@@ -85,20 +91,60 @@ struct AddProfileView: View {
                             .foregroundStyle(.gray)
                             .padding(.bottom, -22)
                             .padding(.top)
+                        if nameNotOk && !birthdayNotOk {
+                            Text("  -     Please Fill In Name")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.red)
+                                .padding(.bottom, -22)
+                                .padding(.top)
+                        }
+                        if birthdayNotOk && !nameNotOk{
+                            Text("  -     Please Fill In Birthday")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.red)
+                                .padding(.bottom, -22)
+                                .padding(.top)
+                        }
+                        if nameNotOk && birthdayNotOk {
+                            Text("  -     Please Fill In Name and Birthday")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.red)
+                                .padding(.bottom, -22)
+                                .padding(.top)
+                        }
                         Spacer()
                     }
                     AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday)
+                        .onChange(of: birthday) { old, new in
+                            if old != new {
+                                birthdayChanged = true
+                            }
+                        }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(.red.opacity(nameNotOk || birthdayNotOk ? 0.5 : 0), lineWidth: 2)
+                        )
                         .padding()
-                        .onChange(of: accentColor, initial: true, colorToResolved)
                     HStack {
                         Text("        Images")
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(.gray)
                             .padding(.bottom, -22)
                             .padding(.top)
+                        if thumbnailNotOk {
+                            Text("  -     Please Add a Thumbnail Image")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.red)
+                                .padding(.bottom, -22)
+                                .padding(.top)
+                        }
                         Spacer()
                     }
                     AddProfileViewImages(shownThumbnail: $shownThumbnail, slideImages: $slideImages)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(.red.opacity(thumbnailNotOk ? 0.5 : 0), lineWidth: 2)
+                        )
                         .padding()
                     HStack {
                         Text("        Socials")
@@ -142,21 +188,33 @@ struct AddProfileView: View {
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
-                        saveToSocialsArray()
                         if !debugOn {
-                            let person = person(
-                                personid: generatePersonID(),
-                                name: name,
-                                birthday: birthday,
-                                hexAccentColor: accentColor.toHex() ?? "FFFFFF",
-                                accentColorIsDefaultForeground: accentColorIsDefaultForeground,
-                                shownThumbnail: shownThumbnail,
-                                slideImages: slideImages,
-                                socials: socialsArray,
-                                relationshipStatus: relationshipStatus,
-                                currentRelationshipStartDate: currentRelationshipStartDate, 
-                                personDescription: personDescription)
-                            modelContext.insert(person)
+                            if checklistOk() {
+                                nameNotOk = false
+                                birthdayNotOk = false
+                                thumbnailNotOk = false
+                                saveToSocialsArray()
+                                let person = person(
+                                    personid: generatePersonID(),
+                                    name: name,
+                                    birthday: birthday,
+                                    hexAccentColor: accentColor.toHex() ?? "FFFFFF",
+                                    accentColorIsDefaultForeground: accentColorIsDefaultForeground,
+                                    shownThumbnail: shownThumbnail,
+                                    slideImages: slideImages,
+                                    socials: socialsArray,
+                                    relationshipStatus: relationshipStatus,
+                                    currentRelationshipStartDate: currentRelationshipStartDate,
+                                    personDescription: personDescription)
+                                modelContext.insert(person)
+                                print("success")
+                                print("\(name)")
+                                dismiss()
+                            } else {
+                                if name == "" {nameNotOk = true} else {nameNotOk = false}
+                                if birthdayChanged == false {birthdayNotOk = true} else {birthdayNotOk = false}
+                                if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
+                            }
                         } else if debugOn {
                             print("""
                             PersonID: \(generatePersonID())
@@ -169,7 +227,7 @@ struct AddProfileView: View {
                             persondescription: \(personDescription)
                             """)
                         }
-                        dismiss()
+                        
                     }
                 }
             }
@@ -180,5 +238,5 @@ struct AddProfileView: View {
 }
 
 #Preview {
-    AddProfileView(debugOn: true)
+    AddProfileView(debugOn: false)
 }
