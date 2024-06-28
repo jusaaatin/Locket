@@ -30,7 +30,6 @@ let foodCarouselImagesMain = [
     "demofood9"
 ]
 
-
 let randomSelectedCarousellImagesMain: String = foodCarouselImagesMain.shuffled().prefix(1).joined()
 
 func generateImages(mainImage: String) -> [String] {
@@ -42,23 +41,55 @@ func generateImages(mainImage: String) -> [String] {
 
 
 struct ProfileViewHeaderImage: View {
+    
+    let demo: Bool
+    let mainImage: Data
+    let slideImages: [Data]
+    
+    private func dataGenerateImages(mainImage: Data, slideImages: [Data]) -> [Data]{
+        var allImages: [Data] = []
+        allImages.append(mainImage)
+        allImages.append(contentsOf: slideImages.shuffled())
+        return allImages
+    }
+    private func dataToUiImage(data: Data) -> UIImage {
+        return UIImage(data: data) ?? UIImage()
+    }
+    
     @GestureState private var zoom = 1.0
  
     var body: some View {
         TabView() {
-            ForEach(generateImages(mainImage: randomSelectedCarousellImagesMain).prefix(20) , id: \.self) {image in
-                Image(image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: CGFloat(screenWidth))
-                    .clipped()
-                    .scaleEffect(zoom)
-                    .gesture(
-                        MagnifyGesture()
-                        .updating($zoom) { value, gestureState, transaction in
-                        gestureState = value.magnification
-                        }
-                    )
+            if demo {
+                ForEach(generateImages(mainImage: randomSelectedCarousellImagesMain).prefix(20) , id: \.self) {image in
+                    Image(image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: CGFloat(screenWidth))
+                        .clipped()
+                        .scaleEffect(zoom)
+                        .gesture(
+                            MagnifyGesture()
+                            .updating($zoom) { value, gestureState, transaction in
+                            gestureState = value.magnification
+                            }
+                        )
+                }
+            } else {
+                ForEach(dataGenerateImages(mainImage: mainImage, slideImages: slideImages).prefix(10), id: \.self) { dataImage in
+                    Image(uiImage: dataToUiImage(data: dataImage))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: CGFloat(screenWidth))
+                        .clipped()
+                        .scaleEffect(zoom)
+                        .gesture(
+                            MagnifyGesture()
+                            .updating($zoom) { value, gestureState, transaction in
+                            gestureState = value.magnification
+                            }
+                        )
+                }
             }
         }
         .scrollClipDisabled()
@@ -69,6 +100,6 @@ struct ProfileViewHeaderImage: View {
 }
 
 #Preview {
-    ProfileViewHeaderImage()
+    ProfileViewHeaderImage(demo: true, mainImage: Data(), slideImages: [Data]())
 }
 

@@ -26,6 +26,14 @@ struct HomeView: View {
         GridItem(.adaptive(minimum: CGFloat(getWidth()), maximum: CGFloat(getWidth())), spacing: 22, alignment: .center)
     ]
     
+    private func returnAccentColor(isFgMatch: Bool, Hex: String) -> Color{
+        if isFgMatch {
+            return Color("Foreground-match")
+        } else {
+            return Color(hex: "\(Hex)") ?? Color("Foreground-match")
+        }
+    }
+    
     @State var searchString: String = ""
     @State var searchFilter: filterState = .showAll
     @State var sortOrder: querySortOrder = .aToZ
@@ -42,9 +50,11 @@ struct HomeView: View {
                     .padding(.bottom, 12)
                 LazyVGrid(columns: twoColumnGrid, spacing: 22) {
                     ForEach(person) { person in
+                        @State var deleting = false
                         NavigationLink {
                             ProfileView(
-                                currentRSStatus: person.relationshipStatus,
+                                currentRSStatus: person.relationshipStatus, 
+                                deleting: $deleting,
                                 demoStartDate: person.currentRelationshipStartDate,
                                 demoEndDate: addOrSubtractYear(year: -1),
                                 name: person.name,
@@ -52,7 +62,13 @@ struct HomeView: View {
                                 instaUser: "username",
                                 telPrefix: "123",
                                 telNumber: "91234567",
-                                accentColor: Color(hex:"\(person.hexAccentColor)") ?? .white)
+                                accentColor: returnAccentColor(
+                                    isFgMatch: person.accentColorIsDefaultForeground,
+                                    Hex: person.hexAccentColor),
+                                demo: false,
+                                mainImage: person.shownThumbnail,
+                                slideImages: person.slideImages ?? [Data]()
+                            )
                             .navigationTransition(
                                 .zoom(
                                     sourceID: person,
@@ -72,7 +88,10 @@ struct HomeView: View {
                                 birthday: person.birthday,
                                 relationshipStatus: person.relationshipStatus,
                                 conditionalActivate: false,
-                                accentColor: Color(hex:"\(person.hexAccentColor)") ?? .white)
+                                accentColor: returnAccentColor(
+                                    isFgMatch: person.accentColorIsDefaultForeground,
+                                    Hex: person.hexAccentColor),
+                                shownThumbnail: person.shownThumbnail)
                         }
                         .buttonStyle(PlainButtonStyle())
                         .matchedTransitionSource(id: person, in: homeViewNamespace)

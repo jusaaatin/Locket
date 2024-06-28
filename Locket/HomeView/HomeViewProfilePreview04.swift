@@ -17,6 +17,7 @@ struct HomeViewProfilePreview04: View {
     let relationshipStatus: RelationshipStatus
     let conditionalActivate: Bool
     let accentColor: Color
+    let shownThumbnail: Data
     
     private func dateToDM(input: Date) -> String {
         let DMFormatter = DateFormatter()
@@ -54,12 +55,15 @@ struct HomeViewProfilePreview04: View {
         VStack {
             ZStack {
                 VStack {
-                    Image(mainImage)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width:CGFloat(mainWidth), height: CGFloat(mainWidth))
-                        .clipped()
-                        .padding(.bottom, 5)
+                    let thumb = shownThumbnail
+                    if let uithumb = UIImage(data: thumb) {
+                        Image(uiImage: uithumb)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width:CGFloat(mainWidth), height: CGFloat(mainWidth))
+                            .clipped()
+                            .padding(.bottom, 5)
+                    }
                     Text(name)
                         .padding(.top, -12)
                         .font(.system(size: 32, weight: .semibold, design: .serif))
@@ -108,7 +112,7 @@ struct HomeViewProfilePreview04: View {
 }
 
 #Preview {
-    HomeViewProfilePreview04(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractYear(year: -15), relationshipStatus: .bestie, conditionalActivate: true, accentColor: .red)
+    HomeViewProfilePreview04(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractYear(year: -15), relationshipStatus: .bestie, conditionalActivate: true, accentColor: .red, shownThumbnail: Data())
 }
 
 

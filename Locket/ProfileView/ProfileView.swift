@@ -14,6 +14,7 @@ struct ProfileView: View {
     
     //DEMO INFO
     @State var currentRSStatus: RelationshipStatus
+    @Binding var deleting: Bool
     
     var demoStartDate: Date
     var demoEndDate: Date
@@ -24,9 +25,13 @@ struct ProfileView: View {
     var telNumber: String
     var accentColor: Color
     
+    var demo: Bool
+    var mainImage: Data
+    var slideImages: [Data]
+    
     var body: some View {
         ScrollView {
-            ProfileViewHeader01(currentRSStatus: currentRSStatus, name: name, startDate: demoStartDate, endDate: demoEndDate, accentColor: accentColor)
+            ProfileViewHeader01(currentRSStatus: currentRSStatus, name: name, startDate: demoStartDate, endDate: demoEndDate, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages)
             ProfileViewInfo03(startDate: demoStartDate, endDate: demoEndDate, currentRSStatus: currentRSStatus, birthday: birthday, instaUser: instaUser, telPrefix: telPrefix, telNumber: telNumber)
                 .frame(height:80)
             Divider()
@@ -39,6 +44,11 @@ struct ProfileView: View {
             }
             .pickerStyle(.segmented)
             .padding([.leading, .trailing])
+            Button(role: .destructive, action: {
+                deleting = true
+            }, label: {
+                Text("delete")
+            })
             
         }
         .ignoresSafeArea()
@@ -48,7 +58,8 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(currentRSStatus: .bestie, 
+    @Previewable @State var deleting = false
+    ProfileView(currentRSStatus: .bestie, deleting: $deleting,
                 demoStartDate: addOrSubtractYear(year: -5),
                 demoEndDate: addOrSubtractYear(year: -1),
                 name: "Name",
@@ -56,5 +67,9 @@ struct ProfileView: View {
                 instaUser: "username",
                 telPrefix: "123",
                 telNumber: "91234567",
-                accentColor: .white)
+                accentColor: .white,
+                demo: true,
+                mainImage: Data(),
+                slideImages: [Data]()
+    )
 }

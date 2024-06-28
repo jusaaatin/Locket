@@ -64,8 +64,12 @@ struct ProfileViewHeader01: View {
     var currentDate = Date.now
     var accentColor: Color
     
+    var demo: Bool
+    var mainImage: Data
+    var slideImages: [Data]
+    
     var body: some View {
-        ProfileViewName(name: name, accentColor: accentColor)
+        ProfileViewName(name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages)
             .frame(height: 514, alignment: .top)
         
         switch currentRSStatus {
@@ -95,5 +99,5 @@ struct ProfileViewHeader01: View {
 }
 
 #Preview {
-    ProfileViewHeader01(currentRSStatus: .relationship, name: "Name", startDate: addOrSubtractDay(day: -3), endDate: addOrSubtractDay(day: 24), accentColor: .red)
+    ProfileViewHeader01(currentRSStatus: .relationship, name: "Name", startDate: addOrSubtractDay(day: -3), endDate: addOrSubtractDay(day: 24), accentColor: .red, demo: true, mainImage: Data(), slideImages: [Data]())
 }

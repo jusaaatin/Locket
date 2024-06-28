@@ -12,10 +12,14 @@ struct ProfileViewName: View {
     var name: String
     var accentColor: Color
     
+    var demo: Bool
+    var mainImage: Data
+    var slideImages: [Data]
+    
     var body: some View {
         ZStack {
             VStack {
-                ProfileViewHeaderImage()
+                ProfileViewHeaderImage(demo: demo, mainImage: mainImage, slideImages: slideImages)
                     .frame(height:460)
                 Rectangle()
                     .fill(.black)
@@ -54,5 +58,5 @@ struct ProfileViewName: View {
 }
 
 #Preview {
-    ProfileViewName(name: "Name", accentColor: .red)
+    ProfileViewName(name: "Name", accentColor: .red, demo: true, mainImage: Data(), slideImages: [Data]())
 }
