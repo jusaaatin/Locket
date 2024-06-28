@@ -56,13 +56,23 @@ struct HomeViewProfilePreview04: View {
             ZStack {
                 VStack {
                     let thumb = shownThumbnail
-                    if let uithumb = UIImage(data: thumb) {
-                        Image(uiImage: uithumb)
+                    if thumb == Data() {
+                        Image("demofood12")
                             .resizable()
                             .scaledToFill()
                             .frame(width:CGFloat(mainWidth), height: CGFloat(mainWidth))
                             .clipped()
                             .padding(.bottom, 5)
+                    } else {
+                        if let uithumb = UIImage(data: thumb) {
+                            Image(uiImage: uithumb)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width:CGFloat(mainWidth), height: CGFloat(mainWidth))
+                                .clipped()
+                                .padding(.bottom, 5)
+                    }
+
                     }
                     Text(name)
                         .padding(.top, -12)
@@ -72,12 +82,21 @@ struct HomeViewProfilePreview04: View {
                         .lineLimit(1)
                         .foregroundStyle(accentColor)
                         .frame(width:CGFloat(mainWidth))
-                    HStack {
-                        Image(systemName: "gift")
-                        Text(dateToDM(input: birthday))
+                    if conditionalActivate {
+                        HStack {
+                            Image(systemName: "gift")
+                            Text("Today")
+                        }
+                        .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(.red.mix(with: .white, by: 0.3))
+                    } else {
+                        HStack {
+                            Image(systemName: "gift")
+                            Text(dateToDM(input: birthday))
+                        }
+                        .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(.gray)
                     }
-                    .font(.system(size: 12, weight: .semibold, design: .monospaced))
-                    .foregroundStyle(.gray)
                     Spacer()
                 }
                 VStack {
