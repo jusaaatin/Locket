@@ -21,6 +21,7 @@ private func getWidth() -> Int {
 
 
 struct HomeView: View {
+
     
     private let twoColumnGrid = [
         GridItem(.adaptive(minimum: CGFloat(getWidth()), maximum: CGFloat(getWidth())), spacing: 22, alignment: .center)
@@ -40,7 +41,12 @@ struct HomeView: View {
     @Namespace var homeViewNamespace
     @Binding var currentPage: locketPages
     @Environment(\.modelContext) var modelContext
-    @Query var person: [person]
+    @Query var unQueriedPerson: [person]
+    
+    var person: [person]{
+        guard searchString.isEmpty == false else { return unQueriedPerson }
+        return unQueriedPerson.filter { $0.name.contains(searchString)}
+    }
     
     var body: some View {
         NavigationStack {
@@ -90,8 +96,6 @@ struct HomeView: View {
                                     isFgMatch: person.accentColorIsDefaultForeground,
                                     Hex: person.hexAccentColor),
                                 shownThumbnail: person.shownThumbnail)
-                            Text("\(person.accentColorIsDefaultForeground)")
-                            Text("\(person.hexAccentColor)")
                         }
                         .buttonStyle(PlainButtonStyle())
                         .matchedTransitionSource(id: person, in: homeViewNamespace)
