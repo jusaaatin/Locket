@@ -130,7 +130,7 @@ struct ProfileViewRelationship: View {
         }
         .padding()
         .frame(height: 92)
-        .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
+   //     .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
