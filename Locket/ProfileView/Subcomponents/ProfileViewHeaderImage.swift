@@ -76,7 +76,7 @@ struct ProfileViewHeaderImage: View {
                         )
                 }
             } else {
-                ForEach(dataGenerateImages(mainImage: mainImage, slideImages: slideImages).prefix(10), id: \.self) { dataImage in
+                ForEach(dataGenerateImages(mainImage: mainImage, slideImages: slideImages), id: \.self) { dataImage in
                     Image(uiImage: dataToUiImage(data: dataImage))
                         .resizable()
                         .scaledToFill()

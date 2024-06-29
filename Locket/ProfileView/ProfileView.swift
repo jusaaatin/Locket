@@ -48,9 +48,18 @@ struct ProfileView: View {
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(.gray)
                         .padding(.top, -44)
+                        .padding(.bottom, -5)
                     Spacer()
                 }.padding(.top, 40)
-                
+                ProfileViewSocials(socials: socials, demo: demo)
+                    .padding([.bottom, .leading, .trailing])
+                    .padding(.top, -30)
+          //      Rectangle().foregroundStyle(Color("Background-match")).frame(height: 120)
+                Image(systemName: "figure.walk.motion")
+                    .font(.system(size: 60, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.gray.opacity(0.5))
+                    .padding()
+                    .padding(.bottom, 30)
             }
             HStack {
                 Button {
@@ -88,6 +97,14 @@ struct ProfileView: View {
                 accentColor: .white,
                 demo: true,
                 mainImage: Data(),
-                slideImages: [Data](), socials: [socials]()
+                slideImages: [Data](), socials:
+                    [
+                    socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+                     socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+                    socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+                    socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+                    socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+                    socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+                    ]
     )
 }
