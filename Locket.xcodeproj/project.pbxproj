@@ -25,7 +25,7 @@
 		D095B3802C16031E007532E2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B37F2C16031E007532E2 /* ProfileView.swift */; };
 		D095B3822C160C58007532E2 /* ProfileViewHeaderImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3812C160C58007532E2 /* ProfileViewHeaderImage.swift */; };
 		D095B3842C162F62007532E2 /* ProfileViewName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3832C162F62007532E2 /* ProfileViewName.swift */; };
-		D095B3882C16EAA0007532E2 /* ProfileViewHeader01.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3872C16EAA0007532E2 /* ProfileViewHeader01.swift */; };
+		D095B3882C16EAA0007532E2 /* ProfileViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3872C16EAA0007532E2 /* ProfileViewHeader.swift */; };
 		D095B38A2C16EEB3007532E2 /* ProfileViewInfo03.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */; };
 		D095B38C2C16F7EE007532E2 /* Universal Declarations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B38B2C16F7ED007532E2 /* Universal Declarations.swift */; };
 		D0A8F5422C15FD1200429F1B /* LocketApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5412C15FD1200429F1B /* LocketApp.swift */; };
@@ -35,6 +35,8 @@
 		D0A8F5562C15FD1300429F1B /* LocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5552C15FD1300429F1B /* LocketTests.swift */; };
 		D0A8F5602C15FD1300429F1B /* LocketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F55F2C15FD1300429F1B /* LocketUITests.swift */; };
 		D0A8F5622C15FD1300429F1B /* LocketUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */; };
+		D0C845562C303F9D0079789F /* ProfileViewRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */; };
+		D0C845582C3052430079789F /* ProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C845572C3052430079789F /* ProfileViewSocials.swift */; };
 		D0DF90762C240DE100803AED /* AddProfileViewNewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */; };
 		D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90772C24133700803AED /* AddProfileViewSocials.swift */; };
 		D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */; };
@@ -78,7 +80,7 @@
 		D095B37F2C16031E007532E2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D095B3812C160C58007532E2 /* ProfileViewHeaderImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewHeaderImage.swift; sourceTree = "<group>"; };
 		D095B3832C162F62007532E2 /* ProfileViewName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewName.swift; sourceTree = "<group>"; };
-		D095B3872C16EAA0007532E2 /* ProfileViewHeader01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewHeader01.swift; sourceTree = "<group>"; };
+		D095B3872C16EAA0007532E2 /* ProfileViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewHeader.swift; sourceTree = "<group>"; };
 		D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewInfo03.swift; sourceTree = "<group>"; };
 		D095B38B2C16F7ED007532E2 /* Universal Declarations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Universal Declarations.swift"; sourceTree = "<group>"; };
 		D0A8F53E2C15FD1200429F1B /* Locket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Locket.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,8 @@
 		D0A8F55B2C15FD1300429F1B /* LocketUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocketUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A8F55F2C15FD1300429F1B /* LocketUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketUITests.swift; sourceTree = "<group>"; };
 		D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRelationship.swift; sourceTree = "<group>"; };
+		D0C845572C3052430079789F /* ProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewSocials.swift; sourceTree = "<group>"; };
 		D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewNewSocials.swift; sourceTree = "<group>"; };
 		D0DF90772C24133700803AED /* AddProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewSocials.swift; sourceTree = "<group>"; };
 		D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewRelationships.swift; sourceTree = "<group>"; };
@@ -175,7 +179,9 @@
 			isa = PBXGroup;
 			children = (
 				D095B37F2C16031E007532E2 /* ProfileView.swift */,
-				D095B3872C16EAA0007532E2 /* ProfileViewHeader01.swift */,
+				D095B3872C16EAA0007532E2 /* ProfileViewHeader.swift */,
+				D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */,
+				D0C845572C3052430079789F /* ProfileViewSocials.swift */,
 				D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */,
 				D095B38E2C17194B007532E2 /* Subcomponents */,
 			);
@@ -402,7 +408,7 @@
 				D01A55622C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift in Sources */,
 				D0DF907E2C249FDB00803AED /* RelationshipStartDatePicker.swift in Sources */,
 				D0A8F5442C15FD1200429F1B /* ContentView.swift in Sources */,
-				D095B3882C16EAA0007532E2 /* ProfileViewHeader01.swift in Sources */,
+				D095B3882C16EAA0007532E2 /* ProfileViewHeader.swift in Sources */,
 				D07F15EB2C1BF0C3001D1538 /* FilterButtonLeading.swift in Sources */,
 				D095B38A2C16EEB3007532E2 /* ProfileViewInfo03.swift in Sources */,
 				D07F15ED2C1C0D7D001D1538 /* filterButtonTrailingRow.swift in Sources */,
@@ -410,7 +416,9 @@
 				D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */,
 				D0A8F5422C15FD1200429F1B /* LocketApp.swift in Sources */,
 				D01A55562C1DFF3000C0B98D /* Models.swift in Sources */,
+				D0C845582C3052430079789F /* ProfileViewSocials.swift in Sources */,
 				D0FB04FE2C189AC6006BC164 /* tabBar.swift in Sources */,
+				D0C845562C303F9D0079789F /* ProfileViewRelationship.swift in Sources */,
 				D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */,
 				D070B7152C1B684400442B16 /* Filterbutton.swift in Sources */,
 			);

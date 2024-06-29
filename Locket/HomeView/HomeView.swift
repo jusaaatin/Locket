@@ -55,7 +55,7 @@ struct HomeView: View {
                             ProfileView(
                                 currentRSStatus: person.relationshipStatus, 
                                 deleting: $deleting,
-                                demoStartDate: person.currentRelationshipStartDate,
+                                currentPage: $currentPage, demoStartDate: person.currentRelationshipStartDate,
                                 demoEndDate: addOrSubtractYear(year: -1),
                                 name: person.name,
                                 birthday: person.birthday,
@@ -67,8 +67,9 @@ struct HomeView: View {
                                     Hex: person.hexAccentColor),
                                 demo: false,
                                 mainImage: person.shownThumbnail,
-                                slideImages: person.slideImages ?? [Data]()
+                                slideImages: person.slideImages ?? [Data](), socials: person.socials ?? [socials]()
                             )
+                            .navigationBarBackButtonHidden()
                             .navigationTransition(
                                 .zoom(
                                     sourceID: person,
@@ -76,9 +77,6 @@ struct HomeView: View {
                             )
                             .onAppear {
                                 withAnimation(.snappy) { currentPage = .profile }
-                            }
-                            .onDisappear {
-                                withAnimation(.snappy) { currentPage = .home }
                             }
                         } label: {
                             HomeViewProfilePreview04(
