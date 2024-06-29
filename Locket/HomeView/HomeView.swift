@@ -90,6 +90,8 @@ struct HomeView: View {
                                     isFgMatch: person.accentColorIsDefaultForeground,
                                     Hex: person.hexAccentColor),
                                 shownThumbnail: person.shownThumbnail)
+                            Text("\(person.accentColorIsDefaultForeground)")
+                            Text("\(person.hexAccentColor)")
                         }
                         .buttonStyle(PlainButtonStyle())
                         .matchedTransitionSource(id: person, in: homeViewNamespace)

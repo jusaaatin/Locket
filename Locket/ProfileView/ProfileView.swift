@@ -54,13 +54,12 @@ struct ProfileView: View {
                 ProfileViewSocials(socials: socials, demo: demo)
                     .padding([.bottom, .leading, .trailing])
                     .padding(.top, -30)
-          //      Rectangle().foregroundStyle(Color("Background-match")).frame(height: 120)
                 Image(systemName: "figure.walk.motion")
                     .font(.system(size: 60, weight: .semibold, design: .rounded))
                     .foregroundStyle(.gray.opacity(0.5))
                     .padding()
                     .padding(.bottom, 30)
-            }
+            }.scrollIndicators(.hidden)
             HStack {
                 Button {
                     withAnimation(.snappy) { currentPage = .home }

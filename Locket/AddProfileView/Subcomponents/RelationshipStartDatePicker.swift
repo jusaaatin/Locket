@@ -32,9 +32,9 @@ struct RelationshipStartDatePicker: View {
     
 
     
-    @State var startDay: String = ""
-    @State var startMonth: String = ""
-    @State var startYear: String = ""
+    @Binding var startDay: String
+    @Binding var startMonth: String
+    @Binding var startYear: String
     @Binding var selectedDate: Date
     
    
@@ -179,8 +179,11 @@ struct RelationshipStartDatePicker: View {
 }
 
 #Preview {
+    @Previewable @State var startDay: String = ""
+    @Previewable @State var startMonth: String = ""
+    @Previewable @State var startYear: String = ""
     @Previewable @State var selectedDate: Date = .now
-    RelationshipStartDatePicker(selectedDate: $selectedDate)
+    RelationshipStartDatePicker(startDay: $startDay, startMonth: $startMonth, startYear: $startYear, selectedDate: $selectedDate)
     
     DatePicker("DEBUG", selection: $selectedDate)
         .padding(.top, 20)

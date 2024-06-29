@@ -14,6 +14,10 @@ struct AddProfileViewPerson: View {
     
     @Binding var birthday: Date
     
+    @Binding var startDay: String
+    @Binding var startMonth: String
+    @Binding var startYear: String
+    
     var body: some View {
         VStack {
             HStack {
@@ -33,7 +37,7 @@ struct AddProfileViewPerson: View {
                 Text("Birthday")
                     .fontWeight(.semibold)
                 Spacer()
-                RelationshipStartDatePicker(selectedDate: $birthday)
+                RelationshipStartDatePicker(startDay: $startDay, startMonth: $startMonth, startYear: $startYear, selectedDate: $birthday)
                     .frame(width: 182)
             }
             Divider()
@@ -50,10 +54,13 @@ struct AddProfileViewPerson: View {
 }
 
 #Preview {
+    @Previewable @State var startDay: String = ""
+    @Previewable @State var startMonth: String = ""
+    @Previewable @State var startYear: String = ""
     @Previewable @State var name: String = ""
     @Previewable @State var accentColor: Color = .white
     @Previewable @State var birthday: Date = .now
     
-    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday)
+    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday, startDay: $startDay, startMonth: $startMonth, startYear: $startYear)
         .padding()
 }

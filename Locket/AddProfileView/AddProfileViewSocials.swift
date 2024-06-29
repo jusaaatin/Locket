@@ -16,6 +16,7 @@ struct AddProfileViewSocials: View {
     @Binding var additionalSocialsCount: Int
     @Binding var visibleSocialsCount: Int
     @Binding var debugOn: Bool
+    @Binding var socialsNotOk: Bool
     
     //IMPORTANT: First social on is zero on every array as well as count
     
@@ -67,6 +68,10 @@ struct AddProfileViewSocials: View {
         .padding()
         .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(.red.opacity(socialsNotOk ? 0.5 : 0), lineWidth: 2)
+        )
         
         HStack {
             Spacer()
@@ -111,9 +116,10 @@ struct AddProfileViewSocials: View {
     @Previewable @State var additionalSocialsCount: Int = 0
     @Previewable @State var visibleSocialsCount: Int = 1
     @Previewable @State var debugOn: Bool = true
+    @Previewable @State var socialsNotOk: Bool = true
     
     ScrollView {
-        AddProfileViewSocials(isHidden: $isHidden, socialPlatform: $socialPlatform, stringPRE: $stringPRE, stringMAIN: $stringMAIN, additionalSocialsCount: $additionalSocialsCount, visibleSocialsCount: $visibleSocialsCount, debugOn: $debugOn)
+        AddProfileViewSocials(isHidden: $isHidden, socialPlatform: $socialPlatform, stringPRE: $stringPRE, stringMAIN: $stringMAIN, additionalSocialsCount: $additionalSocialsCount, visibleSocialsCount: $visibleSocialsCount, debugOn: $debugOn, socialsNotOk: $socialsNotOk)
             .padding([.leading, .trailing])
     }
 }

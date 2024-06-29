@@ -12,6 +12,10 @@ struct AddProfileViewRelationships: View {
     @Binding var relationshipStatus: RelationshipStatus
     @Binding var currentRelationshipStartDate: Date
     
+    @State var one = ""
+    @State var two = ""
+    @State var three = ""
+    
     var body: some View {
         VStack {
             RelationshipStatusPickerButtonRow(filterSelection: $relationshipStatus)
@@ -22,7 +26,7 @@ struct AddProfileViewRelationships: View {
                 Text("Start Date")
                     .font(.system(size: 18, weight: .semibold))
                 Spacer()
-                RelationshipStartDatePicker(selectedDate: $currentRelationshipStartDate)
+                RelationshipStartDatePicker(startDay: $one, startMonth: $two, startYear: $three, selectedDate: $currentRelationshipStartDate)
                     .frame(width: 190)
             }
             .padding(.top, 8)

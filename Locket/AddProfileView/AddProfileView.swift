@@ -20,8 +20,10 @@ struct AddProfileView: View {
     //person
     @State private var name: String = ""
     @State private var accentColor: Color = Color("Foreground-match")
-    @State private var accentColorIsDefaultForeground: Bool = true //true means foregroundmatch false means any other color
     @State private var birthday: Date = .now
+    @State private var bDay: String = ""
+    @State private var bMonth: String = ""
+    @State private var bYear: String = ""
     
     //images
     @State var shownThumbnail: Data = Data()
@@ -35,6 +37,7 @@ struct AddProfileView: View {
     @State var additionalSocialsCount: Int = 0
     @State var visibleSocialsCount: Int = 1
     @State var socialsArray: [socials] = []
+    @State var checkerSocialsArray: [socials] = []
     
     //relationship
     @State private var relationshipStatus: RelationshipStatus = .crush
@@ -49,13 +52,29 @@ struct AddProfileView: View {
     @State private var nameNotOk = false
     @State private var birthdayNotOk = false
     @State private var thumbnailNotOk = false
+    @State private var socialsNotOk = false
     
     @State private var birthdayChanged = false
     
     func saveToSocialsArray() {
         for i in 0...additionalSocialsCount {
-            socialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
+            if !isHidden[i] {
+                socialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
+            }
         }
+    }
+    func saveToCheckerSocialsArray() {
+        for i in 0...additionalSocialsCount {
+            if !isHidden[i] {
+                checkerSocialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
+            }
+        }
+    }
+    
+    func accentColorDefaultFgCheck() -> Bool{
+        if accentColor == Color("Foreground-match") {
+            return true
+        } else { return false }
     }
     
     func generatePersonID() -> Int{
@@ -65,12 +84,35 @@ struct AddProfileView: View {
     }
     
     func checklistOk() -> Bool {
-        if name != "" && shownThumbnail != Data() && birthday != .now {
-            // compulsory fields filled in: ok
+        if (
+            name != "" && 
+            shownThumbnail != Data() &&
+            bDay.count == 2 &&
+            bMonth.count == 2 &&
+            bYear.count == 4
+        ){
             return true
         } else {
             return false
         }
+    }
+    
+    func socialsChecklistOk() -> Bool {
+        for social in checkerSocialsArray {
+            if social.socialPlatform == .PhoneNumber {
+                if social.stringPRE == "" || social.stringMAIN == "" {
+                    checkerSocialsArray.removeAll()
+                    return false
+                }
+            } else {
+                if social.stringMAIN == "" {
+                    checkerSocialsArray.removeAll()
+                    return false
+                }
+            }
+        }
+        checkerSocialsArray.removeAll()
+        return true
     }
     
     var body: some View {
@@ -114,7 +156,7 @@ struct AddProfileView: View {
                         }
                         Spacer()
                     }
-                    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday)
+                    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday, startDay: $bDay, startMonth: $bMonth, startYear: $bYear)
                         .onChange(of: birthday) { old, new in
                             if old != new {
                                 birthdayChanged = true
@@ -151,6 +193,12 @@ struct AddProfileView: View {
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(.gray)
                             .padding(.top)
+                        if socialsNotOk {
+                            Text("  -     Please Fill In All Fields")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.red)
+                                .padding(.top)
+                        }
                         Spacer()
                     }
                     AddProfileViewSocials(isHidden: $isHidden, 
@@ -159,7 +207,7 @@ struct AddProfileView: View {
                                           stringMAIN: $stringMAIN,
                                           additionalSocialsCount: $additionalSocialsCount,
                                           visibleSocialsCount: $visibleSocialsCount,
-                                          debugOn: $debugOn)
+                                          debugOn: $debugOn, socialsNotOk: $socialsNotOk)
                         .padding([.leading, .trailing])
                     HStack {
                         Text("        Relationship")
@@ -181,7 +229,7 @@ struct AddProfileView: View {
                     }
                     AddProfileViewNotes(description: $personDescription).padding()
                 }
-            }
+            }.scrollIndicators(.hidden)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button("Cancel") { dismiss() }
@@ -189,7 +237,8 @@ struct AddProfileView: View {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
                         if !debugOn {
-                            if checklistOk() {
+                            saveToCheckerSocialsArray()
+                            if checklistOk() && socialsChecklistOk(){
                                 nameNotOk = false
                                 birthdayNotOk = false
                                 thumbnailNotOk = false
@@ -199,7 +248,7 @@ struct AddProfileView: View {
                                     name: name,
                                     birthday: birthday,
                                     hexAccentColor: accentColor.toHex() ?? "FFFFFF",
-                                    accentColorIsDefaultForeground: accentColorIsDefaultForeground,
+                                    accentColorIsDefaultForeground: accentColorDefaultFgCheck(),
                                     shownThumbnail: shownThumbnail,
                                     slideImages: slideImages,
                                     socials: socialsArray,
@@ -209,11 +258,14 @@ struct AddProfileView: View {
                                 modelContext.insert(person)
                                 print("success")
                                 print("\(name)")
+                                checkerSocialsArray.removeAll()
                                 dismiss()
                             } else {
                                 if name == "" {nameNotOk = true} else {nameNotOk = false}
-                                if birthdayChanged == false {birthdayNotOk = true} else {birthdayNotOk = false}
+                                if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
                                 if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
+                                if socialsChecklistOk() {socialsNotOk = false} else {socialsNotOk = true}
+                                checkerSocialsArray.removeAll()
                             }
                         } else if debugOn {
                             print("""
@@ -221,7 +273,7 @@ struct AddProfileView: View {
                             name: \(name)
                             birthday: \(birthday)
                             hexAccentColor: \(accentColor.toHex() ?? "FFFFFF")
-                            accentColorIsDefaultBackground: \(accentColorIsDefaultForeground)
+                            accentColorIsDefaultBackground: \(accentColorDefaultFgCheck())
                             relationship status: \(relationshipStatus)
                             currentrelationshipstartdate: \(currentRelationshipStartDate)
                             persondescription: \(personDescription)
@@ -238,5 +290,5 @@ struct AddProfileView: View {
 }
 
 #Preview {
-    AddProfileView(debugOn: false)
+    AddProfileView(debugOn: true)
 }
