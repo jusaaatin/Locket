@@ -18,20 +18,24 @@ struct ProfileView: View {
     @Binding var deleting: Bool
     @Binding var currentPage: locketPages
     
-    var demoStartDate: Date
-    var demoEndDate: Date
-    var name: String
-    var birthday: Date
-    var instaUser: String
-    var telPrefix: String
-    var telNumber: String
-    var accentColor: Color
+    var bindPerson: person
     
-    var demo: Bool
-    var mainImage: Data
-    var slideImages: [Data]
+    @State var demoStartDate: Date
+    @State var demoEndDate: Date
+    @State var name: String
+    @State var birthday: Date
+    @State var instaUser: String
+    @State var telPrefix: String
+    @State var telNumber: String
+    @State var accentColor: Color
     
-    var socials: [socials]
+    @State var demo: Bool
+    @State var mainImage: Data
+    @State var slideImages: [Data]
+    
+    @State var socials: [socials]
+    
+    @Binding var editIsPresented: Bool
     
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -78,15 +82,21 @@ struct ProfileView: View {
                 }
             }.padding().offset(y: 45)
         }
+        .sheet(isPresented: $editIsPresented) {
+            EditProfileView(debugOn: false, bindedPerson: bindPerson)
+        }
         .ignoresSafeArea()
     }
 }
 
 #Preview {
+    @Previewable @State var editIsPresented = false
     @Previewable @State var deleting = false
     @Previewable @State var currentPage: locketPages = .profile
     ProfileView(currentRSStatus: .crush, deleting: $deleting,
-                currentPage: $currentPage, demoStartDate: addOrSubtractYear(year: -5),
+                currentPage: $currentPage, 
+                bindPerson: person(),
+                demoStartDate: addOrSubtractYear(year: -5),
                 demoEndDate: addOrSubtractYear(year: -1),
                 name: "Brain",
                 birthday: addOrSubtractYear(year: -15),
@@ -104,6 +114,6 @@ struct ProfileView: View {
                     socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-                    ]
+                    ], editIsPresented: $editIsPresented
     )
 }

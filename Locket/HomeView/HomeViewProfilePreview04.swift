@@ -76,6 +76,7 @@ struct HomeViewProfilePreview04: View {
                     }
                     Text(name)
                         .padding(.top, -12)
+                        .padding([.leading, .trailing])
                         .font(.system(size: 32, weight: .semibold, design: .serif))
                         .minimumScaleFactor(0.01)
                         //.italic()

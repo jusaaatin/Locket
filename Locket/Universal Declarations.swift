@@ -47,7 +47,7 @@ enum querySortOrder {
 }
 
 enum locketPages {
-    case home, newProfile, profile, settings
+    case home, newProfile, profile, settings, editProfile
     var id: Self { self }
 }
 

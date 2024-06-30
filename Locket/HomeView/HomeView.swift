@@ -42,6 +42,7 @@ struct HomeView: View {
     @Binding var currentPage: locketPages
     @Environment(\.modelContext) var modelContext
     @Query var unQueriedPerson: [person]
+    @Binding var editIsPesented: Bool
     
     var person: [person]{
         guard searchString.isEmpty == false else { return unQueriedPerson }
@@ -61,7 +62,9 @@ struct HomeView: View {
                             ProfileView(
                                 currentRSStatus: person.relationshipStatus, 
                                 deleting: $deleting,
-                                currentPage: $currentPage, demoStartDate: person.currentRelationshipStartDate,
+                                currentPage: $currentPage, 
+                                bindPerson: person,
+                                demoStartDate: person.currentRelationshipStartDate,
                                 demoEndDate: addOrSubtractYear(year: -1),
                                 name: person.name,
                                 birthday: person.birthday,
@@ -73,7 +76,9 @@ struct HomeView: View {
                                     Hex: person.hexAccentColor),
                                 demo: false,
                                 mainImage: person.shownThumbnail,
-                                slideImages: person.slideImages ?? [Data](), socials: person.socials ?? [socials]()
+                                slideImages: person.slideImages ?? [Data](), 
+                                socials: person.socials ?? [socials](),
+                                editIsPresented: $editIsPesented
                             )
                             .navigationBarBackButtonHidden()
                             .navigationTransition(
@@ -128,7 +133,8 @@ struct HomeView: View {
 }
 
 #Preview {
+    @Previewable @State var editIsPresented = false
     @Previewable @State var currentPage: locketPages = .home
-    HomeView(currentPage: $currentPage)
+    HomeView(currentPage: $currentPage, editIsPesented: $editIsPresented)
 }
 

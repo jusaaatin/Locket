@@ -11,6 +11,7 @@ import SwiftData
 struct ContentView: View {
     @State var isPresented: Bool = false
     @State public var page: locketPages = .home
+    @State var editIsPresented: Bool = false
 
     @Environment(\.modelContext) var modelContext
     
@@ -18,12 +19,12 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            HomeView(searchString: "", currentPage: $page)
+            HomeView(searchString: "", currentPage: $page, editIsPesented: $editIsPresented)
             HStack {
                 Spacer()
                 VStack {
                     Spacer()
-                    addProfileButton(currentPage: $page, isPresented: $isPresented)
+                    addProfileButton(currentPage: $page, isPresented: $isPresented, editIsPresented: $editIsPresented)
                         .shadow(color: .black.opacity(0.5), radius: 8)
                         .padding()
                         .padding(.trailing, 1)

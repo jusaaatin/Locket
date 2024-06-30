@@ -1,8 +1,8 @@
 //
-//  AddProfileView.swift
+//  EditProfileView.swift
 //  Locket
 //
-//  Created by Justin Damhaut on 16/6/24.
+//  Created by Justin Damhaut on 30/6/24.
 //
 
 import SwiftUI
@@ -10,7 +10,7 @@ import Combine
 import Photos
 import PhotosUI
 
-struct AddProfileView: View {
+struct EditProfileView: View {
     @Environment(\.self) var environment
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
@@ -20,6 +20,7 @@ struct AddProfileView: View {
     //person
     @State private var name: String = ""
     @State private var accentColor: Color = Color("Foreground-match")
+    @State private var hexInputColor: String = ""
     @State private var birthday: Date = .now
     @State private var bDay: String = ""
     @State private var bMonth: String = ""
@@ -42,14 +43,13 @@ struct AddProfileView: View {
     //relationship
     @State private var relationshipStatus: RelationshipStatus = .crush
     @State private var currentRelationshipStartDate: Date = .now
-    @State private var rDay: String = ""
-    @State private var rMonth: String = ""
-    @State private var rYear: String = ""
+    @State var rDay: String = ""
+    @State var rMonth: String = ""
+    @State var rYear: String = ""
     
     //description??
     @State private var personDescription: String = ""
-    
-    @State private var demoColor: Color = .white
+
     
     //checklistOk
     @State private var nameNotOk = false
@@ -58,6 +58,8 @@ struct AddProfileView: View {
     @State private var socialsNotOk = false
     
     @State private var birthdayChanged = false
+    
+    let bindedPerson: person
     
     func saveToSocialsArray() {
         for i in 0...additionalSocialsCount {
@@ -73,22 +75,19 @@ struct AddProfileView: View {
             }
         }
     }
-    
     func accentColorDefaultFgCheck() -> Bool{
         if accentColor == Color("Foreground-match") {
             return true
         } else { return false }
     }
-    
     func generatePersonID() -> Int{
         let currentDate: Date = .now
         let currentSince1970 = currentDate.timeIntervalSince1970
         return Int(currentSince1970)
     }
-    
     func checklistOk() -> Bool {
         if (
-            name != "" && 
+            name != "" &&
             shownThumbnail != Data() &&
             bDay.count == 2 &&
             bMonth.count == 2 &&
@@ -99,7 +98,6 @@ struct AddProfileView: View {
             return false
         }
     }
-    
     func socialsChecklistOk() -> Bool {
         for social in checkerSocialsArray {
             if social.socialPlatform == .PhoneNumber {
@@ -116,6 +114,40 @@ struct AddProfileView: View {
         }
         checkerSocialsArray.removeAll()
         return true
+    }
+    func saveEdits() {
+        bindedPerson.name = name
+        bindedPerson.birthday = birthday
+        bindedPerson.hexAccentColor = accentColor.toHex() ?? "FFFFFF"
+        bindedPerson.accentColorIsDefaultForeground = accentColorDefaultFgCheck()
+        bindedPerson.shownThumbnail = shownThumbnail
+        bindedPerson.slideImages = slideImages
+        bindedPerson.socials = socialsArray
+        bindedPerson.relationshipStatus = relationshipStatus
+        bindedPerson.currentRelationshipStartDate = currentRelationshipStartDate
+        bindedPerson.personDescription = personDescription
+    }
+    func returnSocialString(social: [socials], which: Int) -> [String] {
+        if which == 1 {
+            return social.map { $0.stringPRE }
+        } else {
+            return social.map { $0.stringMAIN }
+        }
+    }
+    func returnSocialType(social: [socials]) -> [socialPlatforms] {
+        return social.map { $0.socialPlatform}
+    }
+    
+    func dateToDMY(input: Date, type: Int) -> String {
+        let DMYFormatter = DateFormatter()
+        if type == 1{
+            DMYFormatter.dateFormat = "d"
+        } else if type == 2 {
+            DMYFormatter.dateFormat = "MM"
+        } else {
+            DMYFormatter.dateFormat = "y"
+        }
+        return DMYFormatter.string(from: input)
     }
     
     var body: some View {
@@ -204,7 +236,7 @@ struct AddProfileView: View {
                         }
                         Spacer()
                     }
-                    AddProfileViewSocials(isHidden: $isHidden, 
+                    AddProfileViewSocials(isHidden: $isHidden,
                                           socialPlatform: $socialPlatform,
                                           stringPRE: $stringPRE,
                                           stringMAIN: $stringMAIN,
@@ -246,22 +278,10 @@ struct AddProfileView: View {
                                 birthdayNotOk = false
                                 thumbnailNotOk = false
                                 saveToSocialsArray()
-                                let person = person(
-                                    personid: generatePersonID(),
-                                    name: name,
-                                    birthday: birthday,
-                                    hexAccentColor: accentColor.toHex() ?? "FFFFFF",
-                                    accentColorIsDefaultForeground: accentColorDefaultFgCheck(),
-                                    shownThumbnail: shownThumbnail,
-                                    slideImages: slideImages,
-                                    socials: socialsArray,
-                                    relationshipStatus: relationshipStatus,
-                                    currentRelationshipStartDate: currentRelationshipStartDate,
-                                    personDescription: personDescription)
-                                modelContext.insert(person)
                                 print("success")
                                 print("\(name)")
                                 checkerSocialsArray.removeAll()
+                                saveEdits()
                                 dismiss()
                             } else if !checklistOk() || !socialsChecklistOk(){
                                 if name == "" {nameNotOk = true} else {nameNotOk = false}
@@ -286,12 +306,42 @@ struct AddProfileView: View {
                     }
                 }
             }
-            .navigationTitle("Add Person")
+            .navigationTitle("Edit \(bindedPerson.name)")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                name = bindedPerson.name
+                bDay = dateToDMY(input: bindedPerson.birthday, type: 1)
+                bMonth = dateToDMY(input: bindedPerson.birthday, type: 2)
+                bYear = dateToDMY(input: bindedPerson.birthday, type: 3)
+                hexInputColor = bindedPerson.hexAccentColor
+                shownThumbnail = bindedPerson.shownThumbnail
+                slideImages = bindedPerson.slideImages ?? [Data]()
+                socialPlatform.removeAll()
+                stringPRE.removeAll()
+                stringMAIN.removeAll()
+                isHidden.removeAll()
+                additionalSocialsCount = -1
+                visibleSocialsCount = 0
+                socialPlatform.append(contentsOf: returnSocialType(social: bindedPerson.socials ?? [socials]()))
+                stringPRE.append(contentsOf: returnSocialString(social: bindedPerson.socials ?? [socials](), which: 1))
+                stringMAIN.append(contentsOf: returnSocialString(social: bindedPerson.socials ?? [socials](), which: 2))
+                if let socialsCountSH = bindedPerson.socials{
+                    additionalSocialsCount += socialsCountSH.count
+                    visibleSocialsCount += socialsCountSH.count
+                    for _ in 1 ... socialsCountSH.count {
+                        isHidden.append(false)
+                    }
+                }
+                relationshipStatus = bindedPerson.relationshipStatus
+                rDay = dateToDMY(input: bindedPerson.currentRelationshipStartDate, type: 1)
+                rMonth = dateToDMY(input: bindedPerson.currentRelationshipStartDate, type: 2)
+                rYear = dateToDMY(input: bindedPerson.currentRelationshipStartDate, type: 3)
+                personDescription = bindedPerson.personDescription
+            }
         }
     }
 }
 
 #Preview {
-    AddProfileView(debugOn: true)
+    EditProfileView(debugOn: false, bindedPerson: person())
 }

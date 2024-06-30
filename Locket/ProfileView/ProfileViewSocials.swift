@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileViewSocials: View {
     
-    var socials: [socials]
+    @State var socials: [socials]
     var demo: Bool
     
     func returnSocialWebsite(platform: socialPlatforms, pre: String, main: String) -> String{

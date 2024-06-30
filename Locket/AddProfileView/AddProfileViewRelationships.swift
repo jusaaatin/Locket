@@ -12,9 +12,9 @@ struct AddProfileViewRelationships: View {
     @Binding var relationshipStatus: RelationshipStatus
     @Binding var currentRelationshipStartDate: Date
     
-    @State var one = ""
-    @State var two = ""
-    @State var three = ""
+    @Binding var rDay: String
+    @Binding var rMonth: String
+    @Binding var rYear: String
     
     var body: some View {
         VStack {
@@ -26,7 +26,7 @@ struct AddProfileViewRelationships: View {
                 Text("Start Date")
                     .font(.system(size: 18, weight: .semibold))
                 Spacer()
-                RelationshipStartDatePicker(startDay: $one, startMonth: $two, startYear: $three, selectedDate: $currentRelationshipStartDate)
+                RelationshipStartDatePicker(startDay: $rDay, startMonth: $rMonth, startYear: $rYear, selectedDate: $currentRelationshipStartDate)
                     .frame(width: 190)
             }
             .padding(.top, 8)
@@ -42,6 +42,10 @@ struct AddProfileViewRelationships: View {
     @Previewable @State var relationshipStatus: RelationshipStatus = .crush
     @Previewable @State var currentRelationshipStartDate: Date = .now
     
-    AddProfileViewRelationships(relationshipStatus: $relationshipStatus, currentRelationshipStartDate: $currentRelationshipStartDate)
+    @Previewable @State var rDay = ""
+    @Previewable @State var rMonth = ""
+    @Previewable @State var rYear = ""
+    
+    AddProfileViewRelationships(relationshipStatus: $relationshipStatus, currentRelationshipStartDate: $currentRelationshipStartDate, rDay: $rDay, rMonth: $rMonth, rYear: $rYear)
         .padding()
 }
