@@ -62,7 +62,7 @@ struct HomeViewProfilePreview04: View {
                             .scaledToFill()
                             .frame(width:CGFloat(mainWidth), height: CGFloat(mainWidth))
                             .clipped()
-                            .padding(.bottom, 5)
+                            .padding(.bottom, -11)
                     } else {
                         if let uithumb = UIImage(data: thumb) {
                             Image(uiImage: uithumb)
@@ -70,19 +70,19 @@ struct HomeViewProfilePreview04: View {
                                 .scaledToFill()
                                 .frame(width:CGFloat(mainWidth), height: CGFloat(mainWidth))
                                 .clipped()
-                                .padding(.bottom, 5)
+                                .padding(.bottom, 0)
                     }
 
                     }
                     Text(name)
-                        .padding(.top, -12)
+                        .offset(y: 4)
                         .padding([.leading, .trailing])
                         .font(.system(size: 32, weight: .semibold, design: .serif))
                         .minimumScaleFactor(0.01)
-                        //.italic()
                         .lineLimit(1)
                         .foregroundStyle(accentColor)
                         .frame(width:CGFloat(mainWidth))
+                        .frame(height: 39)
                     if conditionalActivate {
                         HStack {
                             Image(systemName: "gift")
@@ -110,6 +110,7 @@ struct HomeViewProfilePreview04: View {
                                 .clipShape(Circle())
                                 .shadow(radius: 5)
                                 .padding(4)
+                                .offset(x:1.5, y:2.5)
                         }
                         Spacer()
                         Image(systemName: returnRightIconString())
@@ -119,6 +120,7 @@ struct HomeViewProfilePreview04: View {
                             .clipShape(Circle())
                             .shadow(radius: 5)
                             .padding(4)
+                            .offset(y:1.5)
                     }
                     Spacer()
                 }

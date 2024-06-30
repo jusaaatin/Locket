@@ -61,7 +61,7 @@ struct ProfileViewHeader: View {
     
     var currentRSStatus: RelationshipStatus
     var name: String
-    var accentColor: Color
+    @State var accentColor: Color
     
     var demo: Bool
     var mainImage: Data

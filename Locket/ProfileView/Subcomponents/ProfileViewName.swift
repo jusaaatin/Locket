@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ProfileViewName: View {
     
-    var name: String
-    var accentColor: Color
+    @State var name: String
+    @State var accentColor: Color
     
     var demo: Bool
     var mainImage: Data

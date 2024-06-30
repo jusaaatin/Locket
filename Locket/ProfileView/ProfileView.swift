@@ -44,9 +44,15 @@ struct ProfileView: View {
                     .onDisappear() {
                         withAnimation(.snappy) { currentPage = .home }
                     }
+                    .onAppear {
+                        withAnimation(.snappy) { currentPage = .profile }
+                    }
                 ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
                     .padding([.leading, .trailing, .bottom])
                     .padding(.top, -30)
+                    .onAppear {
+                        withAnimation(.snappy) { currentPage = .profile }
+                    }
                 HStack {
                     Text("        Socials")
                         .font(.system(size: 14, weight: .semibold))

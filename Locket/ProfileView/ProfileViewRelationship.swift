@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ProfileViewRelationship: View {
     
-    var startDate: Date
+    @State var startDate: Date
     @State var currentRSStatus: RelationshipStatus
     
     func returnStatus() -> String {
