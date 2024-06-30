@@ -158,6 +158,44 @@ struct AddProfileViewImages: View {
                                 }
                             }
                         }
+                        if slideImages.count > 0 {
+                            Button(action: {
+                                slideImages.removeAll()
+                                selectedSlideImages = []
+                            }, label: {
+                                ZStack {
+                                    MeshGradient(
+                                        width: 3,
+                                        height: 3,
+                                        points: [
+                                        [0.0, 0.0], [0.5, 0], [1.0, 0.0],
+                                        [0.0, 0.5], [0.7, 0.5], [1.0, 0.5],
+                                        [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
+                                    ], colors: [
+                                        .red.mix(with: .purple, by: 0.4), .red.mix(with: .orange, by: 0.2), .orange.mix(with: .red, by: 0.8),
+                                        .red.mix(with: .pink, by: 0.8), .pink.mix(with: .orange, by: 0.4), .pink,
+                                        .pink.mix(with: .red, by: 0.5), .pink.mix(with: .purple, by: 0.6), .orange.mix(with: .purple, by: 0.6)
+                                    ],
+                                                 
+                                        smoothsColors: true,
+                                        colorSpace: .perceptual
+                                    ).opacity(0.8)
+                                        .frame(width:68, height:68)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .blur(radius: 4)
+                                    Image(systemName: "trash.fill")
+                                        .foregroundStyle(.white).opacity(0.6)
+                                        .font(.system(size: 28))
+                                }
+                                .frame(width:70, height:70)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .clipped()
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(.thickMaterial.opacity(0.8), lineWidth: 3)
+                                )
+                            })
+                        }
                     }
                     .padding([.leading, .trailing])
                 }.scrollClipDisabled()
