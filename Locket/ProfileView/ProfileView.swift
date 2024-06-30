@@ -35,60 +35,78 @@ struct ProfileView: View {
     
     @State var socials: [socials]
     
-    @Binding var editIsPresented: Bool
     
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            ScrollView {
-                ProfileViewHeader(currentRSStatus: currentRSStatus, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
-                    .onDisappear() {
-                        withAnimation(.snappy) { currentPage = .home }
-                    }
-                    .onAppear {
-                        withAnimation(.snappy) { currentPage = .profile }
-                    }
-                ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
-                    .padding([.leading, .trailing, .bottom])
-                    .padding(.top, -30)
-                    .onAppear {
-                        withAnimation(.snappy) { currentPage = .profile }
-                    }
-                HStack {
-                    Text("        Socials")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(.gray)
-                        .padding(.top, -44)
-                        .padding(.bottom, -5)
-                    Spacer()
-                }.padding(.top, 40)
-                ProfileViewSocials(socials: socials, demo: demo)
-                    .padding([.bottom, .leading, .trailing])
-                    .padding(.top, -30)
-                Image(systemName: "figure.walk.motion")
-                    .font(.system(size: 60, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.gray.opacity(0.5))
-                    .padding()
-                    .padding(.bottom, 30)
-            }.scrollIndicators(.hidden)
-            HStack {
-                Button {
-                    withAnimation(.snappy) { currentPage = .home }
-                    dismiss()
-                } label: {
+        NavigationStack {
+            ZStack(alignment: .topLeading) {
+                ScrollView {
+                    ProfileViewHeader(currentRSStatus: currentRSStatus, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
+                        .onDisappear() {
+                            withAnimation(.snappy) { currentPage = .home }
+                        }
+                        .onAppear {
+                            withAnimation(.snappy) { currentPage = .profile }
+                        }
+                    ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
+                        .padding([.leading, .trailing, .bottom])
+                        .padding(.top, -30)
+                        .onAppear {
+                            withAnimation(.snappy) { currentPage = .profile }
+                        }
                     HStack {
-                        Image(systemName: "chevron.left")
+                        Text("        Socials")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(.gray)
+                            .padding(.top, -44)
+                            .padding(.bottom, -5)
+                        Spacer()
+                    }.padding(.top, 40)
+                    ProfileViewSocials(socials: socials, demo: demo)
+                        .padding([.bottom, .leading, .trailing])
+                        .padding(.top, -30)
+                    Image(systemName: "figure.walk.motion")
+                        .font(.system(size: 60, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.gray.opacity(0.5))
+                        .padding()
+                        .padding(.bottom, 30)
+                }.scrollIndicators(.hidden)
+                HStack {
+                    Button {
+                        withAnimation(.snappy) { currentPage = .home }
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                        }
+                        .padding([.leading, .trailing])
+                        .foregroundStyle(.black)
+                        .background {
+                            Circle()
+                                .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
+                                .frame(height: 32)
+                        }
                     }
-                    .padding([.leading, .trailing])
-                    .foregroundStyle(.black)
-                    .background {
-                        Circle()
-                            .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
-                            .frame(height: 32)
+                    Spacer()
+                    NavigationLink {
+                        EditProfileView(debugOn: false, bindedPerson: bindPerson)
+                            .navigationBarBackButtonHidden()
+                    } label: {
+                        HStack {
+                            Text("Edit").bold()
+                        }
+                        .padding([.leading, .trailing])
+                        .foregroundStyle(.black)
+                        .background {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
+                                .frame(height: 32)
+                        }
                     }
-                }
-            }.padding().offset(y: 45)
+                    .id(UUID())
+                }.padding().offset(y: 45)
+            }
+            .ignoresSafeArea()
         }
-        .ignoresSafeArea()
     }
 }
 
@@ -117,6 +135,6 @@ struct ProfileView: View {
                     socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-                    ], editIsPresented: $editIsPresented
+                    ]
     )
 }

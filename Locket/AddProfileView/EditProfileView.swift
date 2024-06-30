@@ -15,7 +15,6 @@ struct EditProfileView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
     
-    @Binding var editIsPresented: Bool
     
     @State var debugOn: Bool
     
@@ -270,9 +269,7 @@ struct EditProfileView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button("Cancel") {
-                        withAnimation(.smooth) {
-                            editIsPresented = false
-                        }
+                        dismiss()
                     }
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
@@ -288,9 +285,7 @@ struct EditProfileView: View {
                                 print("\(name)")
                                 checkerSocialsArray.removeAll()
                                 saveEdits()
-                                withAnimation(.smooth) {
-                                    editIsPresented = false
-                                }
+                                dismiss()
                             } else if !checklistOk() || !socialsChecklistOk(){
                                 if name == "" {nameNotOk = true} else {nameNotOk = false}
                                 if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
@@ -309,9 +304,7 @@ struct EditProfileView: View {
                             currentrelationshipstartdate: \(currentRelationshipStartDate)
                             persondescription: \(personDescription)
                             """)
-                            withAnimation(.smooth) {
-                                editIsPresented = false
-                            }
+                            dismiss()
                         }
                         
                     }

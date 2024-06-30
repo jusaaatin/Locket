@@ -42,7 +42,7 @@ struct HomeView: View {
     @Binding var currentPage: locketPages
     @Environment(\.modelContext) var modelContext
     @Query var unQueriedPerson: [person]
-    @Binding var editIsPresented: Bool
+    @State var isPresented: Bool = false
     
     var person: [person]{
         guard searchString.isEmpty == false else { return unQueriedPerson }
@@ -50,19 +50,16 @@ struct HomeView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                HomeViewSearchFilter03(filterSelection: $searchFilter, sortOrder: $sortOrder)
-                    .padding(.top, -3)
-                    .padding(.bottom, 12)
-                LazyVGrid(columns: twoColumnGrid, spacing: 22) {
-                    ForEach(person) { person in
-                        @State var deleting = false
-                        NavigationLink {
-                            if editIsPresented == true{
-                                EditProfileView(editIsPresented: $editIsPresented, debugOn: false, bindedPerson: person)
-                                    .navigationBarBackButtonHidden()
-                            } else {
+        ZStack {
+            NavigationStack {
+                ScrollView {
+                    HomeViewSearchFilter03(filterSelection: $searchFilter, sortOrder: $sortOrder)
+                        .padding(.top, -3)
+                        .padding(.bottom, 12)
+                    LazyVGrid(columns: twoColumnGrid, spacing: 22) {
+                        ForEach(person) { person in
+                            @State var deleting = false
+                            NavigationLink {
                                 ProfileView(
                                     currentRSStatus: person.relationshipStatus,
                                     deleting: $deleting,
@@ -81,8 +78,7 @@ struct HomeView: View {
                                     demo: false,
                                     mainImage: person.shownThumbnail,
                                     slideImages: person.slideImages ?? [Data](),
-                                    socials: person.socials ?? [socials](),
-                                    editIsPresented: $editIsPresented
+                                    socials: person.socials ?? [socials]()
                                 )
                                 .navigationBarBackButtonHidden()
                                 .navigationTransition(
@@ -93,54 +89,67 @@ struct HomeView: View {
                                 .onAppear {
                                     withAnimation(.snappy) { currentPage = .profile }
                                 }
-
+                            } label: {
+                                HomeViewProfilePreview04(
+                                    mainWidth: getWidth(),
+                                    mainImage: "demofood12",
+                                    name: person.name,
+                                    birthday: person.birthday,
+                                    relationshipStatus: person.relationshipStatus,
+                                    conditionalActivate: false,
+                                    accentColor: returnAccentColor(
+                                        isFgMatch: person.accentColorIsDefaultForeground,
+                                        Hex: person.hexAccentColor),
+                                    shownThumbnail: person.shownThumbnail)
                             }
-                        } label: {
-                            HomeViewProfilePreview04(
-                                mainWidth: getWidth(),
-                                mainImage: "demofood12",
-                                name: person.name,
-                                birthday: person.birthday,
-                                relationshipStatus: person.relationshipStatus,
-                                conditionalActivate: false,
-                                accentColor: returnAccentColor(
-                                    isFgMatch: person.accentColorIsDefaultForeground,
-                                    Hex: person.hexAccentColor),
-                                shownThumbnail: person.shownThumbnail)
+                            .buttonStyle(PlainButtonStyle())
+                            .matchedTransitionSource(id: person, in: homeViewNamespace)
                         }
-                        .buttonStyle(PlainButtonStyle())
-                        .matchedTransitionSource(id: person, in: homeViewNamespace)
                     }
                 }
+                .scrollIndicators(.hidden)
+                .padding([.leading, .trailing])
+                .navigationTitle("Locket")
+                .toolbar(content:{
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            
+                        }, label: {
+                            Image("demofoodprofile")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width:42, height:42)
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle()
+                                        .stroke(.thickMaterial, lineWidth: 3)
+                                )
+                        })
+                    }
+                })
             }
-            .scrollIndicators(.hidden)
-            .padding([.leading, .trailing])
-            .navigationTitle("Locket")
-            .toolbar(content:{
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        
-                    }, label: {
-                        Image("demofoodprofile")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width:42, height:42)
-                            .clipShape(Circle())
-                            .overlay(
-                                Circle()
-                                    .stroke(.thickMaterial, lineWidth: 3)
-                            )
-                    })
+            
+                .sheet(isPresented: $isPresented) {
+                    AddProfileView(debugOn: false).interactiveDismissDisabled()
                 }
-            })
+            .searchable(text: $searchString)
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    addProfileButton(isPresented: $isPresented)
+                        .shadow(color: .black.opacity(0.5), radius: 8)
+                        .padding()
+                        .padding(.trailing, 1)
+                }
+            }
         }
-        .searchable(text: $searchString)
     }
 }
 
 #Preview {
     @Previewable @State var editIsPresented = false
     @Previewable @State var currentPage: locketPages = .home
-    HomeView(currentPage: $currentPage, editIsPresented: $editIsPresented)
+    HomeView(currentPage: $currentPage)
 }
 
