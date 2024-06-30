@@ -20,6 +20,8 @@ struct ProfileView: View {
     
     var bindPerson: person
     
+    @State var updater: Int = 1
+    
     @State var demoStartDate: Date
     @State var demoEndDate: Date
     @State var name: String
@@ -35,6 +37,14 @@ struct ProfileView: View {
     
     @State var socials: [socials]
     
+    private func returnAccentColor(isFgMatch: Bool, Hex: String) -> Color{
+        if isFgMatch {
+            return Color("Foreground-match")
+        } else {
+            return Color(hex: "\(Hex)") ?? Color("Foreground-match")
+        }
+    }
+    
     
     var body: some View {
         NavigationStack {
@@ -44,8 +54,22 @@ struct ProfileView: View {
                         .onDisappear() {
                             withAnimation(.snappy) { currentPage = .home }
                         }
+                        .id(updater)
                         .onAppear {
                             withAnimation(.snappy) { currentPage = .profile }
+                            print("appeared")
+                            
+                            currentRSStatus = bindPerson.relationshipStatus
+                            demoStartDate = bindPerson.currentRelationshipStartDate
+                            name = bindPerson.name
+                            birthday = bindPerson.birthday
+                            accentColor = returnAccentColor(
+                                isFgMatch: bindPerson.accentColorIsDefaultForeground,
+                                Hex: bindPerson.hexAccentColor)
+                            mainImage = bindPerson.shownThumbnail
+                            slideImages = bindPerson.slideImages ?? [Data]()
+                            socials = bindPerson.socials ?? []
+                            updater += 1
                         }
                     ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
                         .padding([.leading, .trailing, .bottom])
@@ -53,6 +77,7 @@ struct ProfileView: View {
                         .onAppear {
                             withAnimation(.snappy) { currentPage = .profile }
                         }
+                        .id(updater)
                     HStack {
                         Text("        Socials")
                             .font(.system(size: 14, weight: .semibold))
@@ -62,6 +87,7 @@ struct ProfileView: View {
                         Spacer()
                     }.padding(.top, 40)
                     ProfileViewSocials(socials: socials, demo: demo)
+                        .id(updater)
                         .padding([.bottom, .leading, .trailing])
                         .padding(.top, -30)
                     Image(systemName: "figure.walk.motion")

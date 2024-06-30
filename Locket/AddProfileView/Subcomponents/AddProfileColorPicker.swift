@@ -131,9 +131,6 @@ struct AddProfileColorPicker: View {
         .onAppear() {
             loadHex()
         }
-        Text(hexInput)
-        Text("\(colorPickerSelection)")
-        Text("\(accentIsDefaultFg)")
     }
 }
 
