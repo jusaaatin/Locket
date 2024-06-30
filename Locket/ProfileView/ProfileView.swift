@@ -88,9 +88,6 @@ struct ProfileView: View {
                 }
             }.padding().offset(y: 45)
         }
-        .sheet(isPresented: $editIsPresented) {
-            EditProfileView(debugOn: false, bindedPerson: bindPerson)
-        }
         .ignoresSafeArea()
     }
 }

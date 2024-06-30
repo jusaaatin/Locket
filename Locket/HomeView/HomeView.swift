@@ -42,7 +42,7 @@ struct HomeView: View {
     @Binding var currentPage: locketPages
     @Environment(\.modelContext) var modelContext
     @Query var unQueriedPerson: [person]
-    @Binding var editIsPesented: Bool
+    @Binding var editIsPresented: Bool
     
     var person: [person]{
         guard searchString.isEmpty == false else { return unQueriedPerson }
@@ -59,35 +59,41 @@ struct HomeView: View {
                     ForEach(person) { person in
                         @State var deleting = false
                         NavigationLink {
-                            ProfileView(
-                                currentRSStatus: person.relationshipStatus, 
-                                deleting: $deleting,
-                                currentPage: $currentPage, 
-                                bindPerson: person,
-                                demoStartDate: person.currentRelationshipStartDate,
-                                demoEndDate: addOrSubtractYear(year: -1),
-                                name: person.name,
-                                birthday: person.birthday,
-                                instaUser: "username",
-                                telPrefix: "123",
-                                telNumber: "91234567",
-                                accentColor: returnAccentColor(
-                                    isFgMatch: person.accentColorIsDefaultForeground,
-                                    Hex: person.hexAccentColor),
-                                demo: false,
-                                mainImage: person.shownThumbnail,
-                                slideImages: person.slideImages ?? [Data](), 
-                                socials: person.socials ?? [socials](),
-                                editIsPresented: $editIsPesented
-                            )
-                            .navigationBarBackButtonHidden()
-                            .navigationTransition(
-                                .zoom(
-                                    sourceID: person,
-                                    in: homeViewNamespace)
-                            )
-                            .onAppear {
-                                withAnimation(.snappy) { currentPage = .profile }
+                            if editIsPresented == true{
+                                EditProfileView(editIsPresented: $editIsPresented, debugOn: false, bindedPerson: person)
+                                    .navigationBarBackButtonHidden()
+                            } else {
+                                ProfileView(
+                                    currentRSStatus: person.relationshipStatus,
+                                    deleting: $deleting,
+                                    currentPage: $currentPage,
+                                    bindPerson: person,
+                                    demoStartDate: person.currentRelationshipStartDate,
+                                    demoEndDate: addOrSubtractYear(year: -1),
+                                    name: person.name,
+                                    birthday: person.birthday,
+                                    instaUser: "username",
+                                    telPrefix: "123",
+                                    telNumber: "91234567",
+                                    accentColor: returnAccentColor(
+                                        isFgMatch: person.accentColorIsDefaultForeground,
+                                        Hex: person.hexAccentColor),
+                                    demo: false,
+                                    mainImage: person.shownThumbnail,
+                                    slideImages: person.slideImages ?? [Data](),
+                                    socials: person.socials ?? [socials](),
+                                    editIsPresented: $editIsPresented
+                                )
+                                .navigationBarBackButtonHidden()
+                                .navigationTransition(
+                                    .zoom(
+                                        sourceID: person,
+                                        in: homeViewNamespace)
+                                )
+                                .onAppear {
+                                    withAnimation(.snappy) { currentPage = .profile }
+                                }
+
                             }
                         } label: {
                             HomeViewProfilePreview04(
@@ -135,6 +141,6 @@ struct HomeView: View {
 #Preview {
     @Previewable @State var editIsPresented = false
     @Previewable @State var currentPage: locketPages = .home
-    HomeView(currentPage: $currentPage, editIsPesented: $editIsPresented)
+    HomeView(currentPage: $currentPage, editIsPresented: $editIsPresented)
 }
 

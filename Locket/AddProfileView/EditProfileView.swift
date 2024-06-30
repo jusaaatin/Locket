@@ -15,6 +15,8 @@ struct EditProfileView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
     
+    @Binding var editIsPresented: Bool
+    
     @State var debugOn: Bool
     
     //person
@@ -267,7 +269,11 @@ struct EditProfileView: View {
             }.scrollIndicators(.hidden)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
-                    Button("Cancel") { dismiss() }
+                    Button("Cancel") {
+                        withAnimation(.smooth) {
+                            editIsPresented = false
+                        }
+                    }
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
@@ -282,7 +288,9 @@ struct EditProfileView: View {
                                 print("\(name)")
                                 checkerSocialsArray.removeAll()
                                 saveEdits()
-                                dismiss()
+                                withAnimation(.smooth) {
+                                    editIsPresented = false
+                                }
                             } else if !checklistOk() || !socialsChecklistOk(){
                                 if name == "" {nameNotOk = true} else {nameNotOk = false}
                                 if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
@@ -301,6 +309,9 @@ struct EditProfileView: View {
                             currentrelationshipstartdate: \(currentRelationshipStartDate)
                             persondescription: \(personDescription)
                             """)
+                            withAnimation(.smooth) {
+                                editIsPresented = false
+                            }
                         }
                         
                     }
@@ -341,7 +352,8 @@ struct EditProfileView: View {
         }
     }
 }
-
+/*
 #Preview {
     EditProfileView(debugOn: false, bindedPerson: person())
 }
+*/

@@ -19,7 +19,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            HomeView(searchString: "", currentPage: $page, editIsPesented: $editIsPresented)
+            HomeView(searchString: "", currentPage: $page, editIsPresented: $editIsPresented)
             HStack {
                 Spacer()
                 VStack {

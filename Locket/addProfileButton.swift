@@ -19,18 +19,22 @@ struct addProfileButton: View {
             if currentPage != .profile {
                 isPresented = true
             } else {
-                editIsPresented = true
+                withAnimation(.smooth) {
+                    editIsPresented = true
+                }
             }
         }, label: {
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundStyle(.thinMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 21.5)
-                            .stroke(.quaternary, lineWidth: 3)
-                    )
-                Image(systemName: currentPage == .profile ? "pencil" : "plus")
-                    .font(.system(size: 28, weight: .semibold, design: .rounded))
+            if !editIsPresented {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundStyle(.thinMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 21.5)
+                                .stroke(.quaternary, lineWidth: 3)
+                        )
+                    Image(systemName: currentPage == .profile ? "pencil" : "plus")
+                        .font(.system(size: 28, weight: .semibold, design: .rounded))
+                }
             }
         })
         .frame(width:60, height:60)
