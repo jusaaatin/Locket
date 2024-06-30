@@ -70,7 +70,7 @@ struct HomeViewProfilePreview04: View {
                                 .scaledToFill()
                                 .frame(width:CGFloat(mainWidth), height: CGFloat(mainWidth))
                                 .clipped()
-                                .padding(.bottom, 0)
+                                .padding(.bottom, -11)
                     }
 
                     }
