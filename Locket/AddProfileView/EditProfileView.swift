@@ -26,6 +26,8 @@ struct EditProfileView: View {
     @State private var bDay: String = ""
     @State private var bMonth: String = ""
     @State private var bYear: String = ""
+    @State private var initialAccentIsDefFg: Bool = false
+    
     
     //images
     @State var shownThumbnail: Data = Data()
@@ -192,7 +194,7 @@ struct EditProfileView: View {
                         }
                         Spacer()
                     }
-                    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday, startDay: $bDay, startMonth: $bMonth, startYear: $bYear)
+                    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday, startDay: $bDay, startMonth: $bMonth, startYear: $bYear, hexInput: bindedPerson.hexAccentColor, accentColorIsDefFg: bindedPerson.accentColorIsDefaultForeground)
                         .onChange(of: birthday) { old, new in
                             if old != new {
                                 birthdayChanged = true
@@ -318,6 +320,9 @@ struct EditProfileView: View {
                 bMonth = dateToDMY(input: bindedPerson.birthday, type: 2)
                 bYear = dateToDMY(input: bindedPerson.birthday, type: 3)
                 hexInputColor = bindedPerson.hexAccentColor
+                initialAccentIsDefFg = bindedPerson.accentColorIsDefaultForeground
+                print("top \(hexInputColor)")
+                print("top \(initialAccentIsDefFg)")
                 shownThumbnail = bindedPerson.shownThumbnail
                 slideImages = bindedPerson.slideImages ?? [Data]()
                 socialPlatform.removeAll()

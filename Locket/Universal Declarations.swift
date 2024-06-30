@@ -7,7 +7,9 @@
 
 import Foundation
 import SwiftUI
+#if os(iOS)
 import UIKit
+#endif
 import _PhotosUI_SwiftUI
 
 // profileview header 01

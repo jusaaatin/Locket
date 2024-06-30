@@ -159,7 +159,7 @@ struct AddProfileView: View {
                         }
                         Spacer()
                     }
-                    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday, startDay: $bDay, startMonth: $bMonth, startYear: $bYear)
+                    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday, startDay: $bDay, startMonth: $bMonth, startYear: $bYear, hexInput: "FFFFFF", accentColorIsDefFg: true)
                         .onChange(of: birthday) { old, new in
                             if old != new {
                                 birthdayChanged = true

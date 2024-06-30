@@ -18,6 +18,9 @@ struct AddProfileViewPerson: View {
     @Binding var startMonth: String
     @Binding var startYear: String
     
+    var hexInput: String
+    var accentColorIsDefFg: Bool
+    
     var body: some View {
         VStack {
             HStack {
@@ -44,7 +47,7 @@ struct AddProfileViewPerson: View {
             HStack {
                 Text("Color")
                     .fontWeight(.semibold)
-                AddProfileColorPicker(selectedColor: .white, finalColorOutput: $accentColor)
+                AddProfileColorPicker(hexInput: hexInput, accentIsDefaultFg: accentColorIsDefFg, finalColorOutput: $accentColor)
             }
         }
         .padding()
@@ -61,6 +64,6 @@ struct AddProfileViewPerson: View {
     @Previewable @State var accentColor: Color = .white
     @Previewable @State var birthday: Date = .now
     
-    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday, startDay: $startDay, startMonth: $startMonth, startYear: $startYear)
+    AddProfileViewPerson(name: $name, accentColor: $accentColor, birthday: $birthday, startDay: $startDay, startMonth: $startMonth, startYear: $startYear, hexInput: "FFFFFF", accentColorIsDefFg: false)
         .padding()
 }

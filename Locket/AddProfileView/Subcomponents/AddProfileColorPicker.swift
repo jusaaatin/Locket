@@ -9,8 +9,10 @@ import SwiftUI
 
 struct AddProfileColorPicker: View {
     
-    @State var selectedColor: selectedColor
+    @State var selectedColor: selectedColor = .white
     @State var colorPickerSelection: Color = .indigo
+    var hexInput: String
+    var accentIsDefaultFg: Bool
     
     private func colorbuttontoenum(color:  Color) {
         if color == .red {
@@ -53,7 +55,13 @@ struct AddProfileColorPicker: View {
     
     @Binding var finalColorOutput: Color
     
-
+    func loadHex() {
+        selectedColor = .picker
+        colorPickerSelection = Color(hex: hexInput) ?? Color.indigo
+        print(hexInput)
+        print("\(colorPickerSelection)")
+        print("\(accentIsDefaultFg)")
+    }
     
     var body: some View {
         HStack {
@@ -96,12 +104,12 @@ struct AddProfileColorPicker: View {
                 .opacity(selectedColor != .picker ? 1 : 0.5)
                 HStack {
                     Rectangle()
-                        .frame(width: 20, height: 30)
+                        .frame(width: 20, height: 35)
                         .foregroundStyle(
                             LinearGradient(gradient: Gradient(colors: [Color.gray.mix(with:Color("Background-match"), by: 0.7).opacity(100), Color.gray.mix(with:Color("Background-match"), by: 0.7).opacity(0)]), startPoint: .leading, endPoint: .trailing))
                     Spacer()
                     Rectangle()
-                        .frame(width: 20, height: 30)
+                        .frame(width: 20, height: 35)
                         .foregroundStyle(
                             LinearGradient(gradient: Gradient(colors: [Color.gray.mix(with:Color("Background-match"), by: 0.7).opacity(0), Color.gray.mix(with:Color("Background-match"), by: 0.7).opacity(100)]), startPoint: .leading, endPoint: .trailing))
                 }
@@ -120,12 +128,18 @@ struct AddProfileColorPicker: View {
                     finalColorOutput = pickercolorOutput(selected: selectedColor, pickerselection: colorPickerSelection)
                 }
         }
+        .onAppear() {
+            loadHex()
+        }
+        Text(hexInput)
+        Text("\(colorPickerSelection)")
+        Text("\(accentIsDefaultFg)")
     }
 }
 
 #Preview {
     @Previewable @State var accentcolor = Color.indigo
-    AddProfileColorPicker(selectedColor: .blue, finalColorOutput: $accentcolor)
+    AddProfileColorPicker(hexInput: "FFFFFF", accentIsDefaultFg: false, finalColorOutput: $accentcolor)
     Text("DEBUG")
         .foregroundStyle(accentcolor)
 }
