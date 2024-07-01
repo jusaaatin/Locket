@@ -231,6 +231,11 @@ struct AddProfileView: View {
                         Spacer()
                     }
                     AddProfileViewNotes(description: $personDescription).padding()
+                    Image(systemName: "figure.gymnastics")
+                        .font(.system(size: 60, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.gray.opacity(0.5))
+                        .padding()
+                        .padding(.bottom, 30)
                 }
             }.scrollIndicators(.hidden)
             .toolbar {

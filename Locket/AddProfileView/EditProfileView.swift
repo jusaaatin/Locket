@@ -15,7 +15,6 @@ struct EditProfileView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
     
-    
     @State var debugOn: Bool
     
     //person
@@ -27,6 +26,7 @@ struct EditProfileView: View {
     @State private var bMonth: String = ""
     @State private var bYear: String = ""
     @State private var initialAccentIsDefFg: Bool = false
+    @State private var priority = 0
     
     
     //images
@@ -62,10 +62,13 @@ struct EditProfileView: View {
     
     @State private var birthdayChanged = false
     
+    //alerts
+    @State private var showDeleteAlert = false
+    @State private var showDuplicateAlert = false
     
     let bindedPerson: person
     
-    @State private var priority = 0
+    
 
     
     func saveToSocialsArray() {
@@ -251,7 +254,7 @@ struct EditProfileView: View {
                                           additionalSocialsCount: $additionalSocialsCount,
                                           visibleSocialsCount: $visibleSocialsCount,
                                           debugOn: $debugOn, socialsNotOk: $socialsNotOk)
-                        .padding([.leading, .trailing])
+                    .padding([.leading, .trailing])
                     HStack {
                         Text("        Relationship")
                             .font(.system(size: 14, weight: .semibold))
@@ -273,6 +276,42 @@ struct EditProfileView: View {
                     AddProfileViewNotes(description: $personDescription).padding()
                     HStack {
                         Button(action: {
+                            showDuplicateAlert = true
+                        }, label: {
+                            HStack {
+                                Image(systemName: "square.on.square")
+                                Text("Duplicate")
+                            }
+                            .padding()
+                            .frame(width: 140)
+                            .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        })
+                        Button(role: .destructive, action: {
+                            showDeleteAlert = true
+                        }, label: {
+                            HStack {
+                                Image(systemName: "trash.fill")
+                                Text("Delete")
+                            }
+                            .padding()
+                            .frame(width: 140)
+                            .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        })
+                    }
+                    .alert("Delete \(bindedPerson.name)?", isPresented: $showDeleteAlert) { //delete
+                        Button("Delete", role: .destructive) {
+                            priority = -1
+                            saveEdits()
+                            dismiss()
+                        }
+                    } message: {
+                        Text("Are you sure you want to delete \(bindedPerson.name)? Once deleted, this contact can not be recovered")
+                    }
+                    .alert("Duplicate \(bindedPerson.name)?", isPresented: $showDuplicateAlert) { //delete
+                        Button("Cancel", role: .cancel) { }
+                        Button("Duplicate") {
                             if !debugOn {
                                 saveToCheckerSocialsArray()
                                 if checklistOk() && socialsChecklistOk(){
@@ -316,32 +355,15 @@ struct EditProfileView: View {
                                 persondescription: \(personDescription)
                                 """)
                             }
-                        }, label: {
-                            HStack {
-                                Image(systemName: "square.on.square")
-                                Text("Duplicate")
-                            }
-                            .padding()
-                            .frame(width: 140)
-                            .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                        })
-                        
-                        Button(role: .destructive, action: {
-                            priority = -1
-                            saveEdits()
-                            dismiss()
-                        }, label: {
-                            HStack {
-                                Image(systemName: "trash.fill")
-                                Text("Delete")
-                            }
-                            .padding()
-                            .frame(width: 140)
-                            .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                        })
+                        }
+                    } message: {
+                        Text("Are you sure you want to duplicate \(bindedPerson.name)?")
                     }
+                    Image(systemName: "pawprint.fill")
+                        .font(.system(size: 60, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.gray.opacity(0.5))
+                        .padding()
+                        .padding(.bottom, 30)
                 }
             }.scrollIndicators(.hidden)
             .toolbar {
