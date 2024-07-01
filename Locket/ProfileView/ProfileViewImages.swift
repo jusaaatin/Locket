@@ -44,6 +44,8 @@ struct ProfileViewImages: View {
         return UIImage(data: data) ?? UIImage()
     }
     
+    @State var viewExpanded = false
+    
     var body: some View {
         
         let twoColumnGrid = [
@@ -53,7 +55,7 @@ struct ProfileViewImages: View {
         VStack {
             LazyVGrid(columns: twoColumnGrid) {
                 if demo {
-                    ForEach(demoImages.prefix(11), id: \.self) { image in
+                    ForEach(demoImages.prefix(viewExpanded ? 100 : 11), id: \.self) { image in
                         Button(action: {
                             
                         }, label: {
@@ -67,7 +69,7 @@ struct ProfileViewImages: View {
                         })
                     }
                 } else {
-                    ForEach(allImages.prefix(11), id: \.self) { image in
+                    ForEach(allImages.prefix(viewExpanded ? 100 : 11), id: \.self) { image in
                         Button(action: {
                             
                         }, label: {
@@ -83,7 +85,9 @@ struct ProfileViewImages: View {
                 }
                 if allImages.count > 11 || demoImages.count > 11 {
                     Button(action: {
-                        
+                        withAnimation(.interpolatingSpring) {
+                            viewExpanded.toggle()
+                        }
                     }, label: {
                         ZStack {
                             MeshGradient(
@@ -94,9 +98,9 @@ struct ProfileViewImages: View {
                                 [0.0, 0.5], [0.7, 0.5], [1.0, 0.5],
                                 [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
                             ], colors: [
-                                .red.mix(with: .purple, by: 0.4), .red.mix(with: .orange, by: 0.2), .orange.mix(with: .red, by: 0.8),
-                                .red.mix(with: .pink, by: 0.8), .pink.mix(with: .orange, by: 0.4), .pink,
-                                .pink.mix(with: .red, by: 0.5), .pink.mix(with: .purple, by: 0.6), .orange.mix(with: .purple, by: 0.6)
+                                .red, .red.mix(with: .purple, by: 0.5), .red.mix(with: .purple, by: 0.8),
+                                .red.mix(with: .purple, by: 0.8), .purple.mix(with: .blue, by: 0.4), .indigo,
+                                .indigo.mix(with: .red, by: 0.5), .blue.mix(with: .purple, by: 0.6), .indigo.mix(with: .blue, by: 0.8)
                             ],
                                          
                                 smoothsColors: true,
@@ -105,7 +109,8 @@ struct ProfileViewImages: View {
                                 .frame(width:getWidth(), height:getWidth())
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                                 .blur(radius: 4)
-                            Image(systemName: "trash.fill")
+                            Image(systemName: "chevron.up")
+                                .rotationEffect(.degrees(viewExpanded ? 0 : 180))
                                 .foregroundStyle(.white).opacity(0.6)
                                 .font(.system(size: 28))
                         }

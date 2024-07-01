@@ -37,6 +37,10 @@ struct ProfileView: View {
     @State var slideImages: [Data]
     
     @State var socials: [socials]
+    
+    @State var description: String
+    
+    @State var creationDate: Date
 
 
     @State var priority: Int
@@ -49,6 +53,12 @@ struct ProfileView: View {
         }
     }
     
+    func dateToDMY(input: Date) -> String {
+        let DMYFormatter = DateFormatter()
+        DMYFormatter.dateFormat = "d MMM y"
+        return DMYFormatter.string(from: input)
+    }
+    
 
     
     
@@ -56,7 +66,7 @@ struct ProfileView: View {
         NavigationStack {
             ZStack(alignment: .topLeading) {
                 ScrollView {
-                    LazyVStack {
+                    VStack {
                         ProfileViewHeader(currentRSStatus: currentRSStatus, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
                             .onDisappear() {
                                 withAnimation(.snappy) { currentPage = .home }
@@ -114,6 +124,23 @@ struct ProfileView: View {
                             .id(updater)
                             .padding([.bottom, .leading, .trailing])
                             .padding(.top, -30)
+                        HStack {
+                            Text("        Description")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.gray)
+                                .padding(.top, -44)
+                                .padding(.bottom, -5)
+                            Spacer()
+                        }.padding(.top, 40)
+                        ProfileViewDescription(description: description)
+                            .id(updater)
+                            .padding([.bottom, .leading, .trailing])
+                            .padding(.top, -30)
+                        Text("\(name)'s contact created on \(dateToDMY(input: creationDate))")
+                            .padding()
+                            .multilineTextAlignment(.center)
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
+                            .foregroundStyle(.gray.opacity(0.8))
                         Image(systemName: "figure.walk.motion")
                             .font(.system(size: 60, weight: .semibold, design: .rounded))
                             .foregroundStyle(.gray.opacity(0.5))
@@ -186,6 +213,9 @@ struct ProfileView: View {
                     socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-                    ], priority: 0
+                    ], 
+                description: "dhkjlsklhjasfhjkfsa hjsfd jhsfaj fskldj kadfjl jadsfjkhdfajkhl hdfkljh fadsh ladf",
+                creationDate: .now, 
+                priority: 0
     )
 }

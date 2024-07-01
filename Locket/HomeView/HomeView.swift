@@ -84,12 +84,14 @@ struct HomeView: View {
                                     mainImage: person.shownThumbnail,
                                     slideImages: person.slideImages ?? [Data](),
                                     socials: person.socials ?? [socials](), 
+                                    description: person.personDescription, 
+                                    creationDate: person.personModelCreationDate,
                                     priority: person.priority
                                 )
                                 .navigationBarBackButtonHidden()
                                 .navigationTransition(
                                     .zoom(
-                                        sourceID: person,
+                                        sourceID: person.personid,
                                         in: homeViewNamespace)
                                 )
                                 .onAppear {
@@ -114,7 +116,7 @@ struct HomeView: View {
                                 }
                             }
                             .buttonStyle(PlainButtonStyle())
-                            .matchedTransitionSource(id: person, in: homeViewNamespace)
+                            .matchedTransitionSource(id: person.personid, in: homeViewNamespace)
                         }
                     }
                 }
