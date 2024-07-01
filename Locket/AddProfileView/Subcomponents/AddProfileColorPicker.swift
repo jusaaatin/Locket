@@ -58,9 +58,6 @@ struct AddProfileColorPicker: View {
     func loadHex() {
         selectedColor = .picker
         colorPickerSelection = Color(hex: hexInput) ?? Color.indigo
-        print(hexInput)
-        print("\(colorPickerSelection)")
-        print("\(accentIsDefaultFg)")
     }
     
     var body: some View {

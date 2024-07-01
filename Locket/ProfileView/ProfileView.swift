@@ -13,6 +13,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var modelContext
     
     @State var currentRSStatus: RelationshipStatus
     @Binding var deleting: Bool
@@ -36,6 +37,9 @@ struct ProfileView: View {
     @State var slideImages: [Data]
     
     @State var socials: [socials]
+
+
+    @State var priority: Int
     
     private func returnAccentColor(isFgMatch: Bool, Hex: String) -> Color{
         if isFgMatch {
@@ -44,6 +48,8 @@ struct ProfileView: View {
             return Color(hex: "\(Hex)") ?? Color("Foreground-match")
         }
     }
+    
+
     
     
     var body: some View {
@@ -69,7 +75,12 @@ struct ProfileView: View {
                             mainImage = bindPerson.shownThumbnail
                             slideImages = bindPerson.slideImages ?? [Data]()
                             socials = bindPerson.socials ?? []
+                            priority = bindPerson.priority
                             updater += 1
+                            
+                            if priority == -1 {
+                                dismiss()
+                            }
                         }
                     ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
                         .padding([.leading, .trailing, .bottom])
@@ -161,6 +172,6 @@ struct ProfileView: View {
                     socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-                    ]
+                    ], priority: 0
     )
 }

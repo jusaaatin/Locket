@@ -49,6 +49,11 @@ struct HomeView: View {
         return unQueriedPerson.filter { $0.name.contains(searchString)}
     }
     
+    private func deletePerson(person: person) {
+        print("delete triggered for \(person.name)")
+        modelContext.delete(person)
+    }
+    
     var body: some View {
         ZStack {
             NavigationStack {
@@ -78,7 +83,8 @@ struct HomeView: View {
                                     demo: false,
                                     mainImage: person.shownThumbnail,
                                     slideImages: person.slideImages ?? [Data](),
-                                    socials: person.socials ?? [socials]()
+                                    socials: person.socials ?? [socials](), 
+                                    priority: person.priority
                                 )
                                 .navigationBarBackButtonHidden()
                                 .navigationTransition(
@@ -101,6 +107,11 @@ struct HomeView: View {
                                         isFgMatch: person.accentColorIsDefaultForeground,
                                         Hex: person.hexAccentColor),
                                     shownThumbnail: person.shownThumbnail)
+                            }
+                            .onAppear() {
+                                if person.priority == -1 {
+                                    deletePerson(person: person)
+                                }
                             }
                             .buttonStyle(PlainButtonStyle())
                             .matchedTransitionSource(id: person, in: homeViewNamespace)

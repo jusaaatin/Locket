@@ -42,6 +42,12 @@ final class person: Identifiable {
     init(personUUID: UUID = UUID(), priority: Int = 0, personid: Int = 0, personModelCreationDate: Date = .now, name: String = "", birthday: Date = .now, hexAccentColor: String = "FFFFFF", accentColorIsDefaultForeground: Bool = true, shownThumbnail: Data = Data(), slideImages: [Data]? = [Data](), socials: [socials]? = [], relationshipStatus: RelationshipStatus = .crush, currentRelationshipStartDate: Date = .now, personDescription: String = "") {
         self.personUUID = personUUID
         self.priority = priority
+        /*
+         Priority 2:
+         Priority 1:
+         Priority 0: Normal
+         Priority -1: Send person to be deleted :(
+         */
         self.personid = personid
         self.personModelCreationDate = personModelCreationDate
         self.name = name

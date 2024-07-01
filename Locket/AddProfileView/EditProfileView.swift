@@ -62,7 +62,11 @@ struct EditProfileView: View {
     
     @State private var birthdayChanged = false
     
+    
     let bindedPerson: person
+    
+    @State private var priority = 0
+
     
     func saveToSocialsArray() {
         for i in 0...additionalSocialsCount {
@@ -129,6 +133,7 @@ struct EditProfileView: View {
         bindedPerson.relationshipStatus = relationshipStatus
         bindedPerson.currentRelationshipStartDate = currentRelationshipStartDate
         bindedPerson.personDescription = personDescription
+        bindedPerson.priority = priority
     }
     func returnSocialString(social: [socials], which: Int) -> [String] {
         if which == 1 {
@@ -266,6 +271,13 @@ struct EditProfileView: View {
                         Spacer()
                     }
                     AddProfileViewNotes(description: $personDescription).padding()
+                    Button(action: {
+                        priority = -1
+                        saveEdits()
+                        dismiss()
+                    }, label: {
+                        Text("delete!!!")
+                    })
                 }
             }.scrollIndicators(.hidden)
             .toolbar {
@@ -321,8 +333,6 @@ struct EditProfileView: View {
                 bYear = dateToDMY(input: bindedPerson.birthday, type: 3)
                 hexInputColor = bindedPerson.hexAccentColor
                 initialAccentIsDefFg = bindedPerson.accentColorIsDefaultForeground
-                print("top \(hexInputColor)")
-                print("top \(initialAccentIsDefFg)")
                 shownThumbnail = bindedPerson.shownThumbnail
                 slideImages = bindedPerson.slideImages ?? [Data]()
                 socialPlatform.removeAll()
@@ -337,8 +347,10 @@ struct EditProfileView: View {
                 if let socialsCountSH = bindedPerson.socials{
                     additionalSocialsCount += socialsCountSH.count
                     visibleSocialsCount += socialsCountSH.count
-                    for _ in 1 ... socialsCountSH.count {
-                        isHidden.append(false)
+                    if socialsCountSH.count != 0 {
+                        for _ in 1 ... socialsCountSH.count {
+                            isHidden.append(false)
+                        }
                     }
                 }
                 relationshipStatus = bindedPerson.relationshipStatus
