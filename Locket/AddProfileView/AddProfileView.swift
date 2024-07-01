@@ -282,7 +282,6 @@ struct AddProfileView: View {
                             persondescription: \(personDescription)
                             """)
                         }
-                        
                     }
                 }
             }
@@ -293,5 +292,5 @@ struct AddProfileView: View {
 }
 
 #Preview {
-    AddProfileView(debugOn: true)
+    AddProfileView(debugOn: false)
 }

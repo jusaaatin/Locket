@@ -271,13 +271,77 @@ struct EditProfileView: View {
                         Spacer()
                     }
                     AddProfileViewNotes(description: $personDescription).padding()
-                    Button(action: {
-                        priority = -1
-                        saveEdits()
-                        dismiss()
-                    }, label: {
-                        Text("delete!!!")
-                    })
+                    HStack {
+                        Button(action: {
+                            if !debugOn {
+                                saveToCheckerSocialsArray()
+                                if checklistOk() && socialsChecklistOk(){
+                                    nameNotOk = false
+                                    birthdayNotOk = false
+                                    thumbnailNotOk = false
+                                    saveToSocialsArray()
+                                    let insertedperson = person(
+                                        personid: generatePersonID(),
+                                        name: name,
+                                        birthday: birthday,
+                                        hexAccentColor: accentColor.toHex() ?? "FFFFFF",
+                                        accentColorIsDefaultForeground: accentColorDefaultFgCheck(),
+                                        shownThumbnail: shownThumbnail,
+                                        slideImages: slideImages,
+                                        socials: socialsArray,
+                                        relationshipStatus: relationshipStatus,
+                                        currentRelationshipStartDate: currentRelationshipStartDate,
+                                        personDescription: personDescription)
+                                    modelContext.insert(insertedperson)
+                                    print("success on duplicating")
+                                    print("\(name)")
+                                    checkerSocialsArray.removeAll()
+                                    dismiss()
+                                } else if !checklistOk() || !socialsChecklistOk(){
+                                    if name == "" {nameNotOk = true} else {nameNotOk = false}
+                                    if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
+                                    if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
+                                    if socialsChecklistOk() {socialsNotOk = false} else {socialsNotOk = true}
+                                    checkerSocialsArray.removeAll()
+                                }
+                            } else if debugOn {
+                                print("""
+                                PersonID: \(generatePersonID())
+                                name: \(name)
+                                birthday: \(birthday)
+                                hexAccentColor: \(accentColor.toHex() ?? "FFFFFF")
+                                accentColorIsDefaultBackground: \(accentColorDefaultFgCheck())
+                                relationship status: \(relationshipStatus)
+                                currentrelationshipstartdate: \(currentRelationshipStartDate)
+                                persondescription: \(personDescription)
+                                """)
+                            }
+                        }, label: {
+                            HStack {
+                                Image(systemName: "square.on.square")
+                                Text("Duplicate")
+                            }
+                            .padding()
+                            .frame(width: 140)
+                            .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        })
+                        
+                        Button(role: .destructive, action: {
+                            priority = -1
+                            saveEdits()
+                            dismiss()
+                        }, label: {
+                            HStack {
+                                Image(systemName: "trash.fill")
+                                Text("Delete")
+                            }
+                            .padding()
+                            .frame(width: 140)
+                            .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        })
+                    }
                 }
             }.scrollIndicators(.hidden)
             .toolbar {
