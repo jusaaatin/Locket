@@ -37,6 +37,7 @@
 		D0A8F5622C15FD1300429F1B /* LocketUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */; };
 		D0C845562C303F9D0079789F /* ProfileViewRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */; };
 		D0C845582C3052430079789F /* ProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C845572C3052430079789F /* ProfileViewSocials.swift */; };
+		D0CF8B1F2C32CE2600EC59B3 /* ProfileViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */; };
 		D0DF90762C240DE100803AED /* AddProfileViewNewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */; };
 		D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90772C24133700803AED /* AddProfileViewSocials.swift */; };
 		D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */; };
@@ -97,6 +98,7 @@
 		D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRelationship.swift; sourceTree = "<group>"; };
 		D0C845572C3052430079789F /* ProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewSocials.swift; sourceTree = "<group>"; };
+		D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewImages.swift; sourceTree = "<group>"; };
 		D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewNewSocials.swift; sourceTree = "<group>"; };
 		D0DF90772C24133700803AED /* AddProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewSocials.swift; sourceTree = "<group>"; };
 		D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewRelationships.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				D095B3872C16EAA0007532E2 /* ProfileViewHeader.swift */,
 				D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */,
 				D0C845572C3052430079789F /* ProfileViewSocials.swift */,
+				D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */,
 				D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */,
 				D095B38E2C17194B007532E2 /* Subcomponents */,
 			);
@@ -414,6 +417,7 @@
 				D095B3882C16EAA0007532E2 /* ProfileViewHeader.swift in Sources */,
 				D07F15EB2C1BF0C3001D1538 /* FilterButtonLeading.swift in Sources */,
 				D095B38A2C16EEB3007532E2 /* ProfileViewInfo03.swift in Sources */,
+				D0CF8B1F2C32CE2600EC59B3 /* ProfileViewImages.swift in Sources */,
 				D07F15ED2C1C0D7D001D1538 /* filterButtonTrailingRow.swift in Sources */,
 				D0EEF28F2C313BE900F5DF0B /* EditProfileView.swift in Sources */,
 				D01A55602C20175100C0B98D /* RelationshipStatusPickerButton.swift in Sources */,

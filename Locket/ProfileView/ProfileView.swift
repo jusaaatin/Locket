@@ -56,56 +56,70 @@ struct ProfileView: View {
         NavigationStack {
             ZStack(alignment: .topLeading) {
                 ScrollView {
-                    ProfileViewHeader(currentRSStatus: currentRSStatus, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
-                        .onDisappear() {
-                            withAnimation(.snappy) { currentPage = .home }
-                        }
-                        .id(updater)
-                        .onAppear {
-                            withAnimation(.snappy) { currentPage = .profile }
-                            print("appeared")
-                            
-                            currentRSStatus = bindPerson.relationshipStatus
-                            demoStartDate = bindPerson.currentRelationshipStartDate
-                            name = bindPerson.name
-                            birthday = bindPerson.birthday
-                            accentColor = returnAccentColor(
-                                isFgMatch: bindPerson.accentColorIsDefaultForeground,
-                                Hex: bindPerson.hexAccentColor)
-                            mainImage = bindPerson.shownThumbnail
-                            slideImages = bindPerson.slideImages ?? [Data]()
-                            socials = bindPerson.socials ?? []
-                            priority = bindPerson.priority
-                            updater += 1
-                            
-                            if priority == -1 {
-                                dismiss()
+                    LazyVStack {
+                        ProfileViewHeader(currentRSStatus: currentRSStatus, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
+                            .onDisappear() {
+                                withAnimation(.snappy) { currentPage = .home }
                             }
-                        }
-                    ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
-                        .padding([.leading, .trailing, .bottom])
-                        .padding(.top, -30)
-                        .onAppear {
-                            withAnimation(.snappy) { currentPage = .profile }
-                        }
-                        .id(updater)
-                    HStack {
-                        Text("        Socials")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(.gray)
-                            .padding(.top, -44)
-                            .padding(.bottom, -5)
-                        Spacer()
-                    }.padding(.top, 40)
-                    ProfileViewSocials(socials: socials, demo: demo)
-                        .id(updater)
-                        .padding([.bottom, .leading, .trailing])
-                        .padding(.top, -30)
-                    Image(systemName: "figure.walk.motion")
-                        .font(.system(size: 60, weight: .semibold, design: .rounded))
-                        .foregroundStyle(.gray.opacity(0.5))
-                        .padding()
-                        .padding(.bottom, 30)
+                            .id(updater)
+                            .onAppear {
+                                withAnimation(.snappy) { currentPage = .profile }
+                                print("appeared")
+                                
+                                currentRSStatus = bindPerson.relationshipStatus
+                                demoStartDate = bindPerson.currentRelationshipStartDate
+                                name = bindPerson.name
+                                birthday = bindPerson.birthday
+                                accentColor = returnAccentColor(
+                                    isFgMatch: bindPerson.accentColorIsDefaultForeground,
+                                    Hex: bindPerson.hexAccentColor)
+                                mainImage = bindPerson.shownThumbnail
+                                slideImages = bindPerson.slideImages ?? [Data]()
+                                socials = bindPerson.socials ?? []
+                                priority = bindPerson.priority
+                                updater += 1
+                                
+                                if priority == -1 {
+                                    dismiss()
+                                }
+                            }
+                        ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
+                            .padding([.leading, .trailing, .bottom])
+                            .padding(.top, -30)
+                            .onAppear {
+                                withAnimation(.snappy) { currentPage = .profile }
+                            }
+                            .id(updater)
+                        HStack {
+                            Text("        Socials")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.gray)
+                                .padding(.top, -44)
+                                .padding(.bottom, -5)
+                            Spacer()
+                        }.padding(.top, 40)
+                        ProfileViewSocials(socials: socials, demo: demo)
+                            .id(updater)
+                            .padding([.bottom, .leading, .trailing])
+                            .padding(.top, -30)
+                        HStack {
+                            Text("        Images")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.gray)
+                                .padding(.top, -44)
+                                .padding(.bottom, -5)
+                            Spacer()
+                        }.padding(.top, 40)
+                        ProfileViewImages(demo: false, mainImage: mainImage, slideImages: slideImages)
+                            .id(updater)
+                            .padding([.bottom, .leading, .trailing])
+                            .padding(.top, -30)
+                        Image(systemName: "figure.walk.motion")
+                            .font(.system(size: 60, weight: .semibold, design: .rounded))
+                            .foregroundStyle(.gray.opacity(0.5))
+                            .padding()
+                            .padding(.bottom, 30)
+                    }
                 }.scrollIndicators(.hidden)
                 HStack {
                     Button {
