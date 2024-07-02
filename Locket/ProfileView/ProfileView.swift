@@ -42,6 +42,8 @@ struct ProfileView: View {
     
     @State var creationDate: Date
 
+    @State var showDeleteConfirmation = false
+    @State var showDuplicateConfirmation = false
 
     @State var priority: Int
     
@@ -58,8 +60,16 @@ struct ProfileView: View {
         DMYFormatter.dateFormat = "d MMM y"
         return DMYFormatter.string(from: input)
     }
-    
-
+    func generatePersonID() -> Int{
+        let currentDate: Date = .now
+        let currentSince1970 = currentDate.timeIntervalSince1970
+        return Int(currentSince1970)
+    }
+    func accentColorDefaultFgCheck() -> Bool{
+        if accentColor == Color("Foreground-match") {
+            return true
+        } else { return false }
+    }
     
     
     var body: some View {
@@ -146,6 +156,36 @@ struct ProfileView: View {
                             .foregroundStyle(.gray.opacity(0.5))
                             .padding()
                             .padding(.bottom, 30)
+                            .alert("Delete \(name)?", isPresented: $showDeleteConfirmation) { //delete
+                                Button("Delete", role: .destructive) {
+                                    modelContext.delete(bindPerson)
+                                    dismiss()
+                                }
+                            } message: {
+                                Text("Are you sure you want to delete \(name)? Once deleted, this contact can not be recovered")
+                            }
+                            .alert("Duplicate \(name)?", isPresented: $showDuplicateConfirmation) {
+                                Button("Cancel", role: .cancel) { }
+                                Button("Duplicate") {
+                                    let insertedperson = person(
+                                        personid: generatePersonID(),
+                                        name: name,
+                                        birthday: birthday,
+                                        hexAccentColor: accentColor.toHex() ?? "FFFFFF",
+                                        accentColorIsDefaultForeground: accentColorDefaultFgCheck(),
+                                        shownThumbnail: mainImage,
+                                        slideImages: slideImages,
+                                        socials: socials,
+                                        relationshipStatus: currentRSStatus,
+                                        currentRelationshipStartDate: demoStartDate,
+                                        personDescription: description)
+                                    modelContext.insert(insertedperson)
+                                    print("success on duplicating")
+                                    print("\(name)")
+                                }
+                            } message: {
+                                Text("Are you sure you want to duplicate \(name)?")
+                            }
                     }
                 }.scrollIndicators(.hidden)
                 HStack {
@@ -161,13 +201,14 @@ struct ProfileView: View {
                         .background {
                             Circle()
                                 .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
-                                .frame(height: 32)
-                        }
+                                .frame(width: 32, height: 32)
+                        }.frame(width: 42, height: 42)
                     }
                     Spacer()
                     NavigationLink {
                         EditProfileView(debugOn: false, bindedPerson: bindPerson)
                             .navigationBarBackButtonHidden()
+                            .id(UUID())
                     } label: {
                         HStack {
                             Text("Edit").bold()
@@ -180,6 +221,40 @@ struct ProfileView: View {
                                 .frame(height: 32)
                         }
                     }
+                    .id(UUID())
+                    Menu {
+                        Section {
+                            Button(action: {
+                                
+                            }, label: {
+                                Label(priority == 1 ? "Unpin \(name)" : "Pin \(name)", systemImage: priority == 1 ? "pin.fill" : "pin")
+                            })
+                        }
+                        Section {
+                            Button(action: {
+                                showDuplicateConfirmation = true
+                            }, label: {
+                                Label("Duplicate \(name)", systemImage: "square.on.square")
+                            })
+                            Button(role: .destructive, action: {
+                                showDeleteConfirmation = true
+                            }, label: {
+                                Label("Delete \(name)", systemImage: "trash")
+                            })
+                        }
+                    } label: {
+                        HStack {
+                            Image(systemName: "ellipsis")
+                        }
+                        .padding([.leading, .trailing])
+                        .foregroundStyle(.black)
+                        .background {
+                            Circle()
+                                .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
+                                .frame(width: 32, height: 32)
+                        }
+                        .frame(width: 42, height: 42)
+                    }.padding(.leading, -4)
                     .id(UUID())
                 }.padding().offset(y: 45)
             }

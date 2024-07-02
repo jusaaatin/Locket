@@ -31,5 +31,5 @@ struct ProfileViewDescription: View {
 }
 
 #Preview {
-    ProfileViewDescription(description: "fjhdhskjh").padding()
+    ProfileViewDescription(description: "fjhdhskjh")
 }

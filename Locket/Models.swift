@@ -61,8 +61,10 @@ final class person: Identifiable {
         self.personUUID = personUUID
         self.priority = priority
         /*
-         Priority 2:
-         Priority 1:
+         Priority 5: Self Profile
+         Priority 3: Birthday Today OR Anniversary Today Conditional
+         Priority 2: Birthday Tomorrow OR Anniversary Tomorrow Conditional
+         Priority 1: Pin
          Priority 0: Normal
          Priority -1: Send person to be deleted :(
          */
