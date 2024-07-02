@@ -12,8 +12,17 @@ struct ProfileViewDescription: View {
     @State var description: String
     
     var body: some View {
-        HStack {
-            Text(description)
+        ZStack {
+            HStack {
+                Spacer()
+                Text("")
+                Spacer()
+            }
+            HStack {
+                Text(description == "" ? "It's empty in here..." : description)
+                    .foregroundStyle(description == "" ? .gray : Color("Foreground-match"))
+                Spacer()
+            }
         }
         .padding()
         .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
@@ -22,5 +31,5 @@ struct ProfileViewDescription: View {
 }
 
 #Preview {
-    ProfileViewDescription(description: "Description 1 hdjgksh hfdkjla  kdlsjhl fashjkl jfksadh jklhdsfk adfskjh kjadfsh kldfsh kjfsadh lkjdfsah kljdfhas kjdfsah kjfdsh lkjdfah lkjhdfsa lkjhdaf lkjh kjlhsdaf").padding()
+    ProfileViewDescription(description: "fjhdhskjh").padding()
 }

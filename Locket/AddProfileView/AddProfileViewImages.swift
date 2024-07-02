@@ -16,7 +16,10 @@ struct AddProfileViewImages: View {
                 do {
                     let image = try await item.loadTransferable(type: Data.self)
                     if let image = image {
-                        slideImages.append(image)
+                        guard image == shownThumbnail else {
+                            slideImages.append(image)
+                            continue
+                        }
                     }
                 } catch {
                     print("Failed to load image: \(error)")
@@ -133,7 +136,7 @@ struct AddProfileViewImages: View {
                                 slideImages.removeAll()
                             }
                         }
-                        .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, selectionBehavior: .ordered, matching: .images)
+                        .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, matching: .images)
                         .task(id: selectedSlideImages, {
                             await loadImages(from: selectedSlideImages)
                         })

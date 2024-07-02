@@ -104,7 +104,7 @@ struct HomeView: View {
                                     name: person.name,
                                     birthday: person.birthday,
                                     relationshipStatus: person.relationshipStatus,
-                                    conditionalActivate: false,
+                                    conditionalActivate: person.checkConditional(),
                                     accentColor: returnAccentColor(
                                         isFgMatch: person.accentColorIsDefaultForeground,
                                         Hex: person.hexAccentColor),

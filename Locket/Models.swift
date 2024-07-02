@@ -10,6 +10,18 @@ import SwiftData
 import SwiftUI
 import _PhotosUI_SwiftUI
 
+func dateToDMY(input: Date, type: Int) -> String {
+    let DMYFormatter = DateFormatter()
+    if type == 1{
+        DMYFormatter.dateFormat = "d"
+    } else if type == 2 {
+        DMYFormatter.dateFormat = "MM"
+    } else {
+        DMYFormatter.dateFormat = "y"
+    }
+    return DMYFormatter.string(from: input)
+}
+
 @Model
 final class person: Identifiable {
     
@@ -38,6 +50,12 @@ final class person: Identifiable {
     
     //description
     var personDescription: String
+    
+    func checkConditional() -> Bool {
+        if dateToDMY(input: birthday, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
+            return true
+        } else { return false }
+    }
     
     init(personUUID: UUID = UUID(), priority: Int = 0, personid: Int = 0, personModelCreationDate: Date = .now, name: String = "", birthday: Date = .now, hexAccentColor: String = "FFFFFF", accentColorIsDefaultForeground: Bool = true, shownThumbnail: Data = Data(), slideImages: [Data]? = [Data](), socials: [socials]? = [], relationshipStatus: RelationshipStatus = .crush, currentRelationshipStartDate: Date = .now, personDescription: String = "") {
         self.personUUID = personUUID

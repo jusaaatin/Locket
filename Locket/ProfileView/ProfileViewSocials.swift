@@ -108,7 +108,9 @@ struct ProfileViewSocials: View {
                 HStack {
                     Spacer()
                     Image(systemName: "person.fill.questionmark")
+                        .foregroundStyle(.gray)
                     Text("No Socials :(")
+                        .foregroundStyle(.gray)
                     Spacer()
                 }.frame(height: 20)
             }
