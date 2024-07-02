@@ -60,16 +60,20 @@ struct AddProfileView: View {
     @State private var birthdayChanged = false
     
     func saveToSocialsArray() {
-        for i in 0...additionalSocialsCount {
-            if !isHidden[i] {
-                socialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
-            }
-        }
-    }
-    func saveToCheckerSocialsArray() {
-        for i in 0...additionalSocialsCount {
-            if !isHidden[i] {
-                checkerSocialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
+        if additionalSocialsCount >= 0 {
+            for i in 0...additionalSocialsCount {
+                if !isHidden[i] {
+                    if socialPlatform[i] == .PhoneNumber {
+                        if stringPRE[i] != "" && stringMAIN[i] != "" {
+                            socialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
+                        }
+                    } else {
+                        if stringMAIN[i] != "" {
+                            socialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
+                        }
+                    }
+
+                }
             }
         }
     }
@@ -245,8 +249,7 @@ struct AddProfileView: View {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
                         if !debugOn {
-                            saveToCheckerSocialsArray()
-                            if checklistOk() && socialsChecklistOk(){
+                            if checklistOk(){
                                 nameNotOk = false
                                 birthdayNotOk = false
                                 thumbnailNotOk = false
@@ -266,14 +269,13 @@ struct AddProfileView: View {
                                 modelContext.insert(person)
                                 print("success")
                                 print("\(name)")
-                                checkerSocialsArray.removeAll()
                                 dismiss()
-                            } else if !checklistOk() || !socialsChecklistOk(){
+                            }
+                            if !checklistOk(){
+                                print("here")
                                 if name == "" {nameNotOk = true} else {nameNotOk = false}
                                 if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
                                 if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
-                                if socialsChecklistOk() {socialsNotOk = false} else {socialsNotOk = true}
-                                checkerSocialsArray.removeAll()
                             }
                         } else if debugOn {
                             print("""

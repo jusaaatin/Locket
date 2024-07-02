@@ -72,16 +72,20 @@ struct EditProfileView: View {
 
     
     func saveToSocialsArray() {
-        for i in 0...additionalSocialsCount {
-            if !isHidden[i] {
-                socialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
-            }
-        }
-    }
-    func saveToCheckerSocialsArray() {
-        for i in 0...additionalSocialsCount {
-            if !isHidden[i] {
-                checkerSocialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
+        if additionalSocialsCount >= 0 {
+            for i in 0...additionalSocialsCount {
+                if !isHidden[i] {
+                    if socialPlatform[i] == .PhoneNumber {
+                        if stringPRE[i] != "" && stringMAIN[i] != "" {
+                            socialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
+                        }
+                    } else {
+                        if stringMAIN[i] != "" {
+                            socialsArray.append(socials(socialPlatform: socialPlatform[i], stringPRE: stringPRE[i], stringMAIN: stringMAIN[i]))
+                        }
+                    }
+
+                }
             }
         }
     }
@@ -238,12 +242,6 @@ struct EditProfileView: View {
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(.gray)
                             .padding(.top)
-                        if socialsNotOk {
-                            Text("  -     Please Fill In All Fields")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundStyle(.red)
-                                .padding(.top)
-                        }
                         Spacer()
                     }
                     AddProfileViewSocials(isHidden: $isHidden,
@@ -312,8 +310,7 @@ struct EditProfileView: View {
                         Button("Cancel", role: .cancel) { }
                         Button("Duplicate") {
                             if !debugOn {
-                                saveToCheckerSocialsArray()
-                                if checklistOk() && socialsChecklistOk(){
+                                if checklistOk(){
                                     nameNotOk = false
                                     birthdayNotOk = false
                                     thumbnailNotOk = false
@@ -333,14 +330,11 @@ struct EditProfileView: View {
                                     modelContext.insert(insertedperson)
                                     print("success on duplicating")
                                     print("\(name)")
-                                    checkerSocialsArray.removeAll()
                                     dismiss()
-                                } else if !checklistOk() || !socialsChecklistOk(){
+                                } else if !checklistOk(){
                                     if name == "" {nameNotOk = true} else {nameNotOk = false}
                                     if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
                                     if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
-                                    if socialsChecklistOk() {socialsNotOk = false} else {socialsNotOk = true}
-                                    checkerSocialsArray.removeAll()
                                 }
                             } else if debugOn {
                                 print("""
@@ -374,7 +368,6 @@ struct EditProfileView: View {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
                         if !debugOn {
-                            saveToCheckerSocialsArray()
                             if checklistOk() && socialsChecklistOk(){
                                 nameNotOk = false
                                 birthdayNotOk = false
@@ -382,15 +375,12 @@ struct EditProfileView: View {
                                 saveToSocialsArray()
                                 print("success")
                                 print("\(name)")
-                                checkerSocialsArray.removeAll()
                                 saveEdits()
                                 dismiss()
                             } else if !checklistOk() || !socialsChecklistOk(){
                                 if name == "" {nameNotOk = true} else {nameNotOk = false}
                                 if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
                                 if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
-                                if socialsChecklistOk() {socialsNotOk = false} else {socialsNotOk = true}
-                                checkerSocialsArray.removeAll()
                             }
                         } else if debugOn {
                             print("""
