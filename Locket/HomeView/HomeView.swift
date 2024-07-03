@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import EasyMenu
 
 private func getWidth() -> Int {
     #if os(iOS)
@@ -167,6 +168,29 @@ struct HomeView: View {
                                         )
                             }
                         })
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        EasyMenu {
+                            Group {
+                                HStack {
+                                    Image(systemName: "sun.min.fill")
+                                        .foregroundColor(Color(.secondaryLabel))
+                                    Slider(value: .constant(0.5))
+                                    Image(systemName: "sun.max.fill")
+                                        .foregroundColor(Color(.secondaryLabel))
+                                }
+                                .padding(.horizontal)
+                                .frame(height: 50)
+                            }
+                                        
+                            Divider()
+                                            
+                            Toggle("Show Translate", isOn: .constant(true))
+                                .padding(.horizontal)
+                                .frame(height: 54.0)
+                        } label: {
+                            Image(systemName: "textformat.size")
+                        }
                     }
                 })
             }
