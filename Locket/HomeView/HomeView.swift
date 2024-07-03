@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import EasyMenu
 
 private func getWidth() -> Int {
     #if os(iOS)
@@ -48,9 +47,17 @@ struct HomeView: View {
     
     var person: [person]{
         if searchString.isEmpty == false {
-            return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 5 }
+            if searchFilter == .showAll {
+                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 5}
+            } else {
+                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 5 && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
+            }
         } else {
-            return unQueriedPerson.filter { $0.priority != 5 }
+            if searchFilter == .showAll {
+                return unQueriedPerson.filter {$0.priority != 5}
+            } else {
+                return unQueriedPerson.filter {$0.priority != 5 && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
+            }
         }
     }
     
@@ -63,6 +70,21 @@ struct HomeView: View {
         }
         selfProfileExists = false
         return nil
+    }
+    
+    private func filterStateToRelationshipStatus(state: filterState) -> RelationshipStatus? {
+        switch state {
+        case .showAll:
+            return nil
+        case .crush:
+            return .crush
+        case .relationship:
+            return .relationship
+        case .friend:
+            return .friend
+        case .bestie:
+            return .bestie
+        }
     }
     
     private func deletePerson(person: person) {
@@ -141,8 +163,8 @@ struct HomeView: View {
                 .navigationTitle("Locket")
                 .toolbar(content:{
                     ToolbarItem(placement: .topBarTrailing) {
-                        Menu(content: {
-                            ProfileViewRelationship(startDate: .now, currentRSStatus: .bestie)
+                        Button(action: {
+                            
 
                         }, label: {
                             if let selfPFPData = selfPerson?.shownThumbnail {
@@ -168,29 +190,6 @@ struct HomeView: View {
                                         )
                             }
                         })
-                    }
-                    ToolbarItem(placement: .topBarTrailing) {
-                        EasyMenu {
-                            Group {
-                                HStack {
-                                    Image(systemName: "sun.min.fill")
-                                        .foregroundColor(Color(.secondaryLabel))
-                                    Slider(value: .constant(0.5))
-                                    Image(systemName: "sun.max.fill")
-                                        .foregroundColor(Color(.secondaryLabel))
-                                }
-                                .padding(.horizontal)
-                                .frame(height: 50)
-                            }
-                                        
-                            Divider()
-                                            
-                            Toggle("Show Translate", isOn: .constant(true))
-                                .padding(.horizontal)
-                                .frame(height: 54.0)
-                        } label: {
-                            Image(systemName: "textformat.size")
-                        }
                     }
                 })
             }
