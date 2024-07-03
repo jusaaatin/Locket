@@ -43,10 +43,25 @@ struct HomeView: View {
     @Environment(\.modelContext) var modelContext
     @Query var unQueriedPerson: [person]
     @State var isPresented: Bool = false
+    @State var selfProfileExists: Bool = false
     
     var person: [person]{
-        guard searchString.isEmpty == false else { return unQueriedPerson }
-        return unQueriedPerson.filter { $0.name.contains(searchString)}
+        if searchString.isEmpty == false {
+            return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 5 }
+        } else {
+            return unQueriedPerson.filter { $0.priority != 5 }
+        }
+    }
+    
+    var selfPerson: person? {
+        for person in unQueriedPerson {
+            if person.priority == 5 {
+                selfProfileExists = true
+                return person
+            }
+        }
+        selfProfileExists = false
+        return nil
     }
     
     private func deletePerson(person: person) {
@@ -125,18 +140,32 @@ struct HomeView: View {
                 .navigationTitle("Locket")
                 .toolbar(content:{
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: {
-                            
+                        Menu(content: {
+                            ProfileViewRelationship(startDate: .now, currentRSStatus: .bestie)
+
                         }, label: {
-                            Image("demofoodprofile")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width:42, height:42)
-                                .clipShape(Circle())
-                                .overlay(
-                                    Circle()
-                                        .stroke(.thickMaterial, lineWidth: 3)
-                                )
+                            if let selfPFPData = selfPerson?.shownThumbnail {
+                                let selfPFP = UIImage(data: selfPFPData)
+                                Image(uiImage: selfPFP ?? UIImage())
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width:42, height:42)
+                                    .clipShape(Circle())
+                                    .overlay(
+                                        Circle()
+                                            .stroke(.thickMaterial, lineWidth: 3)
+                                        )
+                            } else {
+                                Image("demofoodprofile")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width:42, height:42)
+                                    .clipShape(Circle())
+                                    .overlay(
+                                        Circle()
+                                            .stroke(.thickMaterial, lineWidth: 3)
+                                        )
+                            }
                         })
                     }
                 })
