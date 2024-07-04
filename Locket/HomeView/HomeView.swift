@@ -41,29 +41,29 @@ struct HomeView: View {
     @Namespace var homeViewNamespace
     @Binding var currentPage: locketPages
     @Environment(\.modelContext) var modelContext
-    @Query var unQueriedPerson: [person]
+    @Query(sort: \person.priority, order: .reverse) var unQueriedPerson: [person]
     @State var isPresented: Bool = false
     @State var selfProfileExists: Bool = false
     
-    var person: [person]{
+    var personmodel: [person]{
         if searchString.isEmpty == false {
             if searchFilter == .showAll {
-                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 5}
+                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 10}
             } else {
-                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 5 && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
+                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 10 && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
             }
         } else {
             if searchFilter == .showAll {
-                return unQueriedPerson.filter {$0.priority != 5}
+                return unQueriedPerson.filter {$0.priority != 10}
             } else {
-                return unQueriedPerson.filter {$0.priority != 5 && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
+                return unQueriedPerson.filter {$0.priority != 10 && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
             }
         }
     }
     
     var selfPerson: person? {
         for person in unQueriedPerson {
-            if person.priority == 5 {
+            if person.priority == 10 {
                 selfProfileExists = true
                 return person
             }
@@ -100,7 +100,7 @@ struct HomeView: View {
                         .padding(.top, -3)
                         .padding(.bottom, 12)
                     LazyVGrid(columns: twoColumnGrid, spacing: 22) {
-                        ForEach(person) { person in
+                        ForEach(personmodel) { person in
                             @State var deleting = false
                             NavigationLink {
                                 ProfileView(
@@ -134,6 +134,7 @@ struct HomeView: View {
                                 )
                                 .onAppear {
                                     withAnimation(.snappy) { currentPage = .profile }
+                                    person.appearSetPriority()
                                 }
                             } label: {
                                 HomeViewProfilePreview04(

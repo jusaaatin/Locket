@@ -99,7 +99,7 @@ struct ProfileView: View {
                                 priority = bindPerson.priority
                                 updater += 1
                                 
-                                if priority == -1 {
+                                if bindPerson.priority == -1 {
                                     dismiss()
                                 }
                             }
@@ -110,6 +110,8 @@ struct ProfileView: View {
                                 withAnimation(.snappy) { currentPage = .profile }
                             }
                             .id(updater)
+                        Text("\(priority)")
+                        Text("bind \(bindPerson.priority)")
                         HStack {
                             Text("        Socials")
                                 .font(.system(size: 14, weight: .semibold))
@@ -225,9 +227,17 @@ struct ProfileView: View {
                     Menu {
                         Section {
                             Button(action: {
-                                
+                                if bindPerson.priority == 0 {
+                                    bindPerson.priority = 1
+                                } else if bindPerson.priority == 1 {
+                                    bindPerson.priority = 0
+                                } else if bindPerson.priority == 2 || bindPerson.priority == 4 {
+                                    bindPerson.priority += 1
+                                } else if bindPerson.priority == 3 || bindPerson.priority == 5 {
+                                    bindPerson.priority -= 1
+                                }
                             }, label: {
-                                Label(priority == 1 ? "Unpin \(name)" : "Pin \(name)", systemImage: priority == 1 ? "pin.fill" : "pin")
+                                Label(bindPerson.priority == 1 || bindPerson.priority == 3 || bindPerson.priority == 5 ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.priority == 1 || bindPerson.priority == 3 || bindPerson.priority == 5 ? "pin.fill" : "pin")
                             })
                         }
                         Section {
