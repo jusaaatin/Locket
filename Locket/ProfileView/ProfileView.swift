@@ -110,8 +110,6 @@ struct ProfileView: View {
                                 withAnimation(.snappy) { currentPage = .profile }
                             }
                             .id(updater)
-                        Text("\(priority)")
-                        Text("bind \(bindPerson.priority)")
                         HStack {
                             Text("        Socials")
                                 .font(.system(size: 14, weight: .semibold))
