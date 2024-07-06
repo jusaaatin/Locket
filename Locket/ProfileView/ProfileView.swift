@@ -280,7 +280,15 @@ struct ProfileView: View {
     @Previewable @State var currentPage: locketPages = .profile
     ProfileView(currentRSStatus: .crush, deleting: $deleting,
                 currentPage: $currentPage, 
-                bindPerson: person(),
+                bindPerson: person(personUUID: UUID(), priority: 0, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractYear(year: -15), hexAccentColor: "FFFFFF", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+                    socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+                     socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+                    socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+                    socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+                    socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+                    socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+                ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractYear(year: -3), personDescription: "Description")
+                    ,
                 demoStartDate: addOrSubtractYear(year: -5),
                 demoEndDate: addOrSubtractYear(year: -1),
                 name: "Brain",

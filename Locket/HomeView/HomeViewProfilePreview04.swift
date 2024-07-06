@@ -17,7 +17,8 @@ struct HomeViewProfilePreview04: View {
     let relationshipStatus: RelationshipStatus
     let accentColor: Color
     let shownThumbnail: Data
-    let priority: Int
+    
+    let bindPerson: person
     
     private func dateToDM(input: Date) -> String {
         let DMFormatter = DateFormatter()
@@ -83,12 +84,19 @@ struct HomeViewProfilePreview04: View {
                         .foregroundStyle(accentColor)
                         .frame(width:CGFloat(mainWidth))
                         .frame(height: 39)
-                    if priority == 3 || priority == 5 {
+                    if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
                         HStack {
                             Image(systemName: "gift")
-                            Text("Today")
+                            Text(bindPerson.isBirthdayToday() ? "Today" : "Tomorrow")
                         }
                         .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(.red.mix(with: .white, by: 0.3))
+                    } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
+                        HStack {
+                            Text("Anniversary").padding(.leading, -5)
+                            Text(bindPerson.isAnniversaryToday() ? "Today" : "Tomorrow").padding(.trailing, -5)
+                        }
+                        .font(.system(size: 11, weight: .semibold, design: .monospaced))
                         .foregroundStyle(.red.mix(with: .white, by: 0.3))
                     } else {
                         HStack {
@@ -102,15 +110,26 @@ struct HomeViewProfilePreview04: View {
                 }
                 VStack {
                     HStack {
-                        if priority == 3 || priority == 5 {
-                            Image(systemName: "gift")
-                                .font(.system(size: 16))
+                        if bindPerson.isPinned() || bindPerson.isBirthdayToday() || bindPerson.isAnniversaryToday() || bindPerson.isBirthdayTomorrow() || bindPerson.isAnniversaryTomorrow() {
+                            Group {
+                                if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
+                                    Image(systemName: "gift")
+                                        .font(.system(size: 16))
+                                } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
+                                    Image(systemName: "party.popper.fill")
+                                        .font(.system(size: 12))
+                                } else if bindPerson.isPinned() {
+                                    Image(systemName: "pin.fill")
+                                        .font(.system(size: 14))
+                                }
+                            }
+                                
                                 .padding(7)
                                 .background(.thinMaterial)
                                 .clipShape(Circle())
                                 .shadow(radius: 5)
                                 .padding(4)
-                                .offset(x:1.5, y:2.5)
+                                .offset(x:bindPerson.isPinned() ? 2.5 : 1.5, y:2.5)
                         }
                         Spacer()
                         Image(systemName: returnRightIconString())
@@ -134,7 +153,14 @@ struct HomeViewProfilePreview04: View {
 }
 
 #Preview {
-    HomeViewProfilePreview04(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractYear(year: -15), relationshipStatus: .bestie, accentColor: .red, shownThumbnail: Data(), priority: 1)
+    HomeViewProfilePreview04(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .bestie, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -0), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+        socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+         socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+        socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+        socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+        socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+        socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+    ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
 }
 
 

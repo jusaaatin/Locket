@@ -146,7 +146,7 @@ struct HomeView: View {
                                     accentColor: returnAccentColor(
                                         isFgMatch: person.accentColorIsDefaultForeground,
                                         Hex: person.hexAccentColor),
-                                    shownThumbnail: person.shownThumbnail, priority: person.priority)
+                                    shownThumbnail: person.shownThumbnail, bindPerson: person)
                             }
                             .onAppear() {
                                 if person.priority == -1 {
