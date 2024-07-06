@@ -140,7 +140,7 @@ struct EditProfileView: View {
         bindedPerson.relationshipStatus = relationshipStatus
         bindedPerson.currentRelationshipStartDate = currentRelationshipStartDate
         bindedPerson.personDescription = personDescription
-        bindedPerson.priority = priority
+        bindedPerson.priority = priority == -1 ? priority : bindedPerson.returnPriority()
     }
     func returnSocialString(social: [socials], which: Int) -> [String] {
         if which == 1 {

@@ -95,7 +95,6 @@ struct ProfileView: View {
                                 mainImage = bindPerson.shownThumbnail
                                 slideImages = bindPerson.slideImages ?? [Data]()
                                 socials = bindPerson.socials ?? []
-                                bindPerson.prioritySetter()
                                 priority = bindPerson.priority
                                 updater += 1
                                 
