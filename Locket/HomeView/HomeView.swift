@@ -96,7 +96,7 @@ struct HomeView: View {
         ZStack {
             NavigationStack {
                 ScrollView {
-                    HomeViewSearchFilter03(filterSelection: $searchFilter, sortOrder: $sortOrder)
+                    HomeViewSearchFilter(filterSelection: $searchFilter, sortOrder: $sortOrder)
                         .padding(.top, -3)
                         .padding(.bottom, 12)
                     LazyVGrid(columns: twoColumnGrid, spacing: 22) {
@@ -137,7 +137,7 @@ struct HomeView: View {
                                     person.prioritySetter()
                                 }
                             } label: {
-                                HomeViewProfilePreview04(
+                                HomeViewProfilePreview(
                                     mainWidth: getWidth(),
                                     mainImage: "demofood12",
                                     name: person.name,

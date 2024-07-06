@@ -14,8 +14,8 @@
 		D01A55622C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A55612C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift */; };
 		D052DF452C2DA30300AAFB0F /* AddProfileViewNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D052DF442C2DA30300AAFB0F /* AddProfileViewNotes.swift */; };
 		D070B70F2C1A116600442B16 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B70C2C1A116600442B16 /* HomeView.swift */; };
-		D070B7102C1A116600442B16 /* HomeViewProfilePreview04.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B70D2C1A116600442B16 /* HomeViewProfilePreview04.swift */; };
-		D070B7122C1B5AAC00442B16 /* HomeViewSearchFilter03.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter03.swift */; };
+		D070B7102C1A116600442B16 /* HomeViewProfilePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B70D2C1A116600442B16 /* HomeViewProfilePreview.swift */; };
+		D070B7122C1B5AAC00442B16 /* HomeViewSearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter.swift */; };
 		D070B7152C1B684400442B16 /* Filterbutton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B7142C1B684400442B16 /* Filterbutton.swift */; };
 		D079763B2C25644F00CC35BF /* AddProfileViewPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079763A2C25644F00CC35BF /* AddProfileViewPerson.swift */; };
 		D079763D2C25683A00CC35BF /* AddProfileColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079763C2C25683A00CC35BF /* AddProfileColorPicker.swift */; };
@@ -73,8 +73,8 @@
 		D01A55612C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipStatusPickerButtonRow.swift; sourceTree = "<group>"; };
 		D052DF442C2DA30300AAFB0F /* AddProfileViewNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewNotes.swift; sourceTree = "<group>"; };
 		D070B70C2C1A116600442B16 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		D070B70D2C1A116600442B16 /* HomeViewProfilePreview04.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewProfilePreview04.swift; sourceTree = "<group>"; };
-		D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSearchFilter03.swift; sourceTree = "<group>"; };
+		D070B70D2C1A116600442B16 /* HomeViewProfilePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewProfilePreview.swift; sourceTree = "<group>"; };
+		D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSearchFilter.swift; sourceTree = "<group>"; };
 		D070B7142C1B684400442B16 /* Filterbutton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filterbutton.swift; sourceTree = "<group>"; };
 		D079763A2C25644F00CC35BF /* AddProfileViewPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewPerson.swift; sourceTree = "<group>"; };
 		D079763C2C25683A00CC35BF /* AddProfileColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileColorPicker.swift; sourceTree = "<group>"; };
@@ -167,8 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				D070B70C2C1A116600442B16 /* HomeView.swift */,
-				D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter03.swift */,
-				D070B70D2C1A116600442B16 /* HomeViewProfilePreview04.swift */,
+				D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter.swift */,
+				D070B70D2C1A116600442B16 /* HomeViewProfilePreview.swift */,
 				D070B7132C1B683500442B16 /* Subcomponents */,
 			);
 			path = HomeView;
@@ -405,8 +405,8 @@
 			files = (
 				D070B70F2C1A116600442B16 /* HomeView.swift in Sources */,
 				D07976412C25E6F400CC35BF /* AddProfileViewImages.swift in Sources */,
-				D070B7102C1A116600442B16 /* HomeViewProfilePreview04.swift in Sources */,
-				D070B7122C1B5AAC00442B16 /* HomeViewSearchFilter03.swift in Sources */,
+				D070B7102C1A116600442B16 /* HomeViewProfilePreview.swift in Sources */,
+				D070B7122C1B5AAC00442B16 /* HomeViewSearchFilter.swift in Sources */,
 				D095B3802C16031E007532E2 /* ProfileView.swift in Sources */,
 				D095B38C2C16F7EE007532E2 /* Universal Declarations.swift in Sources */,
 				D095B3842C162F62007532E2 /* ProfileViewName.swift in Sources */,

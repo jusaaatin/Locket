@@ -1,5 +1,5 @@
 //
-//  HomeViewSearchFilter03.swift
+//  HomeViewSearchFilter.swift
 //  Locket
 //
 //  Created by Justin Damhaut on 13/6/24.
@@ -9,8 +9,7 @@ import SwiftUI
 
 
 
-struct HomeViewSearchFilter03: View {
-    
+struct HomeViewSearchFilter: View {
     @Binding var filterSelection: filterState
     @Binding var sortOrder: querySortOrder
     
@@ -32,5 +31,5 @@ struct HomeViewSearchFilter03: View {
 #Preview {
     @Previewable @State var searchFilter: filterState = .showAll
     @Previewable @State var sortOrder: querySortOrder = .aToZ
-    HomeViewSearchFilter03(filterSelection: $searchFilter, sortOrder: $sortOrder)
+    HomeViewSearchFilter(filterSelection: $searchFilter, sortOrder: $sortOrder)
 }

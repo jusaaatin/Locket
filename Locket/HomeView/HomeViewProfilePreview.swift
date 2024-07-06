@@ -1,5 +1,5 @@
 //
-//  HomeViewProfilePreview04.swift
+//  HomeViewProfilePreview.swift
 //  Locket
 //
 //  Created by Justin Damhaut on 12/6/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeViewProfilePreview04: View {
+struct HomeViewProfilePreview: View {
     
     let mainWidth: Int
     
@@ -153,7 +153,7 @@ struct HomeViewProfilePreview04: View {
 }
 
 #Preview {
-    HomeViewProfilePreview04(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .bestie, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -0), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+    HomeViewProfilePreview(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .bestie, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -0), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
         socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
          socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
         socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
