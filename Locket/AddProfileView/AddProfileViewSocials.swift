@@ -116,7 +116,7 @@ struct AddProfileViewSocials: View {
     @Previewable @State var additionalSocialsCount: Int = 0
     @Previewable @State var visibleSocialsCount: Int = 1
     @Previewable @State var debugOn: Bool = true
-    @Previewable @State var socialsNotOk: Bool = true
+    @Previewable @State var socialsNotOk: Bool = false
     
     ScrollView {
         AddProfileViewSocials(isHidden: $isHidden, socialPlatform: $socialPlatform, stringPRE: $stringPRE, stringMAIN: $stringMAIN, additionalSocialsCount: $additionalSocialsCount, visibleSocialsCount: $visibleSocialsCount, debugOn: $debugOn, socialsNotOk: $socialsNotOk)

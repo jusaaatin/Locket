@@ -21,6 +21,8 @@ struct ProfileView: View {
     
     var bindPerson: person
     
+    @State var debug = false
+    
     @State var updater: Int = 1
     
     @State var demoStartDate: Date
@@ -144,18 +146,20 @@ struct ProfileView: View {
                             .id(updater)
                             .padding([.bottom, .leading, .trailing])
                             .padding(.top, -30)
-                        HStack {
-                            Text("        Debug")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundStyle(.gray)
-                                .padding(.top, -44)
-                                .padding(.bottom, -5)
-                            Spacer()
-                        }.padding(.top, 40)
-                        ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: demoStartDate, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: currentRSStatus, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [Data](), modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
-                            .id(updater)
-                            .padding([.bottom, .leading, .trailing])
-                            .padding(.top, -30)
+                        if debug {
+                            HStack {
+                                Text("        Debug")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundStyle(.gray)
+                                    .padding(.top, -44)
+                                    .padding(.bottom, -5)
+                                Spacer()
+                            }.padding(.top, 40)
+                            ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: demoStartDate, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: currentRSStatus, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [Data](), modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
+                                .id(updater)
+                                .padding([.bottom, .leading, .trailing])
+                                .padding(.top, -30)
+                        }
                         Text("\(name)'s contact created on \(dateToDMY(input: creationDate))")
                             .padding()
                             .multilineTextAlignment(.center)
@@ -216,7 +220,7 @@ struct ProfileView: View {
                     }
                     Spacer()
                     NavigationLink {
-                        EditProfileView(debugOn: false, bindedPerson: bindPerson)
+                        EditProfileView(debugOn: debug, bindedPerson: bindPerson)
                             .navigationBarBackButtonHidden()
                             .id(UUID())
                     } label: {
@@ -239,6 +243,12 @@ struct ProfileView: View {
                                 updater += 1
                             }, label: {
                                 Label(bindPerson.isPinned() ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.isPinned() ? "pin.fill" : "pin")
+                            })
+                            Button(action: {
+                                debug.toggle()
+                                updater += 1
+                            }, label: {
+                                Label(debug ? "Turn Off Debug" : "Turn On Debug" , systemImage: debug ? "ladybug.fill" : "ladybug")
                             })
                         }
                         Section {

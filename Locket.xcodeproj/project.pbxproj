@@ -39,6 +39,7 @@
 		D0CF8B1F2C32CE2600EC59B3 /* ProfileViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */; };
 		D0CF8B212C33053600EC59B3 /* ProfileViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF8B202C33053600EC59B3 /* ProfileViewDescription.swift */; };
 		D0DC9E662C399C3C0028CFD1 /* ProfileViewDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC9E652C399C3C0028CFD1 /* ProfileViewDebug.swift */; };
+		D0DC9E682C39C3150028CFD1 /* ProfileViewConditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC9E672C39C3150028CFD1 /* ProfileViewConditional.swift */; };
 		D0DF90762C240DE100803AED /* AddProfileViewNewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */; };
 		D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90772C24133700803AED /* AddProfileViewSocials.swift */; };
 		D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */; };
@@ -101,6 +102,7 @@
 		D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewImages.swift; sourceTree = "<group>"; };
 		D0CF8B202C33053600EC59B3 /* ProfileViewDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewDescription.swift; sourceTree = "<group>"; };
 		D0DC9E652C399C3C0028CFD1 /* ProfileViewDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewDebug.swift; sourceTree = "<group>"; };
+		D0DC9E672C39C3150028CFD1 /* ProfileViewConditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewConditional.swift; sourceTree = "<group>"; };
 		D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewNewSocials.swift; sourceTree = "<group>"; };
 		D0DF90772C24133700803AED /* AddProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewSocials.swift; sourceTree = "<group>"; };
 		D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewRelationships.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				D095B37F2C16031E007532E2 /* ProfileView.swift */,
+				D0DC9E672C39C3150028CFD1 /* ProfileViewConditional.swift */,
 				D095B3872C16EAA0007532E2 /* ProfileViewHeader.swift */,
 				D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */,
 				D0C845572C3052430079789F /* ProfileViewSocials.swift */,
@@ -429,6 +432,7 @@
 				D0A8F5422C15FD1200429F1B /* LocketApp.swift in Sources */,
 				D01A55562C1DFF3000C0B98D /* Models.swift in Sources */,
 				D0C845582C3052430079789F /* ProfileViewSocials.swift in Sources */,
+				D0DC9E682C39C3150028CFD1 /* ProfileViewConditional.swift in Sources */,
 				D0FB04FE2C189AC6006BC164 /* tabBar.swift in Sources */,
 				D0C845562C303F9D0079789F /* ProfileViewRelationship.swift in Sources */,
 				D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */,
