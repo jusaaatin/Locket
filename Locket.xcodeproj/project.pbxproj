@@ -221,6 +221,7 @@
 		D0A8F5352C15FD1200429F1B = {
 			isa = PBXGroup;
 			children = (
+				D00A99FC2C39D3DB002EB426 /* README.md */,
 				D0A8F5402C15FD1200429F1B /* Locket */,
 				D0A8F5542C15FD1300429F1B /* LocketTests */,
 				D0A8F55E2C15FD1300429F1B /* LocketUITests */,
@@ -242,7 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				D0A8F5412C15FD1200429F1B /* LocketApp.swift */,
-				D00A99FC2C39D3DB002EB426 /* README.md */,
 				D0A8F5432C15FD1200429F1B /* ContentView.swift */,
 				D01A55512C1CB54C00C0B98D /* AddProfileButton.swift */,
 				D00A99FB2C39D203002EB426 /* Global */,
