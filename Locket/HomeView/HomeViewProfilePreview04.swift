@@ -15,9 +15,9 @@ struct HomeViewProfilePreview04: View {
     let name: String
     let birthday: Date
     let relationshipStatus: RelationshipStatus
-    let conditionalActivate: Bool
     let accentColor: Color
     let shownThumbnail: Data
+    let priority: Int
     
     private func dateToDM(input: Date) -> String {
         let DMFormatter = DateFormatter()
@@ -83,7 +83,7 @@ struct HomeViewProfilePreview04: View {
                         .foregroundStyle(accentColor)
                         .frame(width:CGFloat(mainWidth))
                         .frame(height: 39)
-                    if conditionalActivate {
+                    if priority == 3 || priority == 5 {
                         HStack {
                             Image(systemName: "gift")
                             Text("Today")
@@ -102,7 +102,7 @@ struct HomeViewProfilePreview04: View {
                 }
                 VStack {
                     HStack {
-                        if conditionalActivate {
+                        if priority == 3 || priority == 5 {
                             Image(systemName: "gift")
                                 .font(.system(size: 16))
                                 .padding(7)
@@ -134,7 +134,7 @@ struct HomeViewProfilePreview04: View {
 }
 
 #Preview {
-    HomeViewProfilePreview04(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractYear(year: -15), relationshipStatus: .bestie, conditionalActivate: true, accentColor: .red, shownThumbnail: Data())
+    HomeViewProfilePreview04(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractYear(year: -15), relationshipStatus: .bestie, accentColor: .red, shownThumbnail: Data(), priority: 1)
 }
 
 

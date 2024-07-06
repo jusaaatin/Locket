@@ -225,17 +225,9 @@ struct ProfileView: View {
                     Menu {
                         Section {
                             Button(action: {
-                                if bindPerson.priority == 0 {
-                                    bindPerson.priority = 1
-                                } else if bindPerson.priority == 1 {
-                                    bindPerson.priority = 0
-                                } else if bindPerson.priority == 2 || bindPerson.priority == 4 {
-                                    bindPerson.priority += 1
-                                } else if bindPerson.priority == 3 || bindPerson.priority == 5 {
-                                    bindPerson.priority -= 1
-                                }
+                                bindPerson.pinToggle()
                             }, label: {
-                                Label(bindPerson.priority == 1 || bindPerson.priority == 3 || bindPerson.priority == 5 ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.priority == 1 || bindPerson.priority == 3 || bindPerson.priority == 5 ? "pin.fill" : "pin")
+                                Label(bindPerson.isPinned() ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.isPinned() ? "pin.fill" : "pin")
                             })
                         }
                         Section {

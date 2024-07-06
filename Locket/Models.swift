@@ -27,9 +27,20 @@ final class person: Identifiable {
     
     //backend
     var personUUID = UUID()
-    var priority: Int //0 normal, 1 for conditional activate etc
+    var priority: Int
     @Attribute(.unique) var personid: Int
     var personModelCreationDate: Date //for sorting
+    
+    /* PRIORITIES
+     Priority 10: Self Profile
+     Priority 5: 4 but pinned
+     Priority 4: Birthday Today OR Anniversary Today Conditional
+     Priority 3: 2 but pinned
+     Priority 2: Birthday Tomorrow OR Anniversary Tomorrow Conditional
+     Priority 1: Pin
+     Priority 0: Normal
+     Priority -1: Send person to be deleted :(
+     */
     
     //person
     var name: String //justin
@@ -51,56 +62,63 @@ final class person: Identifiable {
     //description
     var personDescription: String
     
-    func checkConditional() -> Bool {
+    func pinToggle() {
+        if isPinned() { priority -= 1 }
+        else { priority += 1 }
+    }
+    func isPinned() -> Bool {
+        if priority == 1 || priority == 3 || priority == 5 /* pinned */{
+            return true
+        } else if priority == 0 || priority == 2 || priority == 4 /* unpinned */{
+            return false
+        } else { return false }
+    }
+    func isBirthdayToday() -> Bool {
         if dateToDMY(input: birthday, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
             return true
         } else { return false }
     }
-    
+    func isBirthdayTomorrow() -> Bool {
+        if dateToDMY(input: birthday, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
+            return true
+        } else { return false }
+    }
+    func isAnniversaryToday() -> Bool {
+        if dateToDMY(input: currentRelationshipStartDate, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: currentRelationshipStartDate, type: 2) == dateToDMY(input: Date.now, type: 2) {
+            return true
+        } else { return false }
+    }
+    func isAnniversaryTomorrow() -> Bool {
+        if dateToDMY(input: currentRelationshipStartDate, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: currentRelationshipStartDate, type: 2) == dateToDMY(input: addOrSubtractDay(day: 1), type: 2) {
+            return true
+        } else { return false }
+    }
+    func isSelfProfile() -> Bool {
+        if priority == 10 { return true }
+        else { return false }
+    }
     func appearSetPriority(){
-        if priority == 0 {
-            if dateToDMY(input: birthday, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-                priority = 4
-            } else if dateToDMY(input: birthday, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-                priority = 2
-            }
-        } else if priority == 1 {
-            if dateToDMY(input: birthday, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
+        if isPinned() {
+            if isBirthdayToday() || isAnniversaryToday() {
                 priority = 5
-            } else if dateToDMY(input: birthday, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
+                print("appearSetPriority: priority set to 5")
+            } else if isBirthdayTomorrow() || isBirthdayTomorrow() {
                 priority = 3
-            }
-        } else if priority == 2 {
-            if dateToDMY(input: birthday, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-                priority = 4
-            } else if dateToDMY(input: birthday, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-                priority = 2
-            } else {
-                priority = 0
-            }
-        } else if priority == 3 {
-            if dateToDMY(input: birthday, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-                priority = 5
-            } else if dateToDMY(input: birthday, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-                priority = 3
+                print("appearSetPriority: priority set to 3")
             } else {
                 priority = 1
+                print("appearSetPriority: priority set to 1")
             }
-        } else if priority == 4 {
-            if dateToDMY(input: birthday, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
+        } else {
+            if isBirthdayToday() || isAnniversaryToday() {
                 priority = 4
-            } else if dateToDMY(input: birthday, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
+                print("appearSetPriority: priority set to 4")
+            } else if isBirthdayTomorrow() || isBirthdayTomorrow() {
                 priority = 2
+                print("appearSetPriority: priority set to 2")
             } else {
                 priority = 0
-            }
-        } else if priority == 5 {
-            if dateToDMY(input: birthday, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-                priority = 5
-            } else if dateToDMY(input: birthday, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-                priority = 3
-            } else {
-                priority = 1
+                print("appearSetPriority: priority set to 0")
             }
         }
     }
@@ -108,16 +126,6 @@ final class person: Identifiable {
     init(personUUID: UUID = UUID(), priority: Int = 0, personid: Int = 0, personModelCreationDate: Date = .now, name: String = "", birthday: Date = .now, hexAccentColor: String = "FFFFFF", accentColorIsDefaultForeground: Bool = true, shownThumbnail: Data = Data(), slideImages: [Data]? = [Data](), socials: [socials]? = [], relationshipStatus: RelationshipStatus = .crush, currentRelationshipStartDate: Date = .now, personDescription: String = "") {
         self.personUUID = personUUID
         self.priority = priority
-        /*
-         Priority 10: Self Profile
-         Priority 5: 3 but pinned
-         Priority 4: Birthday Today OR Anniversary Today Conditional
-         Priority 3: 2 but pinned
-         Priority 2: Birthday Tomorrow OR Anniversary Tomorrow Conditional
-         Priority 1: Pin
-         Priority 0: Normal
-         Priority -1: Send person to be deleted :(
-         */
         self.personid = personid
         self.personModelCreationDate = personModelCreationDate
         self.name = name

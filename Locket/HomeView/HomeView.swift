@@ -48,22 +48,22 @@ struct HomeView: View {
     var personmodel: [person]{
         if searchString.isEmpty == false {
             if searchFilter == .showAll {
-                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 10}
+                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.isSelfProfile() != true}
             } else {
-                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.priority != 10 && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
+                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.isSelfProfile() != true && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
             }
         } else {
             if searchFilter == .showAll {
-                return unQueriedPerson.filter {$0.priority != 10}
+                return unQueriedPerson.filter {$0.isSelfProfile() != true}
             } else {
-                return unQueriedPerson.filter {$0.priority != 10 && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
+                return unQueriedPerson.filter {$0.isSelfProfile() != true && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
             }
         }
     }
     
     var selfPerson: person? {
         for person in unQueriedPerson {
-            if person.priority == 10 {
+            if person.isSelfProfile() {
                 selfProfileExists = true
                 return person
             }
@@ -143,11 +143,10 @@ struct HomeView: View {
                                     name: person.name,
                                     birthday: person.birthday,
                                     relationshipStatus: person.relationshipStatus,
-                                    conditionalActivate: person.checkConditional(),
                                     accentColor: returnAccentColor(
                                         isFgMatch: person.accentColorIsDefaultForeground,
                                         Hex: person.hexAccentColor),
-                                    shownThumbnail: person.shownThumbnail)
+                                    shownThumbnail: person.shownThumbnail, priority: person.priority)
                             }
                             .onAppear() {
                                 if person.priority == -1 {
