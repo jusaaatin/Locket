@@ -97,31 +97,29 @@ final class person: Identifiable {
         if priority == 10 { return true }
         else { return false }
     }
-    func appearSetPriority(){
+    func prioritySetter(){
+        priority = returnPriority()
+    }
+    func returnPriority() -> Int {
         if isPinned() {
             if isBirthdayToday() || isAnniversaryToday() {
-                priority = 5
-                print("appearSetPriority: priority set to 5")
-            } else if isBirthdayTomorrow() || isBirthdayTomorrow() {
-                priority = 3
-                print("appearSetPriority: priority set to 3")
+                return 5
+            } else if isBirthdayTomorrow() || isAnniversaryTomorrow() {
+                return 3
             } else {
-                priority = 1
-                print("appearSetPriority: priority set to 1")
+                return 1
             }
         } else {
             if isBirthdayToday() || isAnniversaryToday() {
-                priority = 4
-                print("appearSetPriority: priority set to 4")
-            } else if isBirthdayTomorrow() || isBirthdayTomorrow() {
-                priority = 2
-                print("appearSetPriority: priority set to 2")
+                return 4
+            } else if isBirthdayTomorrow() || isAnniversaryTomorrow() {
+                return 2
             } else {
-                priority = 0
-                print("appearSetPriority: priority set to 0")
+                return 0
             }
         }
     }
+
     
     init(personUUID: UUID = UUID(), priority: Int = 0, personid: Int = 0, personModelCreationDate: Date = .now, name: String = "", birthday: Date = .now, hexAccentColor: String = "FFFFFF", accentColorIsDefaultForeground: Bool = true, shownThumbnail: Data = Data(), slideImages: [Data]? = [Data](), socials: [socials]? = [], relationshipStatus: RelationshipStatus = .crush, currentRelationshipStartDate: Date = .now, personDescription: String = "") {
         self.personUUID = personUUID

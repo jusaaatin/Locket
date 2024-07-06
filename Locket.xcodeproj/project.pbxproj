@@ -26,7 +26,6 @@
 		D095B3822C160C58007532E2 /* ProfileViewHeaderImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3812C160C58007532E2 /* ProfileViewHeaderImage.swift */; };
 		D095B3842C162F62007532E2 /* ProfileViewName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3832C162F62007532E2 /* ProfileViewName.swift */; };
 		D095B3882C16EAA0007532E2 /* ProfileViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3872C16EAA0007532E2 /* ProfileViewHeader.swift */; };
-		D095B38A2C16EEB3007532E2 /* ProfileViewInfo03.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */; };
 		D095B38C2C16F7EE007532E2 /* Universal Declarations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D095B38B2C16F7ED007532E2 /* Universal Declarations.swift */; };
 		D0A8F5422C15FD1200429F1B /* LocketApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5412C15FD1200429F1B /* LocketApp.swift */; };
 		D0A8F5442C15FD1200429F1B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5432C15FD1200429F1B /* ContentView.swift */; };
@@ -39,6 +38,7 @@
 		D0C845582C3052430079789F /* ProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C845572C3052430079789F /* ProfileViewSocials.swift */; };
 		D0CF8B1F2C32CE2600EC59B3 /* ProfileViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */; };
 		D0CF8B212C33053600EC59B3 /* ProfileViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF8B202C33053600EC59B3 /* ProfileViewDescription.swift */; };
+		D0DC9E662C399C3C0028CFD1 /* ProfileViewDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC9E652C399C3C0028CFD1 /* ProfileViewDebug.swift */; };
 		D0DF90762C240DE100803AED /* AddProfileViewNewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */; };
 		D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF90772C24133700803AED /* AddProfileViewSocials.swift */; };
 		D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */; };
@@ -84,7 +84,6 @@
 		D095B3812C160C58007532E2 /* ProfileViewHeaderImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewHeaderImage.swift; sourceTree = "<group>"; };
 		D095B3832C162F62007532E2 /* ProfileViewName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewName.swift; sourceTree = "<group>"; };
 		D095B3872C16EAA0007532E2 /* ProfileViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewHeader.swift; sourceTree = "<group>"; };
-		D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewInfo03.swift; sourceTree = "<group>"; };
 		D095B38B2C16F7ED007532E2 /* Universal Declarations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Universal Declarations.swift"; sourceTree = "<group>"; };
 		D0A8F53E2C15FD1200429F1B /* Locket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Locket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A8F5412C15FD1200429F1B /* LocketApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketApp.swift; sourceTree = "<group>"; };
@@ -101,6 +100,7 @@
 		D0C845572C3052430079789F /* ProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewSocials.swift; sourceTree = "<group>"; };
 		D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewImages.swift; sourceTree = "<group>"; };
 		D0CF8B202C33053600EC59B3 /* ProfileViewDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewDescription.swift; sourceTree = "<group>"; };
+		D0DC9E652C399C3C0028CFD1 /* ProfileViewDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewDebug.swift; sourceTree = "<group>"; };
 		D0DF90752C240DE100803AED /* AddProfileViewNewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewNewSocials.swift; sourceTree = "<group>"; };
 		D0DF90772C24133700803AED /* AddProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewSocials.swift; sourceTree = "<group>"; };
 		D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewRelationships.swift; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 				D0C845572C3052430079789F /* ProfileViewSocials.swift */,
 				D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */,
 				D0CF8B202C33053600EC59B3 /* ProfileViewDescription.swift */,
-				D095B3892C16EEB3007532E2 /* ProfileViewInfo03.swift */,
+				D0DC9E652C399C3C0028CFD1 /* ProfileViewDebug.swift */,
 				D095B38E2C17194B007532E2 /* Subcomponents */,
 			);
 			path = ProfileView;
@@ -420,9 +420,9 @@
 				D0A8F5442C15FD1200429F1B /* ContentView.swift in Sources */,
 				D095B3882C16EAA0007532E2 /* ProfileViewHeader.swift in Sources */,
 				D07F15EB2C1BF0C3001D1538 /* FilterButtonLeading.swift in Sources */,
-				D095B38A2C16EEB3007532E2 /* ProfileViewInfo03.swift in Sources */,
 				D0CF8B1F2C32CE2600EC59B3 /* ProfileViewImages.swift in Sources */,
 				D07F15ED2C1C0D7D001D1538 /* filterButtonTrailingRow.swift in Sources */,
+				D0DC9E662C399C3C0028CFD1 /* ProfileViewDebug.swift in Sources */,
 				D0EEF28F2C313BE900F5DF0B /* EditProfileView.swift in Sources */,
 				D01A55602C20175100C0B98D /* RelationshipStatusPickerButton.swift in Sources */,
 				D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */,

@@ -141,7 +141,6 @@ struct EditProfileView: View {
         bindedPerson.currentRelationshipStartDate = currentRelationshipStartDate
         bindedPerson.personDescription = personDescription
         bindedPerson.priority = priority
-        bindedPerson.appearSetPriority()
     }
     func returnSocialString(social: [socials], which: Int) -> [String] {
         if which == 1 {
@@ -403,6 +402,7 @@ struct EditProfileView: View {
             .navigationTitle("Edit \(bindedPerson.name)")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
+                priority = bindedPerson.priority
                 name = bindedPerson.name
                 bDay = dateToDMY(input: bindedPerson.birthday, type: 1)
                 bMonth = dateToDMY(input: bindedPerson.birthday, type: 2)

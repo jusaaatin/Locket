@@ -134,7 +134,7 @@ struct HomeView: View {
                                 )
                                 .onAppear {
                                     withAnimation(.snappy) { currentPage = .profile }
-                                    person.appearSetPriority()
+                                    person.prioritySetter()
                                 }
                             } label: {
                                 HomeViewProfilePreview04(

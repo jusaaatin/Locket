@@ -54,7 +54,6 @@ struct ProfileView: View {
             return Color(hex: "\(Hex)") ?? Color("Foreground-match")
         }
     }
-    
     func dateToDMY(input: Date) -> String {
         let DMYFormatter = DateFormatter()
         DMYFormatter.dateFormat = "d MMM y"
@@ -84,8 +83,6 @@ struct ProfileView: View {
                             .id(updater)
                             .onAppear {
                                 withAnimation(.snappy) { currentPage = .profile }
-                                print("appeared")
-                                
                                 currentRSStatus = bindPerson.relationshipStatus
                                 demoStartDate = bindPerson.currentRelationshipStartDate
                                 name = bindPerson.name
@@ -96,6 +93,7 @@ struct ProfileView: View {
                                 mainImage = bindPerson.shownThumbnail
                                 slideImages = bindPerson.slideImages ?? [Data]()
                                 socials = bindPerson.socials ?? []
+                                bindPerson.prioritySetter()
                                 priority = bindPerson.priority
                                 updater += 1
                                 
@@ -143,6 +141,18 @@ struct ProfileView: View {
                             Spacer()
                         }.padding(.top, 40)
                         ProfileViewDescription(description: description)
+                            .id(updater)
+                            .padding([.bottom, .leading, .trailing])
+                            .padding(.top, -30)
+                        HStack {
+                            Text("        Debug")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.gray)
+                                .padding(.top, -44)
+                                .padding(.bottom, -5)
+                            Spacer()
+                        }.padding(.top, 40)
+                        ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: demoStartDate, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: currentRSStatus, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [Data](), modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
                             .id(updater)
                             .padding([.bottom, .leading, .trailing])
                             .padding(.top, -30)
@@ -226,6 +236,7 @@ struct ProfileView: View {
                         Section {
                             Button(action: {
                                 bindPerson.pinToggle()
+                                updater += 1
                             }, label: {
                                 Label(bindPerson.isPinned() ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.isPinned() ? "pin.fill" : "pin")
                             })
