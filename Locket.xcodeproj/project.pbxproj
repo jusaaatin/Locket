@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D01A55522C1CB54C00C0B98D /* addProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A55512C1CB54C00C0B98D /* addProfileButton.swift */; };
+		D01A55522C1CB54C00C0B98D /* AddProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A55512C1CB54C00C0B98D /* AddProfileButton.swift */; };
 		D01A55562C1DFF3000C0B98D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A55552C1DFF3000C0B98D /* Models.swift */; };
 		D01A555A2C1F65AC00C0B98D /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A55592C1F65AC00C0B98D /* AddProfileView.swift */; };
 		D01A55602C20175100C0B98D /* RelationshipStatusPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01A555F2C20175100C0B98D /* RelationshipStatusPickerButton.swift */; };
@@ -45,7 +45,6 @@
 		D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */; };
 		D0DF907E2C249FDB00803AED /* RelationshipStartDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907D2C249FDB00803AED /* RelationshipStartDatePicker.swift */; };
 		D0EEF28F2C313BE900F5DF0B /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EEF28E2C313BE900F5DF0B /* EditProfileView.swift */; };
-		D0FB04FE2C189AC6006BC164 /* tabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FB04FD2C189AC6006BC164 /* tabBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D01A55512C1CB54C00C0B98D /* addProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addProfileButton.swift; sourceTree = "<group>"; };
+		D01A55512C1CB54C00C0B98D /* AddProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileButton.swift; sourceTree = "<group>"; };
 		D01A55552C1DFF3000C0B98D /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		D01A55592C1F65AC00C0B98D /* AddProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
 		D01A555F2C20175100C0B98D /* RelationshipStatusPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipStatusPickerButton.swift; sourceTree = "<group>"; };
@@ -108,7 +107,6 @@
 		D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewRelationships.swift; sourceTree = "<group>"; };
 		D0DF907D2C249FDB00803AED /* RelationshipStartDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipStartDatePicker.swift; sourceTree = "<group>"; };
 		D0EEF28E2C313BE900F5DF0B /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
-		D0FB04FD2C189AC6006BC164 /* tabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +134,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D00A99FB2C39D203002EB426 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				D01A55552C1DFF3000C0B98D /* Models.swift */,
+				D095B38B2C16F7ED007532E2 /* Universal Declarations.swift */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
 		D01A555D2C20171F00C0B98D /* AddProfileView */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,12 +239,10 @@
 		D0A8F5402C15FD1200429F1B /* Locket */ = {
 			isa = PBXGroup;
 			children = (
-				D01A55552C1DFF3000C0B98D /* Models.swift */,
-				D095B38B2C16F7ED007532E2 /* Universal Declarations.swift */,
 				D0A8F5412C15FD1200429F1B /* LocketApp.swift */,
 				D0A8F5432C15FD1200429F1B /* ContentView.swift */,
-				D0FB04FD2C189AC6006BC164 /* tabBar.swift */,
-				D01A55512C1CB54C00C0B98D /* addProfileButton.swift */,
+				D01A55512C1CB54C00C0B98D /* AddProfileButton.swift */,
+				D00A99FB2C39D203002EB426 /* Global */,
 				D070B70E2C1A116600442B16 /* HomeView */,
 				D095B38D2C17193F007532E2 /* ProfileView */,
 				D01A555D2C20171F00C0B98D /* AddProfileView */,
@@ -414,7 +419,7 @@
 				D052DF452C2DA30300AAFB0F /* AddProfileViewNotes.swift in Sources */,
 				D0DF90762C240DE100803AED /* AddProfileViewNewSocials.swift in Sources */,
 				D079763B2C25644F00CC35BF /* AddProfileViewPerson.swift in Sources */,
-				D01A55522C1CB54C00C0B98D /* addProfileButton.swift in Sources */,
+				D01A55522C1CB54C00C0B98D /* AddProfileButton.swift in Sources */,
 				D095B3822C160C58007532E2 /* ProfileViewHeaderImage.swift in Sources */,
 				D079763D2C25683A00CC35BF /* AddProfileColorPicker.swift in Sources */,
 				D01A555A2C1F65AC00C0B98D /* AddProfileView.swift in Sources */,
@@ -433,7 +438,6 @@
 				D01A55562C1DFF3000C0B98D /* Models.swift in Sources */,
 				D0C845582C3052430079789F /* ProfileViewSocials.swift in Sources */,
 				D0DC9E682C39C3150028CFD1 /* ProfileViewConditional.swift in Sources */,
-				D0FB04FE2C189AC6006BC164 /* tabBar.swift in Sources */,
 				D0C845562C303F9D0079789F /* ProfileViewRelationship.swift in Sources */,
 				D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */,
 				D070B7152C1B684400442B16 /* Filterbutton.swift in Sources */,
