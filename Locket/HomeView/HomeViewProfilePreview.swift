@@ -90,6 +90,7 @@ struct HomeViewProfilePreview: View {
                     }
                     Text(name)
                         .offset(y: 4)
+                        .offset(y: mainWidth == 200 ? 5: 0)
                         .padding([.leading, .trailing])
                         .font(.system(size: 32, weight: .semibold, design: .serif))
                         .minimumScaleFactor(0.01)
@@ -100,10 +101,12 @@ struct HomeViewProfilePreview: View {
                     if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
                         HStack {
                             Image(systemName: "gift")
+                                .frame(height: 12)
                             Text(bindPerson.isBirthdayToday() ? "Today" : "Tomorrow")
                         }
                         .font(.system(size: 12, weight: .semibold, design: .monospaced))
                         .foregroundStyle(.red.mix(with: .white, by: 0.3))
+                        .offset(y: mainWidth == 200 ? 5: 0)
                     } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
                         HStack {
                             Text("Anniversary").padding(.leading, -5)
@@ -111,13 +114,16 @@ struct HomeViewProfilePreview: View {
                         }
                         .font(.system(size: 11, weight: .semibold, design: .monospaced))
                         .foregroundStyle(.red.mix(with: .white, by: 0.3))
+                        .offset(y: mainWidth == 200 ? 5: 0)
                     } else {
                         HStack {
                             Image(systemName: "gift")
+                                .frame(height: 12)
                             Text(dateToDM(input: birthday))
                         }
                         .font(.system(size: 12, weight: .semibold, design: .monospaced))
                         .foregroundStyle(.gray)
+                        .offset(y: mainWidth == 200 ? 5: 0)
                     }
                     Spacer()
                 }
@@ -153,7 +159,7 @@ struct HomeViewProfilePreview: View {
                             .shadow(radius: 5)
                             .padding(4)
                             .offset(y:1.5)
-                            .foregroundStyle(returnRightIconColor())
+                          //  .foregroundStyle(returnRightIconColor())
                     }
                     Spacer()
                 }
