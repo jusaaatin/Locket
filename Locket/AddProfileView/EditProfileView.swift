@@ -150,7 +150,7 @@ struct EditProfileView: View {
         }
     }
     func returnSocialType(social: [socials]) -> [socialPlatforms] {
-        return social.map { $0.socialPlatform}
+        return social.map { $0.socialPlatform }
     }
     func dateToDMY(input: Date, type: Int) -> String {
         let DMYFormatter = DateFormatter()
