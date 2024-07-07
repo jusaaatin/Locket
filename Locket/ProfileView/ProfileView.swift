@@ -49,6 +49,8 @@ struct ProfileView: View {
 
     @State var priority: Int
     
+    let screenWidth: Int = Int(UIScreen.main.bounds.width)
+    
     private func returnAccentColor(isFgMatch: Bool, Hex: String) -> Color{
         if isFgMatch {
             return Color("Foreground-match")
@@ -73,212 +75,435 @@ struct ProfileView: View {
     }
     
     
+    
     var body: some View {
-        NavigationStack {
-            ZStack(alignment: .topLeading) {
-                ScrollView {
-                    VStack {
-                        ProfileViewHeader(currentRSStatus: currentRSStatus, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
-                            .onDisappear() {
-                                withAnimation(.snappy) { currentPage = .home }
-                            }
-                            .id(updater)
-                            .onAppear {
-                                withAnimation(.snappy) { currentPage = .profile }
-                                currentRSStatus = bindPerson.relationshipStatus
-                                demoStartDate = bindPerson.currentRelationshipStartDate
-                                name = bindPerson.name
-                                birthday = bindPerson.birthday
-                                accentColor = returnAccentColor(
-                                    isFgMatch: bindPerson.accentColorIsDefaultForeground,
-                                    Hex: bindPerson.hexAccentColor)
-                                mainImage = bindPerson.shownThumbnail
-                                slideImages = bindPerson.slideImages ?? [Data]()
-                                socials = bindPerson.socials ?? []
-                                priority = bindPerson.priority
-                                updater += 1
-                                
-                                if bindPerson.priority == -1 {
-                                    dismiss()
+        if UIDevice.current.userInterfaceIdiom == .phone && screenWidth < 400 {
+            NavigationStack {
+                ZStack(alignment: .topLeading) {
+                    ScrollView {
+                        VStack {
+                            ProfileViewHeader(currentRSStatus: currentRSStatus, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
+                                .onDisappear() {
+                                    withAnimation(.snappy) { currentPage = .home }
                                 }
-                            }
-                        ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
-                            .padding([.leading, .trailing, .bottom])
-                            .padding(.top, -30)
-                            .onAppear {
-                                withAnimation(.snappy) { currentPage = .profile }
-                            }
-                            .id(updater)
-                        HStack {
-                            Text("        Socials")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundStyle(.gray)
-                                .padding(.top, -44)
-                                .padding(.bottom, -5)
-                            Spacer()
-                        }.padding(.top, 40)
-                        ProfileViewSocials(socials: socials, demo: demo)
-                            .id(updater)
-                            .padding([.bottom, .leading, .trailing])
-                            .padding(.top, -30)
-                        HStack {
-                            Text("        Images")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundStyle(.gray)
-                                .padding(.top, -44)
-                                .padding(.bottom, -5)
-                            Spacer()
-                        }.padding(.top, 40)
-                        ProfileViewImages(demo: false, mainImage: mainImage, slideImages: slideImages)
-                            .id(updater)
-                            .padding([.bottom, .leading, .trailing])
-                            .padding(.top, -30)
-                        HStack {
-                            Text("        Description")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundStyle(.gray)
-                                .padding(.top, -44)
-                                .padding(.bottom, -5)
-                            Spacer()
-                        }.padding(.top, 40)
-                        ProfileViewDescription(description: description)
-                            .id(updater)
-                            .padding([.bottom, .leading, .trailing])
-                            .padding(.top, -30)
-                        if debug {
+                                .id(updater)
+                                .onAppear {
+                                    withAnimation(.snappy) { currentPage = .profile }
+                                    currentRSStatus = bindPerson.relationshipStatus
+                                    demoStartDate = bindPerson.currentRelationshipStartDate
+                                    name = bindPerson.name
+                                    birthday = bindPerson.birthday
+                                    accentColor = returnAccentColor(
+                                        isFgMatch: bindPerson.accentColorIsDefaultForeground,
+                                        Hex: bindPerson.hexAccentColor)
+                                    mainImage = bindPerson.shownThumbnail
+                                    slideImages = bindPerson.slideImages ?? [Data]()
+                                    socials = bindPerson.socials ?? []
+                                    priority = bindPerson.priority
+                                    updater += 1
+                                    
+                                    if bindPerson.priority == -1 {
+                                        dismiss()
+                                    }
+                                }
+                            ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
+                                .padding([.leading, .trailing, .bottom])
+                                .padding(.top, -30)
+                                .onAppear {
+                                    withAnimation(.snappy) { currentPage = .profile }
+                                }
+                                .id(updater)
                             HStack {
-                                Text("        Debug")
+                                Text("        Socials")
                                     .font(.system(size: 14, weight: .semibold))
                                     .foregroundStyle(.gray)
                                     .padding(.top, -44)
                                     .padding(.bottom, -5)
                                 Spacer()
                             }.padding(.top, 40)
-                            ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: demoStartDate, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: currentRSStatus, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [Data](), modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
+                            ProfileViewSocials(socials: socials, demo: demo)
                                 .id(updater)
                                 .padding([.bottom, .leading, .trailing])
                                 .padding(.top, -30)
-                        }
-                        Text("\(name)'s contact created on \(dateToDMY(input: creationDate))")
-                            .padding()
-                            .multilineTextAlignment(.center)
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundStyle(.gray.opacity(0.8))
-                        Image(systemName: "figure.walk.motion")
-                            .font(.system(size: 60, weight: .semibold, design: .rounded))
-                            .foregroundStyle(.gray.opacity(0.5))
-                            .padding()
-                            .padding(.bottom, 30)
-                            .alert("Delete \(name)?", isPresented: $showDeleteConfirmation) { //delete
-                                Button("Delete", role: .destructive) {
-                                    modelContext.delete(bindPerson)
-                                    dismiss()
-                                }
-                            } message: {
-                                Text("Are you sure you want to delete \(name)? Once deleted, this contact can not be recovered")
+                            HStack {
+                                Text("        Images")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundStyle(.gray)
+                                    .padding(.top, -44)
+                                    .padding(.bottom, -5)
+                                Spacer()
+                            }.padding(.top, 40)
+                            ProfileViewImages(demo: false, mainImage: mainImage, slideImages: slideImages)
+                                .id(updater)
+                                .padding([.bottom, .leading, .trailing])
+                                .padding(.top, -30)
+                            HStack {
+                                Text("        Description")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundStyle(.gray)
+                                    .padding(.top, -44)
+                                    .padding(.bottom, -5)
+                                Spacer()
+                            }.padding(.top, 40)
+                            ProfileViewDescription(description: description)
+                                .id(updater)
+                                .padding([.bottom, .leading, .trailing])
+                                .padding(.top, -30)
+                            if debug {
+                                HStack {
+                                    Text("        Debug")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundStyle(.gray)
+                                        .padding(.top, -44)
+                                        .padding(.bottom, -5)
+                                    Spacer()
+                                }.padding(.top, 40)
+                                ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: demoStartDate, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: currentRSStatus, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [Data](), modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
+                                    .id(updater)
+                                    .padding([.bottom, .leading, .trailing])
+                                    .padding(.top, -30)
                             }
-                            .alert("Duplicate \(name)?", isPresented: $showDuplicateConfirmation) {
-                                Button("Cancel", role: .cancel) { }
-                                Button("Duplicate") {
-                                    let insertedperson = person(
-                                        personid: generatePersonID(),
-                                        name: name,
-                                        birthday: birthday,
-                                        hexAccentColor: accentColor.toHex() ?? "FFFFFF",
-                                        accentColorIsDefaultForeground: accentColorDefaultFgCheck(),
-                                        shownThumbnail: mainImage,
-                                        slideImages: slideImages,
-                                        socials: socials,
-                                        relationshipStatus: currentRSStatus,
-                                        currentRelationshipStartDate: demoStartDate,
-                                        personDescription: description)
-                                    modelContext.insert(insertedperson)
-                                    print("success on duplicating")
-                                    print("\(name)")
+                            Text("\(name)'s contact created on \(dateToDMY(input: creationDate))")
+                                .padding()
+                                .multilineTextAlignment(.center)
+                                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                .foregroundStyle(.gray.opacity(0.8))
+                            Image(systemName: "figure.walk.motion")
+                                .font(.system(size: 60, weight: .semibold, design: .rounded))
+                                .foregroundStyle(.gray.opacity(0.5))
+                                .padding()
+                                .padding(.bottom, 30)
+                                .alert("Delete \(name)?", isPresented: $showDeleteConfirmation) { //delete
+                                    Button("Delete", role: .destructive) {
+                                        modelContext.delete(bindPerson)
+                                        dismiss()
+                                    }
+                                } message: {
+                                    Text("Are you sure you want to delete \(name)? Once deleted, this contact can not be recovered")
                                 }
-                            } message: {
-                                Text("Are you sure you want to duplicate \(name)?")
+                                .alert("Duplicate \(name)?", isPresented: $showDuplicateConfirmation) {
+                                    Button("Cancel", role: .cancel) { }
+                                    Button("Duplicate") {
+                                        let insertedperson = person(
+                                            personid: generatePersonID(),
+                                            name: name,
+                                            birthday: birthday,
+                                            hexAccentColor: accentColor.toHex() ?? "FFFFFF",
+                                            accentColorIsDefaultForeground: accentColorDefaultFgCheck(),
+                                            shownThumbnail: mainImage,
+                                            slideImages: slideImages,
+                                            socials: socials,
+                                            relationshipStatus: currentRSStatus,
+                                            currentRelationshipStartDate: demoStartDate,
+                                            personDescription: description)
+                                        modelContext.insert(insertedperson)
+                                        print("success on duplicating")
+                                        print("\(name)")
+                                    }
+                                } message: {
+                                    Text("Are you sure you want to duplicate \(name)?")
+                                }
+                        }
+                    }.scrollIndicators(.hidden)
+                    HStack {
+                        Button {
+                            withAnimation(.snappy) { currentPage = .home }
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Image(systemName: "chevron.left")
                             }
-                    }
-                }.scrollIndicators(.hidden)
-                HStack {
-                    Button {
-                        withAnimation(.snappy) { currentPage = .home }
-                        dismiss()
-                    } label: {
-                        HStack {
-                            Image(systemName: "chevron.left")
+                            .padding([.leading, .trailing])
+                            .foregroundStyle(.black)
+                            .background {
+                                Circle()
+                                    .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
+                                    .frame(width: 32, height: 32)
+                            }.frame(width: 42, height: 42)
                         }
-                        .padding([.leading, .trailing])
-                        .foregroundStyle(.black)
-                        .background {
-                            Circle()
-                                .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
-                                .frame(width: 32, height: 32)
-                        }.frame(width: 42, height: 42)
-                    }
-                    Spacer()
-                    NavigationLink {
-                        EditProfileView(debugOn: debug, bindedPerson: bindPerson)
-                            .navigationBarBackButtonHidden()
-                            .id(UUID())
-                    } label: {
-                        HStack {
-                            Text("Edit").bold()
-                        }.frame(height: 42)
-                        .padding([.leading, .trailing])
-                        .foregroundStyle(.black)
-                        .background {
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
-                                .frame(height: 32)
+                        Spacer()
+                        NavigationLink {
+                            EditProfileView(debugOn: debug, bindedPerson: bindPerson)
+                                .navigationBarBackButtonHidden()
+                                .id(UUID())
+                        } label: {
+                            HStack {
+                                Text("Edit").bold()
+                            }.frame(height: 42)
+                            .padding([.leading, .trailing])
+                            .foregroundStyle(.black)
+                            .background {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
+                                    .frame(height: 32)
+                            }
                         }
-                    }
-                    .id(UUID())
-                    Menu {
-                        Section {
-                            Button(action: {
-                                bindPerson.pinToggle()
-                                updater += 1
-                            }, label: {
-                                Label(bindPerson.isPinned() ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.isPinned() ? "pin.fill" : "pin")
-                            })
-                            Button(action: {
-                                debug.toggle()
-                                updater += 1
-                            }, label: {
-                                Label(debug ? "Turn Off Debug" : "Turn On Debug" , systemImage: debug ? "ladybug.fill" : "ladybug")
-                            })
-                        }
-                        Section {
-                            Button(action: {
-                                showDuplicateConfirmation = true
-                            }, label: {
-                                Label("Duplicate \(name)", systemImage: "square.on.square")
-                            })
-                            Button(role: .destructive, action: {
-                                showDeleteConfirmation = true
-                            }, label: {
-                                Label("Delete \(name)", systemImage: "trash")
-                            })
-                        }
-                    } label: {
-                        HStack {
-                            Image(systemName: "ellipsis")
-                        }
-                        .padding([.leading, .trailing])
-                        .foregroundStyle(.black)
-                        .background {
-                            Circle()
-                                .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
-                                .frame(width: 32, height: 32)
-                        }
-                        .frame(width: 42, height: 42)
-                    }.padding(.leading, -4)
-                    .id(UUID())
-                }.padding().offset(y: 45)
+                        .id(UUID())
+                        Menu {
+                            Section {
+                                Button(action: {
+                                    bindPerson.pinToggle()
+                                    updater += 1
+                                }, label: {
+                                    Label(bindPerson.isPinned() ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.isPinned() ? "pin.fill" : "pin")
+                                })
+                                Button(action: {
+                                    debug.toggle()
+                                    updater += 1
+                                }, label: {
+                                    Label(debug ? "Turn Off Debug" : "Turn On Debug" , systemImage: debug ? "ladybug.fill" : "ladybug")
+                                })
+                            }
+                            Section {
+                                Button(action: {
+                                    showDuplicateConfirmation = true
+                                }, label: {
+                                    Label("Duplicate \(name)", systemImage: "square.on.square")
+                                })
+                                Button(role: .destructive, action: {
+                                    showDeleteConfirmation = true
+                                }, label: {
+                                    Label("Delete \(name)", systemImage: "trash")
+                                })
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: "ellipsis")
+                            }
+                            .padding([.leading, .trailing])
+                            .foregroundStyle(.black)
+                            .background {
+                                Circle()
+                                    .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
+                                    .frame(width: 32, height: 32)
+                            }
+                            .frame(width: 42, height: 42)
+                        }.padding(.leading, -4)
+                        .id(UUID())
+                    }.padding().offset(y: 45)
+                }
+                .ignoresSafeArea()
             }
-            .ignoresSafeArea()
+        } else {
+            HStack(spacing: 0) {
+                NavigationStack {
+                    ZStack(alignment: .topLeading) {
+                        ScrollView {
+                            VStack {
+                                ProfileViewHeader(currentRSStatus: currentRSStatus, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
+                                    .onDisappear() {
+                                        withAnimation(.snappy) { currentPage = .home }
+                                    }
+                                    .id(updater)
+                                    .onAppear {
+                                        withAnimation(.snappy) { currentPage = .profile }
+                                        currentRSStatus = bindPerson.relationshipStatus
+                                        demoStartDate = bindPerson.currentRelationshipStartDate
+                                        name = bindPerson.name
+                                        birthday = bindPerson.birthday
+                                        accentColor = returnAccentColor(
+                                            isFgMatch: bindPerson.accentColorIsDefaultForeground,
+                                            Hex: bindPerson.hexAccentColor)
+                                        mainImage = bindPerson.shownThumbnail
+                                        slideImages = bindPerson.slideImages ?? [Data]()
+                                        socials = bindPerson.socials ?? []
+                                        priority = bindPerson.priority
+                                        updater += 1
+                                        
+                                        if bindPerson.priority == -1 {
+                                            dismiss()
+                                        }
+                                    }
+                                HStack {
+                                    Text("        Images")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundStyle(.gray)
+                                        .padding(.top, -44)
+                                        .padding(.bottom, -5)
+                                    Spacer()
+                                }.padding(.top, 40)
+                                ProfileViewImages(demo: false, mainImage: mainImage, slideImages: slideImages)
+                                    .id(updater)
+                                    .padding([.bottom, .leading, .trailing])
+                                    .padding(.top, -30)
+                            }
+                        }.scrollIndicators(.hidden)
+                        HStack {
+                            Button {
+                                withAnimation(.snappy) { currentPage = .home }
+                                dismiss()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "chevron.left")
+                                }
+                                .padding([.leading, .trailing])
+                                .foregroundStyle(.black)
+                                .background {
+                                    Circle()
+                                        .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
+                                        .frame(width: 32, height: 32)
+                                }.frame(width: 42, height: 42)
+                            }
+                            Spacer()
+                        }.padding().offset(y: 45)
+                    }
+                    .ignoresSafeArea()
+                }
+                NavigationStack {
+                    ZStack(alignment: .topLeading) {
+                        ScrollView {
+                            VStack {
+                                ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
+                                    .padding(.top, 20)
+                                    .padding()
+                                    .onAppear {
+                                        withAnimation(.snappy) { currentPage = .profile }
+                                    }
+                                    .id(updater)
+                                HStack {
+                                    Text("        Socials")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundStyle(.gray)
+                                        .padding(.top, -44)
+                                        .padding(.bottom, -5)
+                                    Spacer()
+                                }.padding(.top, 40)
+                                ProfileViewSocials(socials: socials, demo: demo)
+                                    .id(updater)
+                                    .padding([.bottom, .leading, .trailing])
+                                    .padding(.top, -30)
+                                HStack {
+                                    Text("        Description")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundStyle(.gray)
+                                        .padding(.top, -44)
+                                        .padding(.bottom, -5)
+                                    Spacer()
+                                }.padding(.top, 40)
+                                ProfileViewDescription(description: description)
+                                    .id(updater)
+                                    .padding([.bottom, .leading, .trailing])
+                                    .padding(.top, -30)
+                                if debug {
+                                    HStack {
+                                        Text("        Debug")
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .foregroundStyle(.gray)
+                                            .padding(.top, -44)
+                                            .padding(.bottom, -5)
+                                        Spacer()
+                                    }.padding(.top, 40)
+                                    ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: demoStartDate, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: currentRSStatus, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [Data](), modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
+                                        .id(updater)
+                                        .padding([.bottom, .leading, .trailing])
+                                        .padding(.top, -30)
+                                }
+                                Text("\(name)'s contact created on \(dateToDMY(input: creationDate))")
+                                    .padding()
+                                    .multilineTextAlignment(.center)
+                                    .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                    .foregroundStyle(.gray.opacity(0.8))
+                                Image(systemName: "figure.walk.motion")
+                                    .font(.system(size: 60, weight: .semibold, design: .rounded))
+                                    .foregroundStyle(.gray.opacity(0.5))
+                                    .padding()
+                                    .padding(.bottom, 30)
+                                    .alert("Delete \(name)?", isPresented: $showDeleteConfirmation) { //delete
+                                        Button("Delete", role: .destructive) {
+                                            modelContext.delete(bindPerson)
+                                            dismiss()
+                                        }
+                                    } message: {
+                                        Text("Are you sure you want to delete \(name)? Once deleted, this contact can not be recovered")
+                                    }
+                                    .alert("Duplicate \(name)?", isPresented: $showDuplicateConfirmation) {
+                                        Button("Cancel", role: .cancel) { }
+                                        Button("Duplicate") {
+                                            let insertedperson = person(
+                                                personid: generatePersonID(),
+                                                name: name,
+                                                birthday: birthday,
+                                                hexAccentColor: accentColor.toHex() ?? "FFFFFF",
+                                                accentColorIsDefaultForeground: accentColorDefaultFgCheck(),
+                                                shownThumbnail: mainImage,
+                                                slideImages: slideImages,
+                                                socials: socials,
+                                                relationshipStatus: currentRSStatus,
+                                                currentRelationshipStartDate: demoStartDate,
+                                                personDescription: description)
+                                            modelContext.insert(insertedperson)
+                                            print("success on duplicating")
+                                            print("\(name)")
+                                        }
+                                    } message: {
+                                        Text("Are you sure you want to duplicate \(name)?")
+                                    }
+                            }
+                        }.scrollIndicators(.hidden)
+                        HStack {
+                            Spacer()
+                            NavigationLink {
+                                EditProfileView(debugOn: debug, bindedPerson: bindPerson)
+                                    .navigationBarBackButtonHidden()
+                                    .id(UUID())
+                            } label: {
+                                HStack {
+                                    Text("Edit").bold()
+                                }.frame(height: 42)
+                                .padding([.leading, .trailing])
+                                .foregroundStyle(.black)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
+                                        .frame(height: 32)
+                                }
+                            }
+                            .id(UUID())
+                            Menu {
+                                Section {
+                                    Button(action: {
+                                        bindPerson.pinToggle()
+                                        updater += 1
+                                    }, label: {
+                                        Label(bindPerson.isPinned() ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.isPinned() ? "pin.fill" : "pin")
+                                    })
+                                    Button(action: {
+                                        debug.toggle()
+                                        updater += 1
+                                    }, label: {
+                                        Label(debug ? "Turn Off Debug" : "Turn On Debug" , systemImage: debug ? "ladybug.fill" : "ladybug")
+                                    })
+                                }
+                                Section {
+                                    Button(action: {
+                                        showDuplicateConfirmation = true
+                                    }, label: {
+                                        Label("Duplicate \(name)", systemImage: "square.on.square")
+                                    })
+                                    Button(role: .destructive, action: {
+                                        showDeleteConfirmation = true
+                                    }, label: {
+                                        Label("Delete \(name)", systemImage: "trash")
+                                    })
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "ellipsis")
+                                }
+                                .padding([.leading, .trailing])
+                                .foregroundStyle(.black)
+                                .background {
+                                    Circle()
+                                        .fill(.white.mix(with:.gray, by: 0.2).opacity(0.6))
+                                        .frame(width: 32, height: 32)
+                                }
+                                .frame(width: 42, height: 42)
+                            }.padding(.leading, -4)
+                            .id(UUID())
+                        }.padding().offset(y: 45)
+                    }.ignoresSafeArea()
+                }
+            }
         }
     }
 }
