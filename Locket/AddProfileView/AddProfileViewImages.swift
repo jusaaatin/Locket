@@ -139,7 +139,7 @@ struct AddProfileViewImages: View {
                                 slideImages.removeAll()
                             }
                         }
-                        .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, maxSelectionCount: 10, matching: .any(of: [.images, .not(.livePhotos)]))
+                        .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, maxSelectionCount: 10, selectionBehavior: .ordered, matching: .images)
                         .task(id: selectedSlideImages, {
                             await loadImages(from: selectedSlideImages)
                         })
