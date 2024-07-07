@@ -55,7 +55,7 @@ struct ProfileViewImages: View {
         VStack {
             LazyVGrid(columns: twoColumnGrid) {
                 if demo {
-                    ForEach(demoImages.prefix(viewExpanded ? 100 : 11), id: \.self) { image in
+                    ForEach(demoImages.prefix(viewExpanded ? 100 : 3), id: \.self) { image in
                         Button(action: {
                             
                         }, label: {
@@ -69,7 +69,7 @@ struct ProfileViewImages: View {
                         })
                     }
                 } else {
-                    ForEach(allImages.prefix(viewExpanded ? 100 : 11), id: \.self) { image in
+                    ForEach(allImages.prefix(viewExpanded ? 100 : 3), id: \.self) { image in
                         Button(action: {
                             
                         }, label: {
@@ -83,7 +83,7 @@ struct ProfileViewImages: View {
                         })
                     }
                 }
-                if allImages.count > 11 || demoImages.count > 11 {
+                if allImages.count > 3 || demoImages.count > 3 {
                     Button(action: {
                         withAnimation(.interpolatingSpring) {
                             viewExpanded.toggle()

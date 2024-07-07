@@ -17,7 +17,9 @@ struct AddProfileViewImages: View {
                     let image = try await item.loadTransferable(type: Data.self)
                     if let image = image {
                         guard image == shownThumbnail else {
-                            slideImages.append(image)
+                            if slideImages.count < 11 {
+                                slideImages.append(image)
+                            }
                             continue
                         }
                     }
@@ -137,7 +139,7 @@ struct AddProfileViewImages: View {
                                 slideImages.removeAll()
                             }
                         }
-                        .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, matching: .images)
+                        .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, maxSelectionCount: 10, matching: .any(of: [.images, .not(.livePhotos)]))
                         .task(id: selectedSlideImages, {
                             await loadImages(from: selectedSlideImages)
                         })

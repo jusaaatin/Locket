@@ -175,7 +175,7 @@ struct AddProfileView: View {
                         )
                         .padding()
                     HStack {
-                        Text("        Images")
+                        Text(thumbnailNotOk ? "        Images" : "        Thumbnail and Slide Images (Max 10)")
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(.gray)
                             .padding(.bottom, -22)
