@@ -65,7 +65,7 @@ struct ProfileViewHeaderImage: View {
                     Image(image)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: CGFloat(screenWidth > 400 ? screenWidth/2 : screenWidth))
+                        .frame(width: CGFloat(screenWidth > 440 ? screenWidth/2 : screenWidth))
                         .clipped()
                         .scaleEffect(zoom)
                         .gesture(
@@ -80,7 +80,7 @@ struct ProfileViewHeaderImage: View {
                     Image(uiImage: dataToUiImage(data: dataImage))
                         .resizable()
                         .scaledToFill()
-                        .frame(width: CGFloat(screenWidth > 400 ? screenWidth/2 : screenWidth))
+                        .frame(width: CGFloat(screenWidth > 440 ? screenWidth/2 : screenWidth))
                         .clipped()
                         .scaleEffect(zoom)
                         .gesture(

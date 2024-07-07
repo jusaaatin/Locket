@@ -77,7 +77,7 @@ struct ProfileView: View {
     
     
     var body: some View {
-        if UIDevice.current.userInterfaceIdiom == .phone && screenWidth < 400 {
+        if UIDevice.current.userInterfaceIdiom == .phone && screenWidth < 440 {
             NavigationStack {
                 ZStack(alignment: .topLeading) {
                     ScrollView {
