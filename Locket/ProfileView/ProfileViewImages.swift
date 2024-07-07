@@ -37,7 +37,7 @@ struct ProfileViewImages: View {
     let screenWidth: Int = Int(UIScreen.main.bounds.width)
     
     private func getWidth() -> CGFloat {
-        return CGFloat(0.2*Double(screenWidth))
+        return screenWidth < 500 ? CGFloat(0.2*Double(screenWidth)) : 120
     }
     
     private func dataToUiImage(data: Data) -> UIImage {
