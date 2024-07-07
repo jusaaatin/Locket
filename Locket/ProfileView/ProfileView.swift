@@ -225,7 +225,7 @@ struct ProfileView: View {
                     } label: {
                         HStack {
                             Text("Edit").bold()
-                        }
+                        }.frame(height: 42)
                         .padding([.leading, .trailing])
                         .foregroundStyle(.black)
                         .background {

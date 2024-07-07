@@ -148,6 +148,7 @@
 		D01A555D2C20171F00C0B98D /* AddProfileView */ = {
 			isa = PBXGroup;
 			children = (
+				D01A55512C1CB54C00C0B98D /* AddProfileButton.swift */,
 				D01A55592C1F65AC00C0B98D /* AddProfileView.swift */,
 				D0EEF28E2C313BE900F5DF0B /* EditProfileView.swift */,
 				D079763A2C25644F00CC35BF /* AddProfileViewPerson.swift */,
@@ -244,7 +245,6 @@
 			children = (
 				D0A8F5412C15FD1200429F1B /* LocketApp.swift */,
 				D0A8F5432C15FD1200429F1B /* ContentView.swift */,
-				D01A55512C1CB54C00C0B98D /* AddProfileButton.swift */,
 				D00A99FB2C39D203002EB426 /* Global */,
 				D070B70E2C1A116600442B16 /* HomeView */,
 				D095B38D2C17193F007532E2 /* ProfileView */,

@@ -33,6 +33,7 @@ struct AddProfileViewImages: View {
     @State var selectedSlideImages: [PhotosPickerItem] = []
     @Binding var slideImages: [Data]
     @State private var showSlidePhotosPicker: Bool = false
+    @State var debug: Bool
     
     var body: some View {
         HStack {
@@ -214,17 +215,24 @@ struct AddProfileViewImages: View {
                             LinearGradient(gradient: Gradient(colors: [Color.gray.mix(with:Color("Background-match"), by: 0.7).opacity(0), Color.gray.mix(with:Color("Background-match"), by: 0.7).opacity(100)]), startPoint: .leading, endPoint: .trailing))
                 }
             }.padding(.leading, -10).zIndex(-2).padding(.trailing, -20)
+            if debug {
+                VStack(alignment: .trailing) {
+                    Text("selected: \(selectedSlideImages.count)")
+                    Text("slide: \(slideImages.count)")
+                }
+            }
         }
         .padding(6)
         .padding(.trailing, 6)
         .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
+    
 }
 
 #Preview {
     @Previewable @State var shownThumbnail: Data = Data()
     @Previewable @State var slideImages: [Data] = []
-    AddProfileViewImages(shownThumbnail: $shownThumbnail, slideImages: $slideImages)
+    AddProfileViewImages(shownThumbnail: $shownThumbnail, slideImages: $slideImages, debug: true)
         .padding()
 }

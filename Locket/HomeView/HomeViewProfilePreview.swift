@@ -39,6 +39,19 @@ struct HomeViewProfilePreview: View {
         }
     }
     
+    private func returnRightIconColor() -> Color {
+        switch relationshipStatus {
+        case .crush:
+            return Color.pink
+        case .relationship:
+            return Color.red
+        case .friend:
+            return Color.cyan
+        case .bestie:
+            return Color.mint
+        }
+    }
+    
     private func returnRightIconSize() -> Int {
         switch relationshipStatus {
         case .crush:
@@ -140,6 +153,7 @@ struct HomeViewProfilePreview: View {
                             .shadow(radius: 5)
                             .padding(4)
                             .offset(y:1.5)
+                            .foregroundStyle(returnRightIconColor())
                     }
                     Spacer()
                 }
@@ -153,14 +167,62 @@ struct HomeViewProfilePreview: View {
 }
 
 #Preview {
-    HomeViewProfilePreview(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .bestie, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -0), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
-        socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
-         socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
-        socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
-        socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
-        socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
-        socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-    ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
+    ScrollView {
+        HStack {
+            HomeViewProfilePreview(mainWidth: 160, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .bestie, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -0), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+                socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+                 socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
+            HomeViewProfilePreview(mainWidth: 160, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .crush, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -4), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+                socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+                 socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
+        }
+        HStack {
+            HomeViewProfilePreview(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .relationship, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -5), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+                socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+                 socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 0), personDescription: "Description"))
+            HomeViewProfilePreview(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .friend, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 0, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -4), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+                socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+                 socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
+        }
+        HStack {
+            HomeViewProfilePreview(mainWidth: 200, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .bestie, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -2), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+                socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+                 socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 1), personDescription: "Description"))
+            HomeViewProfilePreview(mainWidth: 200, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .crush, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -0), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+                socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+                 socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+                socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
+        }
+    }
 }
 
 

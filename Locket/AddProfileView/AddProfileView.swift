@@ -189,7 +189,7 @@ struct AddProfileView: View {
                         }
                         Spacer()
                     }
-                    AddProfileViewImages(shownThumbnail: $shownThumbnail, slideImages: $slideImages)
+                    AddProfileViewImages(shownThumbnail: $shownThumbnail, slideImages: $slideImages, debug: debugOn)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
                                 .stroke(.red.opacity(thumbnailNotOk ? 0.5 : 0), lineWidth: 2)
