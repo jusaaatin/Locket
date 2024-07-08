@@ -13,7 +13,7 @@ struct AddProfileViewImages: View {
     
     private func loadImages(from items: [PhotosPickerItem]) async {
         Task {
-            for item in items {
+            for (idx, item) in items.enumerated() {
                 do {
                     let image = try await item.loadTransferable(type: Data.self)
                     let compressedImage = (image?.compress(withAlgorithm: .lzfse) ?? Data()) as Data
@@ -21,6 +21,10 @@ struct AddProfileViewImages: View {
                     guard image2 == shownThumbnail else {
                         if slideImages.count < 16 {
                             slideImages.append(image2)
+                        }
+                        if idx == items.endIndex - 1 || idx == 15{
+                            //handling last item
+                            imageLoadingDone = true
                         }
                         continue
                         }
@@ -31,6 +35,7 @@ struct AddProfileViewImages: View {
         }
     }
     
+    @Binding var imageLoadingDone: Bool
     @State var selectedThumbnail: PhotosPickerItem?
     @Binding var shownThumbnail: Data
     @State var selectedSlideImages: [PhotosPickerItem] = []
@@ -144,6 +149,7 @@ struct AddProfileViewImages: View {
                         }
                         .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, maxSelectionCount: 15, selectionBehavior: .ordered, matching: .images)
                         .task(id: selectedSlideImages, {
+                            imageLoadingDone = false
                             await loadImages(from: selectedSlideImages)
                         })
                         ZStack {
@@ -225,6 +231,7 @@ struct AddProfileViewImages: View {
                 VStack(alignment: .trailing) {
                     Text("selected: \(selectedSlideImages.count)")
                     Text("slide: \(slideImages.count)")
+                    Text("\(imageLoadingDone)")
                 }
             }
         }
@@ -239,6 +246,7 @@ struct AddProfileViewImages: View {
 #Preview {
     @Previewable @State var shownThumbnail: Data = Data()
     @Previewable @State var slideImages: [Data] = []
-    AddProfileViewImages(shownThumbnail: $shownThumbnail, slideImages: $slideImages, debug: true)
+    @Previewable @State var imageLoadingDone = true
+    AddProfileViewImages(imageLoadingDone: $imageLoadingDone, shownThumbnail: $shownThumbnail, slideImages: $slideImages, debug: true)
         .padding()
 }

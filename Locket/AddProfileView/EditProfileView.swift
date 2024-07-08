@@ -66,6 +66,8 @@ struct EditProfileView: View {
     @State private var showDeleteAlert = false
     @State private var showDuplicateAlert = false
     
+    @State var imageLoadingDone = true
+    
     let bindedPerson: person
     
     
@@ -232,7 +234,7 @@ struct EditProfileView: View {
                         }
                         Spacer()
                     }
-                    AddProfileViewImages(shownThumbnail: $shownThumbnail, slideImages: $slideImages, debug: debugOn)
+                    AddProfileViewImages(imageLoadingDone: $imageLoadingDone, shownThumbnail: $shownThumbnail, slideImages: $slideImages, debug: debugOn)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
                                 .stroke(.red.opacity(thumbnailNotOk ? 0.5 : 0), lineWidth: 2)
@@ -368,8 +370,8 @@ struct EditProfileView: View {
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
-                        if !debugOn {
-                            if checklistOk() && socialsChecklistOk(){
+                        if !debugOn && imageLoadingDone {
+                            if checklistOk() {
                                 nameNotOk = false
                                 birthdayNotOk = false
                                 thumbnailNotOk = false

@@ -59,6 +59,8 @@ struct AddProfileView: View {
     
     @State private var birthdayChanged = false
     
+    @State var imageLoadingDone = true
+    
     func saveToSocialsArray() {
         if additionalSocialsCount >= 0 {
             for i in 0...additionalSocialsCount {
@@ -189,7 +191,7 @@ struct AddProfileView: View {
                         }
                         Spacer()
                     }
-                    AddProfileViewImages(shownThumbnail: $shownThumbnail, slideImages: $slideImages, debug: debugOn)
+                    AddProfileViewImages(imageLoadingDone: $imageLoadingDone, shownThumbnail: $shownThumbnail, slideImages: $slideImages, debug: debugOn)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
                                 .stroke(.red.opacity(thumbnailNotOk ? 0.5 : 0), lineWidth: 2)
@@ -248,7 +250,7 @@ struct AddProfileView: View {
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
-                        if !debugOn {
+                        if !debugOn && imageLoadingDone {
                             if checklistOk(){
                                 nameNotOk = false
                                 birthdayNotOk = false
