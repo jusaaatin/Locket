@@ -7,6 +7,7 @@
 
 import SwiftUI
 import _PhotosUI_SwiftUI
+import DataCompression
 
 struct AddProfileViewImages: View {
     
@@ -15,14 +16,14 @@ struct AddProfileViewImages: View {
             for item in items {
                 do {
                     let image = try await item.loadTransferable(type: Data.self)
-                    if let image = image {
-                        guard image == shownThumbnail else {
-                            if slideImages.count < 11 {
-                                slideImages.append(image)
-                            }
-                            continue
+                    let compressedImage = (image?.compress(withAlgorithm: .lzfse) ?? Data()) as Data
+                    let image2 = compressedImage
+                    guard image2 == shownThumbnail else {
+                        if slideImages.count < 16 {
+                            slideImages.append(image2)
                         }
-                    }
+                        continue
+                        }
                 } catch {
                     print("Failed to load image: \(error)")
                 }
@@ -76,7 +77,8 @@ struct AddProfileViewImages: View {
                         )
                     } else {
                         let thumb = shownThumbnail
-                        if let uithumb = UIImage(data: thumb) {
+                        let decompressedThumb = (thumb.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
+                        if let uithumb = UIImage(data: decompressedThumb) {
                             Image(uiImage: uithumb)
                                 .resizable()
                                 .scaledToFill()
@@ -90,7 +92,8 @@ struct AddProfileViewImages: View {
                         if oldthumb != newthumb {
                             Task {
                                 if let thumbdata = try? await newthumb?.loadTransferable(type:Data.self) {
-                                    shownThumbnail = thumbdata
+                                    let compressedThumb = (thumbdata.compress(withAlgorithm: .lzfse) ?? Data()) as Data
+                                    shownThumbnail = compressedThumb
                                 }
                             }
                         }
@@ -139,7 +142,7 @@ struct AddProfileViewImages: View {
                                 slideImages.removeAll()
                             }
                         }
-                        .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, maxSelectionCount: 10, selectionBehavior: .ordered, matching: .images)
+                        .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, maxSelectionCount: 15, selectionBehavior: .ordered, matching: .images)
                         .task(id: selectedSlideImages, {
                             await loadImages(from: selectedSlideImages)
                         })
@@ -151,8 +154,9 @@ struct AddProfileViewImages: View {
                                             
                                         }
                                     }, label: { 
-                                       let selectedSlideData = i
-                                        if let uiSlideImage = UIImage(data: selectedSlideData) {
+                                        let selectedSlideData = i
+                                        let decompressedImageSlide = (selectedSlideData.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
+                                        if let uiSlideImage = UIImage(data: decompressedImageSlide) {
                                             Image(uiImage: uiSlideImage)
                                                 .resizable()
                                                 .scaledToFill()

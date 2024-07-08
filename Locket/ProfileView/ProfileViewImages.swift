@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DataCompression
 
 struct ProfileViewImages: View {
     
@@ -73,7 +74,8 @@ struct ProfileViewImages: View {
                         Button(action: {
                             
                         }, label: {
-                            Image(uiImage: dataToUiImage(data: image))
+                            let decompressedImageSlide = (image.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
+                            Image(uiImage: dataToUiImage(data: decompressedImageSlide))
                                 .resizable()
                                 .minimumScaleFactor(0.1)
                                 .scaledToFill()

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DataCompression
 
 let screenWidth: Int = Int(UIScreen.main.bounds.width)
 
@@ -77,7 +78,8 @@ struct ProfileViewHeaderImage: View {
                 }
             } else {
                 ForEach(dataGenerateImages(mainImage: mainImage, slideImages: slideImages), id: \.self) { dataImage in
-                    Image(uiImage: dataToUiImage(data: dataImage))
+                    let decompressedImage = (dataImage.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
+                    Image(uiImage: dataToUiImage(data: decompressedImage))
                         .resizable()
                         .scaledToFill()
                         .frame(width: CGFloat(screenWidth > 440 ? screenWidth/2 : screenWidth))

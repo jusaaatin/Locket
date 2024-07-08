@@ -1,0 +1,15 @@
+{
+  "originHash" : "631fe5bdcb822820b105b55cc99194d2ce08ba9a218a8a18d4109cbd336e28e6",
+  "pins" : [
+    {
+      "identity" : "swiftdatacompression",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mw99/SwiftDataCompression",
+      "state" : {
+        "revision" : "5ab15951321b08b74511601cbd0497667649d70b",
+        "version" : "3.8.0"
+      }
+    }
+  ],
+  "version" : 3
+}

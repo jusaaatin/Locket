@@ -18,6 +18,7 @@
 		D070B7102C1A116600442B16 /* HomeViewProfilePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B70D2C1A116600442B16 /* HomeViewProfilePreview.swift */; };
 		D070B7122C1B5AAC00442B16 /* HomeViewSearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B7112C1B5AAC00442B16 /* HomeViewSearchFilter.swift */; };
 		D070B7152C1B684400442B16 /* Filterbutton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D070B7142C1B684400442B16 /* Filterbutton.swift */; };
+		D078DA402C3C0C4E009CB9C4 /* DataCompression in Frameworks */ = {isa = PBXBuildFile; productRef = D078DA3F2C3C0C4E009CB9C4 /* DataCompression */; };
 		D079763B2C25644F00CC35BF /* AddProfileViewPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079763A2C25644F00CC35BF /* AddProfileViewPerson.swift */; };
 		D079763D2C25683A00CC35BF /* AddProfileColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D079763C2C25683A00CC35BF /* AddProfileColorPicker.swift */; };
 		D07976412C25E6F400CC35BF /* AddProfileViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07976402C25E6F400CC35BF /* AddProfileViewImages.swift */; };
@@ -116,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D078DA402C3C0C4E009CB9C4 /* DataCompression in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +299,9 @@
 			dependencies = (
 			);
 			name = Locket;
+			packageProductDependencies = (
+				D078DA3F2C3C0C4E009CB9C4 /* DataCompression */,
+			);
 			productName = Locket;
 			productReference = D0A8F53E2C15FD1200429F1B /* Locket.app */;
 			productType = "com.apple.product-type.application";
@@ -369,6 +374,9 @@
 				Base,
 			);
 			mainGroup = D0A8F5352C15FD1200429F1B;
+			packageReferences = (
+				D0CFFF412C3C0AD20011572F /* XCRemoteSwiftPackageReference "SwiftDataCompression" */,
+			);
 			productRefGroup = D0A8F53F2C15FD1200429F1B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -813,6 +821,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D0CFFF412C3C0AD20011572F /* XCRemoteSwiftPackageReference "SwiftDataCompression" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mw99/SwiftDataCompression";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D078DA3F2C3C0C4E009CB9C4 /* DataCompression */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0CFFF412C3C0AD20011572F /* XCRemoteSwiftPackageReference "SwiftDataCompression" */;
+			productName = DataCompression;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D0A8F5362C15FD1200429F1B /* Project object */;
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DataCompression
 
 struct HomeViewProfilePreview: View {
     
@@ -78,7 +79,8 @@ struct HomeViewProfilePreview: View {
                             .clipped()
                             .padding(.bottom, -11)
                     } else {
-                        if let uithumb = UIImage(data: thumb) {
+                        let decompressedThumb = (thumb.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
+                        if let uithumb = UIImage(data: decompressedThumb) {
                             Image(uiImage: uithumb)
                                 .resizable()
                                 .scaledToFill()
