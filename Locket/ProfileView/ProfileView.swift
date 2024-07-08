@@ -101,6 +101,7 @@ struct ProfileView: View {
                                     socials = bindPerson.socials ?? []
                                     priority = bindPerson.priority
                                     updater += 1
+                                    description = bindPerson.personDescription
                                     
                                     if bindPerson.priority == -1 {
                                         dismiss()
@@ -243,6 +244,7 @@ struct ProfileView: View {
                             Section {
                                 Button(action: {
                                     bindPerson.pinToggle()
+                                    bindPerson.prioritySetter()
                                     updater += 1
                                 }, label: {
                                     Label(bindPerson.isPinned() ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.isPinned() ? "pin.fill" : "pin")
