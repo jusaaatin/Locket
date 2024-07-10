@@ -177,7 +177,7 @@ struct AddProfileView: View {
                         )
                         .padding()
                     HStack {
-                        Text(thumbnailNotOk ? "        Images" : "        Thumbnail and Slide Images (Max 10)")
+                        Text(thumbnailNotOk ? "        Images" : "        Thumbnail and Slide Images (Max 15)")
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(.gray)
                             .padding(.bottom, -22)
@@ -249,9 +249,16 @@ struct AddProfileView: View {
                     Button("Cancel") { dismiss() }
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button("Save") {
+                    Button("Save") {      
+                        
+                        print("here")
+                        if name == "" {nameNotOk = true} else {nameNotOk = false}
+                        if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
+                        if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
+                    
+                        
                         if !debugOn && imageLoadingDone {
-                            if checklistOk(){
+                             if checklistOk(){
                                 nameNotOk = false
                                 birthdayNotOk = false
                                 thumbnailNotOk = false
@@ -272,12 +279,6 @@ struct AddProfileView: View {
                                 print("success")
                                 print("\(name)")
                                 dismiss()
-                            }
-                            if !checklistOk(){
-                                print("here")
-                                if name == "" {nameNotOk = true} else {nameNotOk = false}
-                                if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
-                                if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
                             }
                         } else if debugOn {
                             print("""

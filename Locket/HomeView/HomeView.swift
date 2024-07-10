@@ -69,6 +69,13 @@ struct HomeView: View {
             }
         }
     }
+    func deselectAll() {
+        for person in personmodel {
+            if person.personid < 0 {
+                person.personid.negate()
+            }
+        }
+    }
     
     private let twoColumnGrid = [
         GridItem(.adaptive(minimum: CGFloat(getWidth()), maximum: CGFloat(getWidth())), spacing: 22, alignment: .center)
@@ -233,6 +240,9 @@ struct HomeView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
                             withAnimation {
+                                if selecting == true {
+                                    deselectAll()
+                                }
                                 selecting.toggle()
                             }
                         }, label: {

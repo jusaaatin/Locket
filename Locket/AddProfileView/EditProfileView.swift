@@ -220,7 +220,7 @@ struct EditProfileView: View {
                         )
                         .padding()
                     HStack {
-                        Text("        Images")
+                        Text(thumbnailNotOk ? "        Images" : "        Thumbnail and Slide Images (Max 15)")
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundStyle(.gray)
                             .padding(.bottom, -22)
@@ -370,6 +370,9 @@ struct EditProfileView: View {
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
+                        if name == "" {nameNotOk = true} else {nameNotOk = false}
+                        if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
+                        if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
                         if !debugOn && imageLoadingDone {
                             if checklistOk() {
                                 nameNotOk = false
@@ -380,10 +383,6 @@ struct EditProfileView: View {
                                 print("\(name)")
                                 saveEdits()
                                 dismiss()
-                            } else if !checklistOk() || !socialsChecklistOk(){
-                                if name == "" {nameNotOk = true} else {nameNotOk = false}
-                                if bDay.count == 2 && bMonth.count == 2 && bYear.count == 4 {birthdayNotOk = false} else {birthdayNotOk = true}
-                                if shownThumbnail == Data() {thumbnailNotOk = true} else {thumbnailNotOk = false}
                             }
                         } else if debugOn {
                             print("""

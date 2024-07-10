@@ -148,8 +148,10 @@ struct AddProfileViewImages: View {
                             }
                         }
                         .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, maxSelectionCount: 15, selectionBehavior: .ordered, matching: .images)
-                        .task(id: selectedSlideImages, {
+                        .onChange(of: selectedSlideImages) { old, new in
                             imageLoadingDone = false
+                        }
+                        .task(id: selectedSlideImages, {
                             await loadImages(from: selectedSlideImages)
                         })
                         ZStack {
@@ -178,6 +180,7 @@ struct AddProfileViewImages: View {
                             Button(action: {
                                 slideImages.removeAll()
                                 selectedSlideImages = []
+                                imageLoadingDone = true
                             }, label: {
                                 ZStack {
                                     MeshGradient(
