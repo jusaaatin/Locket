@@ -47,6 +47,28 @@ struct HomeView: View {
         print("delete triggered for \(person.name)")
         modelContext.delete(person)
     }
+    func deleteSelected() {
+        for person in personmodel {
+            if person.personid < 0 {
+                modelContext.delete(person)
+            }
+        }
+    }
+    func selectOrDeselectAll() {
+        if allSelected {
+            for person in personmodel {
+                if person.personid < 0 {
+                    person.personid.negate()
+                }
+            }
+        } else {
+            for person in personmodel {
+                if person.personid > 0 {
+                    person.personid.negate()
+                }
+            }
+        }
+    }
     
     private let twoColumnGrid = [
         GridItem(.adaptive(minimum: CGFloat(getWidth()), maximum: CGFloat(getWidth())), spacing: 22, alignment: .center)
@@ -85,7 +107,24 @@ struct HomeView: View {
         selfProfileExists = false
         return nil
     }
-    @State var selecting = true
+    @State var selecting = false
+    var allSelected: Bool {
+        for person in personmodel {
+            if person.personid > 0 {
+                return false
+            }
+        }
+        return true
+    }
+    @State var presentingDeleteAlert = false
+    var oneSelected: Bool {
+        for person in personmodel {
+            if person.personid < 0 {
+                return true
+            }
+        }
+        return false
+    }
     
     
     var body: some View {
@@ -132,16 +171,50 @@ struct HomeView: View {
                                     withAnimation(.snappy) { currentPage = .profile }
                                 }
                             } label: {
-                                HomeViewProfilePreview(
-                                    mainWidth: getWidth(),
-                                    mainImage: "demofood12",
-                                    name: person.name,
-                                    birthday: person.birthday,
-                                    relationshipStatus: person.relationshipStatus,
-                                    accentColor: returnAccentColor(
-                                        isFgMatch: person.accentColorIsDefaultForeground,
-                                        Hex: person.hexAccentColor),
-                                    shownThumbnail: person.shownThumbnail, bindPerson: person, selecting: selecting)
+                                ZStack {
+                                    HomeViewProfilePreview(
+                                        mainWidth: getWidth(),
+                                        mainImage: "demofood12",
+                                        name: person.name,
+                                        birthday: person.birthday,
+                                        relationshipStatus: person.relationshipStatus,
+                                        accentColor: returnAccentColor(
+                                            isFgMatch: person.accentColorIsDefaultForeground,
+                                            Hex: person.hexAccentColor),
+                                        shownThumbnail: person.shownThumbnail, bindPerson: person, selecting: selecting)
+                                    if selecting {
+                                        Button(action: {
+                                            print("pressed")
+                                            person.personid.negate()
+                                        }, label: {
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 20)
+                                                    .frame(width:CGFloat(getWidth()), height:CGFloat(218*getWidth()/160))
+                                                    .foregroundStyle(.blue.mix(with: .white, by: 0.1))
+                                                    .opacity(person.personid > 0 ? 0 : 0.2)
+                                                VStack {
+                                                    HStack {
+                                                        Spacer()
+                                                        ZStack {
+                                                            Circle()
+                                                                .foregroundStyle(person.personid > 0 ? .gray.mix(with: .black, by: 0.2) : .blue)
+                                                                .opacity(person.personid > 0 ? 0.8 : 1)
+                                                                .frame(width: 28, height: 28)
+                                                                .padding(6)
+                                                                .offset(y: 2)
+                                                            Image(systemName: "checkmark")
+                                                                .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                                                                .offset(x: 0, y: 2)
+                                                                .foregroundStyle(.white)
+                                                                .opacity(person.personid > 0 ? 0 : 1)
+                                                        }
+                                                    }
+                                                    Spacer()
+                                                }
+                                            }
+                                        })
+                                    }
+                                }
                             }
                             .onAppear() {
                                 if person.priority == -1 {
@@ -159,10 +232,12 @@ struct HomeView: View {
                 .toolbar(content:{
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
-                            
+                            withAnimation {
+                                selecting.toggle()
+                            }
                         }, label: {
                             HStack {
-                                Text("Select")
+                                Text(selecting ? "Cancel" : "Select")
                                     .foregroundStyle(Color("Foreground-match"))
                                     .font(.system(size: 12, weight: .bold, design: .rounded))
                             }.frame(height: 18)
@@ -215,45 +290,57 @@ struct HomeView: View {
             VStack {
                 Spacer()
                 HStack {
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("Deselect All")
-                            .font(.system(size: 15, weight: .semibold, design: .rounded))
-                            .frame(width: 100)
-                            .padding([.leading, .trailing], 8)
-                            .padding([.top, .bottom], 8)
-                            .background {
-                                RoundedRectangle(cornerRadius: 50)
-                                        .foregroundStyle(.thinMaterial)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 50)
-                                                .stroke(Color.gray.mix(with:Color("Background-match"), by: 0.6), lineWidth: 3)
-                                        )
+                    if selecting {
+                        Button(action: {
+                            selectOrDeselectAll()
+                        }, label: {
+                            Text(allSelected ? "Deselect All" : "Select All")
+                                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                .frame(width: 100)
+                                .padding([.leading, .trailing], 8)
+                                .padding([.top, .bottom], 8)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 50)
+                                            .foregroundStyle(.thinMaterial)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 50)
+                                                    .stroke(Color.gray.mix(with:Color("Background-match"), by: 0.6), lineWidth: 3)
+                                            )
+                                }
+                        })
+                        .alert("Delete selected people?", isPresented: $presentingDeleteAlert) { //delete
+                            Button("Delete", role: .destructive) {
+                                deleteSelected()
+                                selecting = false
                             }
-                    })
-                    .buttonStyle(PlainButtonStyle())
-                    .padding(.leading)
-                    Button(role: .destructive, action: {
-                        
-                    }, label: {
-                        Text("Delete")
-                            .font(.system(size: 16, weight: .semibold, design: .rounded))
-                            .foregroundStyle(.red)
-                            .frame(width: 60)
-                            .padding([.leading, .trailing], 8)
-                            .padding([.top, .bottom], 8)
-                            .background {
-                                RoundedRectangle(cornerRadius: 50)
-                                        .foregroundStyle(.thinMaterial)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 50)
-                                                .stroke(Color.gray.mix(with:Color("Background-match"), by: 0.6), lineWidth: 3)
-                                        )
-                            }
-                    })
-                    .buttonStyle(PlainButtonStyle())
-                    .padding(.trailing)
+                        } message: {
+                            Text("Are you sure you want to delete the selected people? Once deleted, these contacts can not be recovered")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.leading)
+                        Button(role: .destructive, action: {
+                            presentingDeleteAlert = true
+                        }, label: {
+                            Text("Delete")
+                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                .foregroundStyle(.red)
+                                .frame(width: 60)
+                                .padding([.leading, .trailing], 8)
+                                .padding([.top, .bottom], 8)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 50)
+                                            .foregroundStyle(.thinMaterial)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 50)
+                                                    .stroke(Color.gray.mix(with:Color("Background-match"), by: 0.6), lineWidth: 3)
+                                            )
+                                }
+                        })
+                        .disabled(!oneSelected)
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.trailing)
+
+                    }
                     Spacer()
                     AddProfileButton(isPresented: $isPresented)
                         .shadow(color: .black.opacity(0.5), radius: 8)

@@ -18,9 +18,7 @@ struct HomeViewProfilePreview: View {
     let relationshipStatus: RelationshipStatus
     let accentColor: Color
     let shownThumbnail: Data
-    
     let bindPerson: person
-    
     var selecting: Bool
     
     private func dateToDM(input: Date) -> String {
@@ -28,7 +26,6 @@ struct HomeViewProfilePreview: View {
         DMFormatter.dateFormat = "d MMM"
         return DMFormatter.string(from: input)
     }
-    
     private func returnRightIconString() -> String {
         switch relationshipStatus {
         case .crush:
@@ -41,7 +38,6 @@ struct HomeViewProfilePreview: View {
             return "person.2"
         }
     }
-    
     private func returnRightIconColor() -> Color {
         switch relationshipStatus {
         case .crush:
@@ -54,7 +50,6 @@ struct HomeViewProfilePreview: View {
             return Color.mint
         }
     }
-    
     private func returnRightIconSize() -> Int {
         switch relationshipStatus {
         case .crush:
@@ -131,10 +126,10 @@ struct HomeViewProfilePreview: View {
                     }
                     Spacer()
                 }
-                VStack {
-                    if selecting {
-                        
-                    } else {
+                if selecting {
+
+                } else {
+                    VStack {
                         HStack {
                             if bindPerson.isPinned() || bindPerson.isBirthdayToday() || bindPerson.isAnniversaryToday() || bindPerson.isBirthdayTomorrow() || bindPerson.isAnniversaryTomorrow() {
                                 Group {
@@ -149,7 +144,6 @@ struct HomeViewProfilePreview: View {
                                             .font(.system(size: 14))
                                     }
                                 }
-                                    
                                     .padding(7)
                                     .background(.thinMaterial)
                                     .clipShape(Circle())
@@ -168,9 +162,10 @@ struct HomeViewProfilePreview: View {
                                 .offset(y:1.5)
                               //  .foregroundStyle(returnRightIconColor())
                         }
+                        Spacer()
                     }
-                    Spacer()
                 }
+
                 
             }
         }
