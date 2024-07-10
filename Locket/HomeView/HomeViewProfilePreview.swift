@@ -21,6 +21,8 @@ struct HomeViewProfilePreview: View {
     
     let bindPerson: person
     
+    var selecting: Bool
+    
     private func dateToDM(input: Date) -> String {
         let DMFormatter = DateFormatter()
         DMFormatter.dateFormat = "d MMM"
@@ -130,38 +132,42 @@ struct HomeViewProfilePreview: View {
                     Spacer()
                 }
                 VStack {
-                    HStack {
-                        if bindPerson.isPinned() || bindPerson.isBirthdayToday() || bindPerson.isAnniversaryToday() || bindPerson.isBirthdayTomorrow() || bindPerson.isAnniversaryTomorrow() {
-                            Group {
-                                if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
-                                    Image(systemName: "gift")
-                                        .font(.system(size: 16))
-                                } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
-                                    Image(systemName: "party.popper.fill")
-                                        .font(.system(size: 12))
-                                } else if bindPerson.isPinned() {
-                                    Image(systemName: "pin.fill")
-                                        .font(.system(size: 14))
+                    if selecting {
+                        
+                    } else {
+                        HStack {
+                            if bindPerson.isPinned() || bindPerson.isBirthdayToday() || bindPerson.isAnniversaryToday() || bindPerson.isBirthdayTomorrow() || bindPerson.isAnniversaryTomorrow() {
+                                Group {
+                                    if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
+                                        Image(systemName: "gift")
+                                            .font(.system(size: 16))
+                                    } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
+                                        Image(systemName: "party.popper.fill")
+                                            .font(.system(size: 12))
+                                    } else if bindPerson.isPinned() {
+                                        Image(systemName: "pin.fill")
+                                            .font(.system(size: 14))
+                                    }
                                 }
+                                    
+                                    .padding(7)
+                                    .background(.thinMaterial)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                                    .padding(4)
+                                    .offset(x:bindPerson.isPinned() ? 2.5 : 1.5, y:2.5)
                             }
-                                
+                            Spacer()
+                            Image(systemName: returnRightIconString())
+                                .font(.system(size: CGFloat(returnRightIconSize())))
                                 .padding(7)
                                 .background(.thinMaterial)
                                 .clipShape(Circle())
                                 .shadow(radius: 5)
                                 .padding(4)
-                                .offset(x:bindPerson.isPinned() ? 2.5 : 1.5, y:2.5)
+                                .offset(y:1.5)
+                              //  .foregroundStyle(returnRightIconColor())
                         }
-                        Spacer()
-                        Image(systemName: returnRightIconString())
-                            .font(.system(size: CGFloat(returnRightIconSize())))
-                            .padding(7)
-                            .background(.thinMaterial)
-                            .clipShape(Circle())
-                            .shadow(radius: 5)
-                            .padding(4)
-                            .offset(y:1.5)
-                          //  .foregroundStyle(returnRightIconColor())
                     }
                     Spacer()
                 }
@@ -184,7 +190,7 @@ struct HomeViewProfilePreview: View {
                 socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"), selecting: true)
             HomeViewProfilePreview(mainWidth: 160, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .crush, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -4), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
                 socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
                  socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
@@ -192,7 +198,7 @@ struct HomeViewProfilePreview: View {
                 socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"), selecting: false)
         }
         HStack {
             HomeViewProfilePreview(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .relationship, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -5), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
@@ -202,7 +208,7 @@ struct HomeViewProfilePreview: View {
                 socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 0), personDescription: "Description"))
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 0), personDescription: "Description"), selecting: true)
             HomeViewProfilePreview(mainWidth: 169, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .friend, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 0, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -4), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
                 socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
                  socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
@@ -210,7 +216,7 @@ struct HomeViewProfilePreview: View {
                 socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"), selecting: false)
         }
         HStack {
             HomeViewProfilePreview(mainWidth: 200, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .bestie, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -2), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
@@ -220,7 +226,7 @@ struct HomeViewProfilePreview: View {
                 socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 1), personDescription: "Description"))
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 1), personDescription: "Description"), selecting: true)
             HomeViewProfilePreview(mainWidth: 200, mainImage: "demofood12", name: "Name", birthday: addOrSubtractMonth(month: -2), relationshipStatus: .crush, accentColor: Color(hex: "B18CFE") ?? Color.blue, shownThumbnail: Data(), bindPerson: person(personUUID: UUID(), priority: 1, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractMonth(month: -0), hexAccentColor: "FF8C82", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
                 socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
                  socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
@@ -228,7 +234,7 @@ struct HomeViewProfilePreview: View {
                 socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                 socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"))
+            ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractDay(day: 5), personDescription: "Description"), selecting: false)
         }
     }
 }

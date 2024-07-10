@@ -22,11 +22,6 @@ private func getWidth() -> Int {
 
 struct HomeView: View {
 
-    
-    private let twoColumnGrid = [
-        GridItem(.adaptive(minimum: CGFloat(getWidth()), maximum: CGFloat(getWidth())), spacing: 22, alignment: .center)
-    ]
-    
     private func returnAccentColor(isFgMatch: Bool, Hex: String) -> Color{
         if isFgMatch {
             return Color("Foreground-match")
@@ -34,7 +29,28 @@ struct HomeView: View {
             return Color(hex: "\(Hex)") ?? Color("Foreground-match")
         }
     }
+    private func filterStateToRelationshipStatus(state: filterState) -> RelationshipStatus? {
+        switch state {
+        case .showAll:
+            return nil
+        case .crush:
+            return .crush
+        case .relationship:
+            return .relationship
+        case .friend:
+            return .friend
+        case .bestie:
+            return .bestie
+        }
+    }
+    private func deletePerson(person: person) {
+        print("delete triggered for \(person.name)")
+        modelContext.delete(person)
+    }
     
+    private let twoColumnGrid = [
+        GridItem(.adaptive(minimum: CGFloat(getWidth()), maximum: CGFloat(getWidth())), spacing: 22, alignment: .center)
+    ]
     @State var searchString: String = ""
     @State var searchFilter: filterState = .showAll
     @State var sortOrder: querySortOrder = .aToZ
@@ -44,7 +60,6 @@ struct HomeView: View {
     @Query(sort: \person.priority, order: .reverse) var unQueriedPerson: [person]
     @State var isPresented: Bool = false
     @State var selfProfileExists: Bool = false
-    
     var personmodel: [person]{
         if searchString.isEmpty == false {
             if searchFilter == .showAll {
@@ -60,7 +75,6 @@ struct HomeView: View {
             }
         }
     }
-    
     var selfPerson: person? {
         for person in unQueriedPerson {
             if person.isSelfProfile() {
@@ -71,26 +85,8 @@ struct HomeView: View {
         selfProfileExists = false
         return nil
     }
+    @State var selecting = true
     
-    private func filterStateToRelationshipStatus(state: filterState) -> RelationshipStatus? {
-        switch state {
-        case .showAll:
-            return nil
-        case .crush:
-            return .crush
-        case .relationship:
-            return .relationship
-        case .friend:
-            return .friend
-        case .bestie:
-            return .bestie
-        }
-    }
-    
-    private func deletePerson(person: person) {
-        print("delete triggered for \(person.name)")
-        modelContext.delete(person)
-    }
     
     var body: some View {
         ZStack {
@@ -145,7 +141,7 @@ struct HomeView: View {
                                     accentColor: returnAccentColor(
                                         isFgMatch: person.accentColorIsDefaultForeground,
                                         Hex: person.hexAccentColor),
-                                    shownThumbnail: person.shownThumbnail, bindPerson: person)
+                                    shownThumbnail: person.shownThumbnail, bindPerson: person, selecting: selecting)
                             }
                             .onAppear() {
                                 if person.priority == -1 {
@@ -155,12 +151,31 @@ struct HomeView: View {
                             .buttonStyle(PlainButtonStyle())
                             .matchedTransitionSource(id: person.personid, in: homeViewNamespace)
                         }
-                    }
+                    }.id(UUID())
                 }
                 .scrollIndicators(.hidden)
                 .padding([.leading, .trailing])
-                .navigationTitle("Locket")
+                .navigationBarTitle("People", displayMode: .large)
                 .toolbar(content:{
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            
+                        }, label: {
+                            HStack {
+                                Text("Select")
+                                    .foregroundStyle(Color("Foreground-match"))
+                                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                            }.frame(height: 18)
+                            .padding([.leading, .trailing], 12)
+                            .foregroundStyle(.black)
+                            .background {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color("Background-match").mix(with:.gray, by: 0.6).opacity(0.6))
+                                    .frame(height: 32)
+                            }
+                            .padding(.trailing, -12)
+                        })
+                    }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
                             
@@ -171,7 +186,7 @@ struct HomeView: View {
                                 Image(uiImage: selfPFP ?? UIImage())
                                     .resizable()
                                     .scaledToFill()
-                                    .frame(width:42, height:42)
+                                    .frame(width:38, height:38)
                                     .clipShape(Circle())
                                     .overlay(
                                         Circle()
@@ -181,7 +196,7 @@ struct HomeView: View {
                                 Image("demofoodprofile")
                                     .resizable()
                                     .scaledToFill()
-                                    .frame(width:42, height:42)
+                                    .frame(width:38, height:38)
                                     .clipShape(Circle())
                                     .overlay(
                                         Circle()
@@ -200,8 +215,47 @@ struct HomeView: View {
             VStack {
                 Spacer()
                 HStack {
+                    Button(action: {
+                        
+                    }, label: {
+                        Text("Deselect All")
+                            .font(.system(size: 15, weight: .semibold, design: .rounded))
+                            .frame(width: 100)
+                            .padding([.leading, .trailing], 8)
+                            .padding([.top, .bottom], 8)
+                            .background {
+                                RoundedRectangle(cornerRadius: 50)
+                                        .foregroundStyle(.thinMaterial)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 50)
+                                                .stroke(Color.gray.mix(with:Color("Background-match"), by: 0.6), lineWidth: 3)
+                                        )
+                            }
+                    })
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.leading)
+                    Button(role: .destructive, action: {
+                        
+                    }, label: {
+                        Text("Delete")
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                            .foregroundStyle(.red)
+                            .frame(width: 60)
+                            .padding([.leading, .trailing], 8)
+                            .padding([.top, .bottom], 8)
+                            .background {
+                                RoundedRectangle(cornerRadius: 50)
+                                        .foregroundStyle(.thinMaterial)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 50)
+                                                .stroke(Color.gray.mix(with:Color("Background-match"), by: 0.6), lineWidth: 3)
+                                        )
+                            }
+                    })
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.trailing)
                     Spacer()
-                    addProfileButton(isPresented: $isPresented)
+                    AddProfileButton(isPresented: $isPresented)
                         .shadow(color: .black.opacity(0.5), radius: 8)
                         .padding()
                         .padding(.trailing, 1)
