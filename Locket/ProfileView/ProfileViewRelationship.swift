@@ -11,8 +11,8 @@ import SwiftUI
 
 struct ProfileViewRelationship: View {
     
-    @State var startDate: Date
-    @State var currentRSStatus: RelationshipStatus
+    let startDate: Date
+    let currentRSStatus: RelationshipStatus
     
     func returnStatus() -> String {
         switch currentRSStatus {
@@ -25,7 +25,7 @@ struct ProfileViewRelationship: View {
         case .friend:
             return "Friend"
         }
-}
+    }
     func returnStatusColor() -> Color {
         switch currentRSStatus {
         case .crush:

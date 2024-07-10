@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileViewDescription: View {
     
-    var description: String
+    let description: String
     
     var body: some View {
         ZStack {

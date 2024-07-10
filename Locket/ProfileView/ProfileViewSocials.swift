@@ -10,8 +10,8 @@ import UniformTypeIdentifiers
 
 struct ProfileViewSocials: View {
     
-    @State var socials: [socials]
-    var demo: Bool
+    let socials: [socials]
+    let demo: Bool
     
     func returnSocialWebsite(platform: socialPlatforms, pre: String, main: String) -> String{
         switch platform {

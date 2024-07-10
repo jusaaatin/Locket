@@ -59,15 +59,15 @@ struct ProfileViewHeader: View {
         return DMYFormatter.string(from: input)
     }
     
-    var currentRSStatus: RelationshipStatus
-    var name: String
+    let currentRSStatus: RelationshipStatus
+    let name: String
     @State var accentColor: Color
     
-    var demo: Bool
-    var mainImage: Data
-    var slideImages: [Data]
+    let demo: Bool
+    let mainImage: Data
+    let slideImages: [Data]
     
-    var birthday: Date
+    let birthday: Date
     
     var body: some View {
         ZStack {

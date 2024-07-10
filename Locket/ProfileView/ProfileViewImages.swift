@@ -10,9 +10,9 @@ import DataCompression
 
 struct ProfileViewImages: View {
     
-    @State var demo: Bool
-    @State var mainImage: Data
-    @State var slideImages: [Data]
+    let demo: Bool
+    let mainImage: Data
+    let slideImages: [Data]
     
     @State var allImages: [Data] = []
     @State var demoImages: [String] = []
