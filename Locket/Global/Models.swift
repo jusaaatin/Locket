@@ -40,7 +40,10 @@ final class person: Identifiable {
      Priority 1: Pin
      Priority 0: Normal
      Priority -1: Send person to be deleted :(
+     Priority -10: Normal Hidden
+     Priority -11 -12 -13 -14 -15: States Hidden
      */
+
     
     //person
     var name: String //justin
@@ -62,12 +65,16 @@ final class person: Identifiable {
     //description
     var personDescription: String
     
+    func hiddenToggle() {
+        priority.negate()
+        priority -= 10
+    }
     func pinToggle() {
         if isPinned() { priority -= 1 }
         else { priority += 1 }
     }
     func isPinned() -> Bool {
-        if priority == 1 || priority == 3 || priority == 5 /* pinned */{
+        if priority == 1 || priority == 3 || priority == 5 || priority == -11 || priority == -13 || priority == -15 /* pinned */{
             return true
         } else if priority == 0 || priority == 2 || priority == 4 /* unpinned */{
             return false
@@ -97,25 +104,29 @@ final class person: Identifiable {
         if priority == 10 { return true }
         else { return false }
     }
+    func isHiddenProfile() -> Bool {
+        if priority == -10 || priority == -11 || priority == -12 || priority == -13 || priority == -14 || priority == -15  { return true }
+        else { return false }
+    }
     func prioritySetter(){
         priority = returnPriority()
     }
     func returnPriority() -> Int {
         if isPinned() {
             if isBirthdayToday() || isAnniversaryToday() {
-                return 5
+                return isHiddenProfile() ? -15 : 5
             } else if isBirthdayTomorrow() || isAnniversaryTomorrow() {
-                return 3
+                return isHiddenProfile() ? -13 : 3
             } else {
-                return 1
+                return isHiddenProfile() ? -11 : 1
             }
         } else {
             if isBirthdayToday() || isAnniversaryToday() {
-                return 4
+                return isHiddenProfile() ? -14 : 4
             } else if isBirthdayTomorrow() || isAnniversaryTomorrow() {
-                return 2
+                return isHiddenProfile() ? -12 : 2
             } else {
-                return 0
+                return isHiddenProfile() ? -10 : 0
             }
         }
     }
