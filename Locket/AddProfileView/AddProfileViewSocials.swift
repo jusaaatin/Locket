@@ -102,7 +102,7 @@ struct AddProfileViewSocials: View {
                 .foregroundStyle(.gray)
             }
         }
-        .frame(height: visibleSocialsCount == 0 ? 20 : CGFloat(90*visibleSocialsCount - 20))
+        .frame(height: visibleSocialsCount == 0 ? 20 : CGFloat(94*visibleSocialsCount - 20))
         .clipped()
         .padding()
         .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
@@ -139,7 +139,6 @@ struct AddProfileViewSocials: View {
             Text("visible \(visibleSocialsCount)")
             Text("additional \(additionalSocialsCount)")
             Text("isHidden \(isHidden)")
-            Text("socials \(socialPlatform)")
         }
     }
 }
