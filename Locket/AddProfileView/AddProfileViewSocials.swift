@@ -18,6 +18,49 @@ struct AddProfileViewSocials: View {
     @Binding var debugOn: Bool
     @Binding var socialsNotOk: Bool
     
+    func returnNextSocial(input: socialPlatforms) -> socialPlatforms{
+        switch input {
+        case .PhoneNumber:
+            return .Instagram
+        case .Instagram:
+            return .Tiktok
+        case .Tiktok:
+            return .Telegram
+        case .Telegram:
+            return .Twitter
+        case .Twitter:
+            return .Discord
+        case .Discord:
+            return .Youtube
+        case .Youtube:
+            return .Twitch
+        case .Twitch:
+            return .Github
+        case .Github:
+            return .Bluesky
+        case .Bluesky:
+            return .Discourse
+        case .Discourse:
+            return .Facebook
+        case .Facebook:
+            return .Linkedin
+        case .Linkedin:
+            return .Mastodon
+        case .Mastodon:
+            return .Matrix
+        case .Matrix:
+            return .Microblog
+        case .Microblog:
+            return .Reddit
+        case .Reddit:
+            return .Slack
+        case .Slack:
+            return .Threads
+        case .Threads:
+            return .PhoneNumber
+        }
+    }
+    
     //IMPORTANT: First social on is zero on every array as well as count
     
     var body: some View {
@@ -44,11 +87,7 @@ struct AddProfileViewSocials: View {
                     Button(action: {
                         withAnimation(.bouncy) {
                             isHidden.append(false)
-                            if visibleSocialsCount == 0 {
-                                socialPlatform.append(.PhoneNumber)
-                            } else {
-                                socialPlatform.append(.Instagram)
-                            }
+                            socialPlatform.append(returnNextSocial(input: socialPlatform[additionalSocialsCount]))
                             stringPRE.append("")
                             stringMAIN.append("")
                             additionalSocialsCount += 1
@@ -78,11 +117,7 @@ struct AddProfileViewSocials: View {
             Button(action: {
                 withAnimation(.bouncy) {
                     isHidden.append(false)
-                    if visibleSocialsCount == 0 {
-                        socialPlatform.append(.PhoneNumber)
-                    } else {
-                        socialPlatform.append(.Instagram)
-                    }
+                    socialPlatform.append(returnNextSocial(input: socialPlatform[additionalSocialsCount]))
                     stringPRE.append("")
                     stringMAIN.append("")
                     additionalSocialsCount += 1
@@ -104,6 +139,7 @@ struct AddProfileViewSocials: View {
             Text("visible \(visibleSocialsCount)")
             Text("additional \(additionalSocialsCount)")
             Text("isHidden \(isHidden)")
+            Text("socials \(socialPlatform)")
         }
     }
 }

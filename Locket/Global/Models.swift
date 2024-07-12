@@ -48,7 +48,6 @@ final class person: Identifiable {
      Priority -1: Send person to be deleted :(
      */
 
-    
     //person
     var name: String //justin
     var birthday: Date //birthday
@@ -135,7 +134,6 @@ final class person: Identifiable {
         }
     }
 
-    
     init(personUUID: UUID = UUID(), priority: Int = 0, personid: Int = 0, personModelCreationDate: Date = .now, name: String = "", birthday: Date = .now, hexAccentColor: String = "FFFFFF", accentColorIsDefaultForeground: Bool = true, shownThumbnail: Data = Data(), slideImages: [Data]? = [Data](), socials: [socials]? = [], relationshipStatus: RelationshipStatus = .crush, currentRelationshipStartDate: Date = .now, personDescription: String = "") {
         self.personUUID = personUUID
         self.priority = priority
