@@ -250,6 +250,13 @@ struct ProfileView: View {
                                     Label(bindPerson.isPinned() ? "Unpin \(name)" : "Pin \(name)", systemImage: bindPerson.isPinned() ? "pin.fill" : "pin")
                                 })
                                 Button(action: {
+                                    bindPerson.hiddenToggle()
+                                    bindPerson.prioritySetter()
+                                    updater += 1
+                                }, label: {
+                                    Label(bindPerson.isHiddenProfile() ? "Unhide \(name)" : "Hide \(name)", systemImage: bindPerson.isHiddenProfile() ? "eye" : "eye.slash")
+                                })
+                                Button(action: {
                                     debug.toggle()
                                     updater += 1
                                 }, label: {

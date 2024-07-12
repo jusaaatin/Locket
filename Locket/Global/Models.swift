@@ -30,20 +30,7 @@ final class person: Identifiable {
     var priority: Int
     @Attribute(.unique) var personid: Int
     var personModelCreationDate: Date //for sorting
-    
-    /* PRIORITIES
-     Priority 10: Self Profile
-     Priority 5: 4 but pinned
-     Priority 4: Birthday Today OR Anniversary Today Conditional
-     Priority 3: 2 but pinned
-     Priority 2: Birthday Tomorrow OR Anniversary Tomorrow Conditional
-     Priority 1: Pin
-     Priority 0: Normal
-     Priority -1: Send person to be deleted :(
-     Priority -10: Normal Hidden
-     Priority -11 -12 -13 -14 -15: States Hidden
-     */
-    
+
     /* PRIORITIES
      Priority 18: Self Profile
      Priority 15: 4 but pinned HIDDEN
