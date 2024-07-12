@@ -43,6 +43,23 @@ final class person: Identifiable {
      Priority -10: Normal Hidden
      Priority -11 -12 -13 -14 -15: States Hidden
      */
+    
+    /* PRIORITIES
+     Priority 18: Self Profile
+     Priority 15: 4 but pinned HIDDEN
+     Priority 14: Birthday Today OR Anniversary Today Conditional HIDDEN
+     Priority 13: 2 but pinned HIDDEN
+     Priority 12: Birthday Tomorrow OR Anniversary Tomorrow Conditional HIDDEN
+     Priority 11: Pin HIDDEN
+     Priority 10: Normal HIDDEN
+     Priority 5: 4 but pinned
+     Priority 4: Birthday Today OR Anniversary Today Conditional
+     Priority 3: 2 but pinned
+     Priority 2: Birthday Tomorrow OR Anniversary Tomorrow Conditional
+     Priority 1: Pin
+     Priority 0: Normal
+     Priority -1: Send person to be deleted :(
+     */
 
     
     //person
@@ -66,17 +83,17 @@ final class person: Identifiable {
     var personDescription: String
     
     func hiddenToggle() {
-        priority.negate()
-        priority -= 10
+        if isHiddenProfile() { priority -= 10 }
+        else { priority += 10 }
     }
     func pinToggle() {
         if isPinned() { priority -= 1 }
         else { priority += 1 }
     }
     func isPinned() -> Bool {
-        if priority == 1 || priority == 3 || priority == 5 || priority == -11 || priority == -13 || priority == -15 /* pinned */{
+        if priority == 1 || priority == 3 || priority == 5 || priority == 11 || priority == 13 || priority == 15 /* pinned */{
             return true
-        } else if priority == 0 || priority == 2 || priority == 4 /* unpinned */{
+        } else if priority == 0 || priority == 2 || priority == 4 || priority == 10 || priority == 12 || priority == 14 /* unpinned */{
             return false
         } else { return false }
     }
@@ -101,11 +118,11 @@ final class person: Identifiable {
         } else { return false }
     }
     func isSelfProfile() -> Bool {
-        if priority == 10 { return true }
+        if priority == 18 { return true }
         else { return false }
     }
     func isHiddenProfile() -> Bool {
-        if priority == -10 || priority == -11 || priority == -12 || priority == -13 || priority == -14 || priority == -15  { return true }
+        if priority == 10 || priority == 11 || priority == 12 || priority == 13 || priority == 14 || priority == 15  { return true }
         else { return false }
     }
     func prioritySetter(){
@@ -114,19 +131,19 @@ final class person: Identifiable {
     func returnPriority() -> Int {
         if isPinned() {
             if isBirthdayToday() || isAnniversaryToday() {
-                return isHiddenProfile() ? -15 : 5
+                return isHiddenProfile() ? 15 : 5
             } else if isBirthdayTomorrow() || isAnniversaryTomorrow() {
-                return isHiddenProfile() ? -13 : 3
+                return isHiddenProfile() ? 13 : 3
             } else {
-                return isHiddenProfile() ? -11 : 1
+                return isHiddenProfile() ? 11 : 1
             }
         } else {
             if isBirthdayToday() || isAnniversaryToday() {
-                return isHiddenProfile() ? -14 : 4
+                return isHiddenProfile() ? 14 : 4
             } else if isBirthdayTomorrow() || isAnniversaryTomorrow() {
-                return isHiddenProfile() ? -12 : 2
+                return isHiddenProfile() ? 12 : 2
             } else {
-                return isHiddenProfile() ? -10 : 0
+                return isHiddenProfile() ? 10 : 0
             }
         }
     }
