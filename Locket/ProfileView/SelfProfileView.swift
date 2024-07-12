@@ -1,21 +1,16 @@
 //
-//  ProfileView.swift
+//  SelfProfileView.swift
 //  Locket
 //
-//  Created by Justin Damhaut on 9/6/24.
+//  Created by Justin Damhaut on 12/7/24.
 //
-
 
 import SwiftUI
 
-
-
-struct ProfileView: View {
+struct SelfProfileView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
-    
-    @State var currentRSStatus: RelationshipStatus
     @Binding var deleting: Bool
     @Binding var currentPage: locketPages
     
@@ -25,13 +20,8 @@ struct ProfileView: View {
     
     @State var updater: Int = 1
     
-    @State var demoStartDate: Date
-    @State var demoEndDate: Date
     @State var name: String
     @State var birthday: Date
-    @State var instaUser: String
-    @State var telPrefix: String
-    @State var telNumber: String
     @State var accentColor: Color
     
     @State var demo: Bool
@@ -48,8 +38,6 @@ struct ProfileView: View {
     @State var showDuplicateConfirmation = false
 
     @State var priority: Int
-    
-    var selfProfileExists: Bool
     
     let screenWidth: Int = Int(UIScreen.main.bounds.width)
     
@@ -75,23 +63,19 @@ struct ProfileView: View {
             return true
         } else { return false }
     }
-    
-    
-    
+
     var body: some View {
         NavigationStack {
             ZStack(alignment: .topLeading) {
                 ScrollView {
                     VStack {
-                        ProfileViewHeader(currentRSStatus: currentRSStatus, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
+                        ProfileViewHeader(currentRSStatus: .bestie, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
                             .onDisappear() {
                                 withAnimation(.snappy) { currentPage = .home }
                             }
                             .id(updater)
                             .onAppear {
                                 withAnimation(.snappy) { currentPage = .profile }
-                                currentRSStatus = bindPerson.relationshipStatus
-                                demoStartDate = bindPerson.currentRelationshipStartDate
                                 name = bindPerson.name
                                 birthday = bindPerson.birthday
                                 accentColor = returnAccentColor(
@@ -108,13 +92,6 @@ struct ProfileView: View {
                                     dismiss()
                                 }
                             }
-                        ProfileViewRelationship(startDate: demoStartDate, currentRSStatus: currentRSStatus)
-                            .padding([.leading, .trailing, .bottom])
-                            .padding(.top, -30)
-                            .onAppear {
-                                withAnimation(.snappy) { currentPage = .profile }
-                            }
-                            .id(updater)
                         HStack {
                             Text("        Socials")
                                 .font(.system(size: 14, weight: .semibold))
@@ -160,7 +137,7 @@ struct ProfileView: View {
                                     .padding(.bottom, -5)
                                 Spacer()
                             }.padding(.top, 40)
-                            ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: demoStartDate, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: currentRSStatus, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [Data](), modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
+                            ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: .now, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: .bestie, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [Data](), modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
                                 .id(updater)
                                 .padding([.bottom, .leading, .trailing])
                                 .padding(.top, -30)
@@ -195,8 +172,8 @@ struct ProfileView: View {
                                         shownThumbnail: mainImage,
                                         slideImages: slideImages,
                                         socials: socials,
-                                        relationshipStatus: currentRSStatus,
-                                        currentRelationshipStartDate: demoStartDate,
+                                        relationshipStatus: .bestie,
+                                        currentRelationshipStartDate: .now,
                                         personDescription: description)
                                     modelContext.insert(insertedperson)
                                     print("success on duplicating")
@@ -257,14 +234,12 @@ struct ProfileView: View {
                             }, label: {
                                 Label(bindPerson.isHiddenProfile() ? "Unhide \(name)" : "Hide \(name)", systemImage: bindPerson.isHiddenProfile() ? "eye" : "eye.slash")
                             })
-                            if !selfProfileExists {
-                                Button(action: {
-                                    bindPerson.selfToggle()
-                                    dismiss()
-                                }, label: {
-                                    Label("Convert \(name) to Self", systemImage: "person")
-                                })
-                            }
+                            Button(action: {
+                                bindPerson.selfToggle()
+                                dismiss()
+                            }, label: {
+                                Label("Convert \(name) to nonself", systemImage: "person.slash")
+                            })
                             Button(action: {
                                 debug.toggle()
                                 updater += 1
@@ -303,15 +278,14 @@ struct ProfileView: View {
             .ignoresSafeArea()
         }
     }
-    
 }
 
 #Preview {
     @Previewable @State var editIsPresented = false
     @Previewable @State var deleting = false
     @Previewable @State var currentPage: locketPages = .profile
-    ProfileView(currentRSStatus: .crush, deleting: $deleting,
-                currentPage: $currentPage, 
+    SelfProfileView(deleting: $deleting,
+                currentPage: $currentPage,
                 bindPerson: person(personUUID: UUID(), priority: 0, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractYear(year: -15), hexAccentColor: "FFFFFF", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
                     socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
                      socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
@@ -319,15 +293,9 @@ struct ProfileView: View {
                     socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-                ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractYear(year: -3), personDescription: "Description")
-                    ,
-                demoStartDate: addOrSubtractYear(year: -5),
-                demoEndDate: addOrSubtractYear(year: -1),
+                ], personDescription: "Description"),
                 name: "Brain",
                 birthday: addOrSubtractYear(year: -15),
-                instaUser: "username",
-                telPrefix: "123",
-                telNumber: "91234567",
                 accentColor: .white,
                 demo: true,
                 mainImage: Data(),
@@ -339,10 +307,9 @@ struct ProfileView: View {
                     socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
                     socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
-                    ], 
+                    ],
                 description: "dhkjlsklhjasfhjkfsa hjsfd jhsfaj fskldj kadfjl jadsfjkhdfajkhl hdfkljh fadsh ladf",
-                creationDate: .now, 
-                priority: 0,
-                selfProfileExists: false
+                creationDate: .now,
+                priority: 0
     )
 }

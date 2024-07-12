@@ -47,6 +47,8 @@
 		D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */; };
 		D0DF907E2C249FDB00803AED /* RelationshipStartDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF907D2C249FDB00803AED /* RelationshipStartDatePicker.swift */; };
 		D0EEF28F2C313BE900F5DF0B /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EEF28E2C313BE900F5DF0B /* EditProfileView.swift */; };
+		D0F372C92C41743200FA5074 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F372C82C41743200FA5074 /* SettingsView.swift */; };
+		D0F372CD2C41763C00FA5074 /* SelfProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F372CC2C41763C00FA5074 /* SelfProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +112,8 @@
 		D0DF907B2C249E2200803AED /* AddProfileViewRelationships.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileViewRelationships.swift; sourceTree = "<group>"; };
 		D0DF907D2C249FDB00803AED /* RelationshipStartDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipStartDatePicker.swift; sourceTree = "<group>"; };
 		D0EEF28E2C313BE900F5DF0B /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		D0F372C82C41743200FA5074 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D0F372CC2C41763C00FA5074 /* SelfProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfProfileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +203,7 @@
 		D095B38D2C17193F007532E2 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
+				D0F372CC2C41763C00FA5074 /* SelfProfileView.swift */,
 				D095B37F2C16031E007532E2 /* ProfileView.swift */,
 				D0DC9E672C39C3150028CFD1 /* ProfileViewConditional.swift */,
 				D095B3872C16EAA0007532E2 /* ProfileViewHeader.swift */,
@@ -249,6 +254,7 @@
 				D0A8F5432C15FD1200429F1B /* ContentView.swift */,
 				D00A99FB2C39D203002EB426 /* Global */,
 				D070B70E2C1A116600442B16 /* HomeView */,
+				D0F372C72C41741F00FA5074 /* SettingsView */,
 				D095B38D2C17193F007532E2 /* ProfileView */,
 				D01A555D2C20171F00C0B98D /* AddProfileView */,
 				D0A8F5472C15FD1300429F1B /* Assets.xcassets */,
@@ -281,6 +287,14 @@
 				D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */,
 			);
 			path = LocketUITests;
+			sourceTree = "<group>";
+		};
+		D0F372C72C41741F00FA5074 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				D0F372C82C41743200FA5074 /* SettingsView.swift */,
+			);
+			path = SettingsView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,9 +436,11 @@
 			files = (
 				D070B70F2C1A116600442B16 /* HomeView.swift in Sources */,
 				D07976412C25E6F400CC35BF /* AddProfileViewImages.swift in Sources */,
+				D0F372CD2C41763C00FA5074 /* SelfProfileView.swift in Sources */,
 				D070B7102C1A116600442B16 /* HomeViewProfilePreview.swift in Sources */,
 				D070B7122C1B5AAC00442B16 /* HomeViewSearchFilter.swift in Sources */,
 				D095B3802C16031E007532E2 /* ProfileView.swift in Sources */,
+				D0F372C92C41743200FA5074 /* SettingsView.swift in Sources */,
 				D095B38C2C16F7EE007532E2 /* Universal Declarations.swift in Sources */,
 				D095B3842C162F62007532E2 /* ProfileViewName.swift in Sources */,
 				D0CF8B212C33053600EC59B3 /* ProfileViewDescription.swift in Sources */,

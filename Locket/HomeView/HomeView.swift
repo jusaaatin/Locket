@@ -193,6 +193,8 @@ struct HomeView: View {
     @State var presentingDeleteAlert = false
     @State var hiddenShown = false // are hidden people being shown?
     @State var isPresented: Bool = false
+    @State var selfProfileIsPresented: Bool = false
+    @State var selfProfileDeleting: Bool = false
     
     @Namespace var homeViewNamespace
     @Binding var currentPage: locketPages
@@ -377,10 +379,11 @@ struct HomeView: View {
                                     demo: false,
                                     mainImage: person.shownThumbnail,
                                     slideImages: person.slideImages ?? [Data](),
-                                    socials: person.socials ?? [socials](), 
-                                    description: person.personDescription, 
+                                    socials: person.socials ?? [socials](),
+                                    description: person.personDescription,
                                     creationDate: person.personModelCreationDate,
-                                    priority: person.priority
+                                    priority: person.priority,
+                                    selfProfileExists: selfProfileExists
                                 )
                                 .navigationBarBackButtonHidden()
                                 .navigationTransition(
@@ -473,7 +476,8 @@ struct HomeView: View {
                                             socials: person.socials ?? [socials](),
                                             description: person.personDescription,
                                             creationDate: person.personModelCreationDate,
-                                            priority: person.priority
+                                            priority: person.priority,
+                                            selfProfileExists: selfProfileExists
                                         )
                                         .navigationBarBackButtonHidden()
                                         .navigationTransition(
@@ -602,11 +606,11 @@ struct HomeView: View {
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
-                            
-
+                            selfProfileIsPresented = true
                         }, label: {
                             if let selfPFPData = selfPerson?.shownThumbnail {
-                                let selfPFP = UIImage(data: selfPFPData)
+                                let decompressedImage = (selfPFPData.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
+                                let selfPFP = UIImage(data: decompressedImage)
                                 Image(uiImage: selfPFP ?? UIImage())
                                     .resizable()
                                     .scaledToFill()
@@ -628,6 +632,29 @@ struct HomeView: View {
                                         )
                             }
                         })
+                        .fullScreenCover(isPresented: $selfProfileIsPresented) {
+                            if let selfPerson = selfPerson {
+                                SelfProfileView(
+                                    deleting: $selfProfileDeleting,
+                                    currentPage: $currentPage,
+                                    bindPerson: selfPerson,
+                                    name: selfPerson.name,
+                                    birthday: selfPerson.birthday,
+                                    accentColor: returnAccentColor(
+                                        isFgMatch: selfPerson.accentColorIsDefaultForeground,
+                                        Hex: selfPerson.hexAccentColor),
+                                    demo: false,
+                                    mainImage: selfPerson.shownThumbnail,
+                                    slideImages: selfPerson.slideImages ?? [Data](),
+                                    socials: selfPerson.socials ?? [socials](),
+                                    description: selfPerson.personDescription,
+                                    creationDate: selfPerson.personModelCreationDate,
+                                    priority: selfPerson.priority
+                                    )
+                            } else {
+                                Button(action: {selfProfileIsPresented = false}, label: {Text("Dismiss")})
+                            }
+                        }
                     }
                 })
             }

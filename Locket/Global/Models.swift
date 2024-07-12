@@ -76,6 +76,10 @@ final class person: Identifiable {
         if isPinned() { priority -= 1 }
         else { priority += 1 }
     }
+    func selfToggle() {
+        if isSelfProfile() { priority = 0 }
+        else { priority = 18 }
+    }
     func isPinned() -> Bool {
         if priority == 1 || priority == 3 || priority == 5 || priority == 11 || priority == 13 || priority == 15 /* pinned */{
             return true
@@ -115,7 +119,9 @@ final class person: Identifiable {
         priority = returnPriority()
     }
     func returnPriority() -> Int {
-        if isPinned() {
+        if isSelfProfile() {
+            return 18
+        } else if isPinned() {
             if isBirthdayToday() || isAnniversaryToday() {
                 return isHiddenProfile() ? 15 : 5
             } else if isBirthdayTomorrow() || isAnniversaryTomorrow() {
