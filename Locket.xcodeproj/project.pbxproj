@@ -36,6 +36,7 @@
 		D0A8F5562C15FD1300429F1B /* LocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5552C15FD1300429F1B /* LocketTests.swift */; };
 		D0A8F5602C15FD1300429F1B /* LocketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F55F2C15FD1300429F1B /* LocketUITests.swift */; };
 		D0A8F5622C15FD1300429F1B /* LocketUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */; };
+		D0B3898F2CC29E1F00BBBA0D /* SettingsViewProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B3898E2CC29E1F00BBBA0D /* SettingsViewProfileCard.swift */; };
 		D0C845562C303F9D0079789F /* ProfileViewRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */; };
 		D0C845582C3052430079789F /* ProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C845572C3052430079789F /* ProfileViewSocials.swift */; };
 		D0CF8B1F2C32CE2600EC59B3 /* ProfileViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */; };
@@ -101,6 +102,7 @@
 		D0A8F55B2C15FD1300429F1B /* LocketUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocketUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A8F55F2C15FD1300429F1B /* LocketUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketUITests.swift; sourceTree = "<group>"; };
 		D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D0B3898E2CC29E1F00BBBA0D /* SettingsViewProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewProfileCard.swift; sourceTree = "<group>"; };
 		D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRelationship.swift; sourceTree = "<group>"; };
 		D0C845572C3052430079789F /* ProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewSocials.swift; sourceTree = "<group>"; };
 		D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewImages.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				D0F372C82C41743200FA5074 /* SettingsView.swift */,
+				D0B3898E2CC29E1F00BBBA0D /* SettingsViewProfileCard.swift */,
 			);
 			path = SettingsView;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				D01A555A2C1F65AC00C0B98D /* AddProfileView.swift in Sources */,
 				D01A55622C20175B00C0B98D /* RelationshipStatusPickerButtonRow.swift in Sources */,
 				D0DF907E2C249FDB00803AED /* RelationshipStartDatePicker.swift in Sources */,
+				D0B3898F2CC29E1F00BBBA0D /* SettingsViewProfileCard.swift in Sources */,
 				D0A8F5442C15FD1200429F1B /* ContentView.swift in Sources */,
 				D095B3882C16EAA0007532E2 /* ProfileViewHeader.swift in Sources */,
 				D07F15EB2C1BF0C3001D1538 /* FilterButtonLeading.swift in Sources */,

@@ -32,11 +32,6 @@ enum RelationshipStatus: Codable, Hashable {
     var id: Self { self }
 }
 
-enum paginator {
-    case left, mid, right, none
-    var id: Self { self }
-}
-
 // home view
 enum filterState {
     case showAll, crush, relationship, friend, bestie

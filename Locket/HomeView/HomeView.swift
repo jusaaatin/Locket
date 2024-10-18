@@ -632,27 +632,14 @@ struct HomeView: View {
                                         )
                             }
                         })
-                        .fullScreenCover(isPresented: $selfProfileIsPresented) {
-                            if let selfPerson = selfPerson {
-                                SelfProfileView(
-                                    deleting: $selfProfileDeleting,
-                                    currentPage: $currentPage,
-                                    bindPerson: selfPerson,
-                                    name: selfPerson.name,
-                                    birthday: selfPerson.birthday,
-                                    accentColor: returnAccentColor(
-                                        isFgMatch: selfPerson.accentColorIsDefaultForeground,
-                                        Hex: selfPerson.hexAccentColor),
-                                    demo: false,
-                                    mainImage: selfPerson.shownThumbnail,
-                                    slideImages: selfPerson.slideImages ?? [Data](),
-                                    socials: selfPerson.socials ?? [socials](),
-                                    description: selfPerson.personDescription,
-                                    creationDate: selfPerson.personModelCreationDate,
-                                    priority: selfPerson.priority
-                                    )
-                            } else {
-                                Button(action: {selfProfileIsPresented = false}, label: {Text("Dismiss")})
+                        .sheet(isPresented: $selfProfileIsPresented) {
+                            SettingsView(selfProfileDeleting: $selfProfileDeleting, currentPage: $currentPage, bindPerson: selfPerson)
+                        }
+                        .onAppear() {
+                            for person in unQueriedPerson {
+                                if person.priority == -1 {
+                                    modelContext.delete(person)
+                                }
                             }
                         }
                     }

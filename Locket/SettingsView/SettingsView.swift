@@ -8,11 +8,72 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @Binding var selfProfileDeleting: Bool
+    @Binding var currentPage: locketPages
+    let bindPerson: person?
+    
+    private func dateToDM(input: Date) -> String {
+        let DMFormatter = DateFormatter()
+        DMFormatter.dateFormat = "d MMM"
+        return DMFormatter.string(from: input)
+    }
+    private func returnAccentColor(isFgMatch: Bool, Hex: String) -> Color{
+        if isFgMatch {
+            return Color("Foreground-match")
+        } else {
+            return Color(hex: "\(Hex)") ?? Color("Foreground-match")
+        }
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if let selfPerson = bindPerson {
+            NavigationView {
+                ScrollView {
+                    NavigationLink {
+                        SelfProfileView(
+                            deleting: $selfProfileDeleting,
+                            currentPage: $currentPage,
+                            bindPerson: selfPerson,
+                            name: selfPerson.name,
+                            birthday: selfPerson.birthday,
+                            accentColor: returnAccentColor(
+                                isFgMatch: selfPerson.accentColorIsDefaultForeground,
+                                Hex: selfPerson.hexAccentColor),
+                            demo: false,
+                            mainImage: selfPerson.shownThumbnail,
+                            slideImages: selfPerson.slideImages ?? [Data](),
+                            socials: selfPerson.socials ?? [socials](),
+                            description: selfPerson.personDescription,
+                            creationDate: selfPerson.personModelCreationDate,
+                            priority: selfPerson.priority
+                        )
+                        .navigationBarBackButtonHidden()
+                    } label: {
+                        SettingsViewProfileCard(name: selfPerson.name, birthday: selfPerson.birthday, relationshipStatus: selfPerson.relationshipStatus, accentColor: returnAccentColor(
+                            isFgMatch: selfPerson.accentColorIsDefaultForeground,
+                            Hex: selfPerson.hexAccentColor), shownThumbnail: selfPerson.shownThumbnail, bindPerson: bindPerson ?? person())
+                        .padding()
+                    }
+                    Spacer()
+                }
+                .navigationBarTitle("Settings")
+            }
+        } else {
+            
+        }
     }
 }
 
 #Preview {
-    SettingsView()
+    @Previewable @State var selfProfileDeleting = false
+    @Previewable @State var locketPages: locketPages = .home
+    SettingsView(selfProfileDeleting: $selfProfileDeleting, currentPage: $locketPages, bindPerson: person(personUUID: UUID(), priority: 0, personid: 1000000, personModelCreationDate: .now, name: "Name", birthday: addOrSubtractYear(year: -15), hexAccentColor: "FFFFFF", accentColorIsDefaultForeground: true, shownThumbnail: Data(), slideImages: [Data](), socials: [
+        socials(socialPlatform: .PhoneNumber, stringPRE: "65", stringMAIN: "91234567"),
+         socials(socialPlatform: .Instagram, stringPRE: "", stringMAIN: "Username"),
+        socials(socialPlatform: .Discord, stringPRE: "", stringMAIN: "Username"),
+        socials(socialPlatform: .Slack, stringPRE: "", stringMAIN: "Username"),
+        socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
+        socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
+    ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractYear(year: -3), personDescription: "Description"))
 }

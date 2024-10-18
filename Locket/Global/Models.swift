@@ -25,12 +25,6 @@ func dateToDMY(input: Date, type: Int) -> String {
 @Model
 final class person: Identifiable {
     
-    //backend
-    var personUUID = UUID()
-    var priority: Int
-    @Attribute(.unique) var personid: Int
-    var personModelCreationDate: Date //for sorting
-
     /* PRIORITIES
      Priority 18: Self Profile
      Priority 15: 4 but pinned HIDDEN
@@ -47,6 +41,12 @@ final class person: Identifiable {
      Priority 0: Normal
      Priority -1: Send person to be deleted :(
      */
+    
+    //backend
+    var personUUID = UUID()
+    var priority: Int
+    @Attribute(.unique) var personid: Int
+    var personModelCreationDate: Date //for sorting
 
     //person
     var name: String //justin
