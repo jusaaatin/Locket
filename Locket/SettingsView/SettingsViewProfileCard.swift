@@ -73,7 +73,7 @@ struct SettingsViewProfileCard: View {
                 Image("demofood12")
                     .resizable()
                     .scaledToFill()
-                    .frame(width:CGFloat(80), height: CGFloat(80))
+                    .frame(width:CGFloat(58), height: CGFloat(58))
                     .clipShape(Circle())
                     .clipped()
             } else {
@@ -82,52 +82,53 @@ struct SettingsViewProfileCard: View {
                     Image(uiImage: uithumb)
                         .resizable()
                         .scaledToFill()
-                        .frame(width:CGFloat(80), height: CGFloat(80))
+                        .frame(width:CGFloat(58), height: CGFloat(58))
                         .clipShape(Circle())
                         .clipped()
                 }
             }
-            VStack {
-                HStack {
+            HStack {
+                VStack(alignment: .leading, spacing: -2) {
                     Text(name)
-                        .font(.system(size: 32, weight: .semibold, design: .serif))
+                        .font(.system(size: 28, weight: .semibold, design: .serif))
                         .minimumScaleFactor(0.01)
                         .lineLimit(1)
-                        .foregroundStyle(accentColor)
+                        .foregroundStyle(Color.white)
                         .frame(height: 39)
-                    if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
-                        HStack {
-                            Image(systemName: "gift")
-                                .frame(height: 12)
-                            Text(bindPerson.isBirthdayToday() ? "Today" : "Tomorrow")
+                    Group {
+                        if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
+                            HStack {
+                                Image(systemName: "gift")
+                                    .frame(height: 10)
+                                    .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                                Text(bindPerson.isBirthdayToday() ? "Today" : "Tomorrow")
+                                    .font(.system(size: 14, weight: .semibold, design: .monospaced))
+                            }
+                            .foregroundStyle(.red.mix(with: .white, by: 0.3))
+                        } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
+                            HStack {
+                                Text("Anniversary").padding(.leading, -5)
+                                Text(bindPerson.isAnniversaryToday() ? "Today" : "Tomorrow").padding(.trailing, -5)
+                            }
+                            .font(.system(size: 13, weight: .semibold, design: .monospaced))
+                            .foregroundStyle(.red.mix(with: .white, by: 0.3))
+                        } else {
+                            HStack {
+                                Image(systemName: "gift")
+                                    .frame(height: 10)
+                                    .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                                Text(dateToDM(input: birthday))
+                                    .font(.system(size: 14, weight: .semibold, design: .monospaced))
+                            }
+                            .foregroundStyle(.gray)
                         }
-                        .font(.system(size: 12, weight: .semibold, design: .monospaced))
-                        .foregroundStyle(.red.mix(with: .white, by: 0.3))
-                    } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
-                        HStack {
-                            Text("Anniversary").padding(.leading, -5)
-                            Text(bindPerson.isAnniversaryToday() ? "Today" : "Tomorrow").padding(.trailing, -5)
-                        }
-                        .font(.system(size: 11, weight: .semibold, design: .monospaced))
-                        .foregroundStyle(.red.mix(with: .white, by: 0.3))
-                    } else {
-                        HStack {
-                            Image(systemName: "gift")
-                                .frame(height: 12)
-                            Text(dateToDM(input: birthday))
-                        }
-                        .font(.system(size: 12, weight: .semibold, design: .monospaced))
-                        .foregroundStyle(.gray)
-                    }
-                    Spacer()
+                    } // birthday view
                 }
-                HStack {
-                    Text("Click to more")
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
-                        .minimumScaleFactor(0.01)
-                        .lineLimit(1)
+                Spacer()
+                VStack {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
                         .foregroundStyle(.gray)
-                    Spacer()
                 }
             }
             .padding()

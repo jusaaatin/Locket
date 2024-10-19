@@ -30,7 +30,7 @@ struct SettingsView: View {
         if let selfPerson = bindPerson {
             NavigationView {
                 ZStack {
-                    Color("Background-match").ignoresSafeArea()
+            //      Color("Background-match").ignoresSafeArea()
                     ScrollView {
                         NavigationLink {
                             SelfProfileView(
