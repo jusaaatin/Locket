@@ -67,9 +67,12 @@ struct SelfProfileView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .topLeading) {
+                Color("Background-match")
                 ScrollView {
                     VStack {
                         ProfileViewHeader(currentRSStatus: .bestie, name: name, accentColor: accentColor, demo: demo, mainImage: mainImage, slideImages: slideImages, birthday: birthday)
+                            .frame(height: 514)
+                            .clipped()
                             .onDisappear() {
                                 withAnimation(.snappy) { currentPage = .home }
                             }
@@ -273,7 +276,7 @@ struct SelfProfileView: View {
                         .frame(width: 42, height: 42)
                     }.padding(.leading, -4)
                     .id(UUID())
-                }.padding().offset(y: 45)
+                }.padding()
             }
             .ignoresSafeArea()
         }

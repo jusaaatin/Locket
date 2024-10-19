@@ -29,35 +29,39 @@ struct SettingsView: View {
     var body: some View {
         if let selfPerson = bindPerson {
             NavigationView {
-                ScrollView {
-                    NavigationLink {
-                        SelfProfileView(
-                            deleting: $selfProfileDeleting,
-                            currentPage: $currentPage,
-                            bindPerson: selfPerson,
-                            name: selfPerson.name,
-                            birthday: selfPerson.birthday,
-                            accentColor: returnAccentColor(
+                ZStack {
+                    Color("Background-match").ignoresSafeArea()
+                    ScrollView {
+                        NavigationLink {
+                            SelfProfileView(
+                                deleting: $selfProfileDeleting,
+                                currentPage: $currentPage,
+                                bindPerson: selfPerson,
+                                name: selfPerson.name,
+                                birthday: selfPerson.birthday,
+                                accentColor: returnAccentColor(
+                                    isFgMatch: selfPerson.accentColorIsDefaultForeground,
+                                    Hex: selfPerson.hexAccentColor),
+                                demo: false,
+                                mainImage: selfPerson.shownThumbnail,
+                                slideImages: selfPerson.slideImages ?? [Data](),
+                                socials: selfPerson.socials ?? [socials](),
+                                description: selfPerson.personDescription,
+                                creationDate: selfPerson.personModelCreationDate,
+                                priority: selfPerson.priority
+                            )
+                            .navigationBarBackButtonHidden()
+                            .ignoresSafeArea()
+                        } label: {
+                            SettingsViewProfileCard(name: selfPerson.name, birthday: selfPerson.birthday, relationshipStatus: selfPerson.relationshipStatus, accentColor: returnAccentColor(
                                 isFgMatch: selfPerson.accentColorIsDefaultForeground,
-                                Hex: selfPerson.hexAccentColor),
-                            demo: false,
-                            mainImage: selfPerson.shownThumbnail,
-                            slideImages: selfPerson.slideImages ?? [Data](),
-                            socials: selfPerson.socials ?? [socials](),
-                            description: selfPerson.personDescription,
-                            creationDate: selfPerson.personModelCreationDate,
-                            priority: selfPerson.priority
-                        )
-                        .navigationBarBackButtonHidden()
-                    } label: {
-                        SettingsViewProfileCard(name: selfPerson.name, birthday: selfPerson.birthday, relationshipStatus: selfPerson.relationshipStatus, accentColor: returnAccentColor(
-                            isFgMatch: selfPerson.accentColorIsDefaultForeground,
-                            Hex: selfPerson.hexAccentColor), shownThumbnail: selfPerson.shownThumbnail, bindPerson: bindPerson ?? person())
-                        .padding()
+                                Hex: selfPerson.hexAccentColor), shownThumbnail: selfPerson.shownThumbnail, bindPerson: bindPerson ?? person())
+                            .padding()
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    .navigationBarTitle("Settings")
                 }
-                .navigationBarTitle("Settings")
             }
         } else {
             
