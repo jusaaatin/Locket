@@ -634,6 +634,7 @@ struct HomeView: View {
                         })
                         .sheet(isPresented: $selfProfileIsPresented) {
                             SettingsView(selfProfileDeleting: $selfProfileDeleting, currentPage: $currentPage, bindPerson: selfPerson)
+                                .presentationDragIndicator(.visible)
                         }
                         .onAppear() {
                             for person in unQueriedPerson {

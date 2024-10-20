@@ -58,13 +58,21 @@ struct SettingsView: View {
                                 Hex: selfPerson.hexAccentColor), shownThumbnail: selfPerson.shownThumbnail, bindPerson: bindPerson ?? person())
                             .padding()
                         }
+                        Image(systemName: "figure.dance")
+                            .font(.system(size: 60, weight: .semibold, design: .rounded))
+                            .foregroundStyle(.gray.opacity(0.5))
+                            .padding()
+                            .padding(.bottom, 30)
                         Spacer()
+                        // stuff here
                     }
                     .navigationBarTitle("Settings")
                 }
             }
         } else {
-            
+            NavigationView {
+                
+            }
         }
     }
 }
@@ -80,4 +88,10 @@ struct SettingsView: View {
         socials(socialPlatform: .Telegram, stringPRE: "", stringMAIN: "Username"),
         socials(socialPlatform: .Youtube, stringPRE: "", stringMAIN: "Username")
     ], relationshipStatus: .bestie, currentRelationshipStartDate: addOrSubtractYear(year: -3), personDescription: "Description"))
+}
+
+#Preview {
+    @Previewable @State var selfProfileDeleting = false
+    @Previewable @State var locketPages: locketPages = .home
+    SettingsView(selfProfileDeleting: $selfProfileDeleting, currentPage: $locketPages, bindPerson: nil)
 }

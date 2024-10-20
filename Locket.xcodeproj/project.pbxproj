@@ -37,6 +37,8 @@
 		D0A8F5602C15FD1300429F1B /* LocketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F55F2C15FD1300429F1B /* LocketUITests.swift */; };
 		D0A8F5622C15FD1300429F1B /* LocketUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */; };
 		D0B3898F2CC29E1F00BBBA0D /* SettingsViewProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B3898E2CC29E1F00BBBA0D /* SettingsViewProfileCard.swift */; };
+		D0B389912CC4D5C800BBBA0D /* AddSelfProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B389902CC4D5C800BBBA0D /* AddSelfProfileView.swift */; };
+		D0B389932CC4D81500BBBA0D /* SettingsViewNilProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B389922CC4D81500BBBA0D /* SettingsViewNilProfileCard.swift */; };
 		D0C845562C303F9D0079789F /* ProfileViewRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */; };
 		D0C845582C3052430079789F /* ProfileViewSocials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C845572C3052430079789F /* ProfileViewSocials.swift */; };
 		D0CF8B1F2C32CE2600EC59B3 /* ProfileViewImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */; };
@@ -103,6 +105,8 @@
 		D0A8F55F2C15FD1300429F1B /* LocketUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketUITests.swift; sourceTree = "<group>"; };
 		D0A8F5612C15FD1300429F1B /* LocketUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocketUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D0B3898E2CC29E1F00BBBA0D /* SettingsViewProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewProfileCard.swift; sourceTree = "<group>"; };
+		D0B389902CC4D5C800BBBA0D /* AddSelfProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelfProfileView.swift; sourceTree = "<group>"; };
+		D0B389922CC4D81500BBBA0D /* SettingsViewNilProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewNilProfileCard.swift; sourceTree = "<group>"; };
 		D0C845552C303F9D0079789F /* ProfileViewRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRelationship.swift; sourceTree = "<group>"; };
 		D0C845572C3052430079789F /* ProfileViewSocials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewSocials.swift; sourceTree = "<group>"; };
 		D0CF8B1E2C32CE2600EC59B3 /* ProfileViewImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewImages.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 			children = (
 				D01A55512C1CB54C00C0B98D /* AddProfileButton.swift */,
 				D01A55592C1F65AC00C0B98D /* AddProfileView.swift */,
+				D0B389902CC4D5C800BBBA0D /* AddSelfProfileView.swift */,
 				D0EEF28E2C313BE900F5DF0B /* EditProfileView.swift */,
 				D079763A2C25644F00CC35BF /* AddProfileViewPerson.swift */,
 				D07976402C25E6F400CC35BF /* AddProfileViewImages.swift */,
@@ -296,6 +301,7 @@
 			children = (
 				D0F372C82C41743200FA5074 /* SettingsView.swift */,
 				D0B3898E2CC29E1F00BBBA0D /* SettingsViewProfileCard.swift */,
+				D0B389922CC4D81500BBBA0D /* SettingsViewNilProfileCard.swift */,
 			);
 			path = SettingsView;
 			sourceTree = "<group>";
@@ -467,11 +473,13 @@
 				D01A55602C20175100C0B98D /* RelationshipStatusPickerButton.swift in Sources */,
 				D0DF907C2C249E2200803AED /* AddProfileViewRelationships.swift in Sources */,
 				D0A8F5422C15FD1200429F1B /* LocketApp.swift in Sources */,
+				D0B389912CC4D5C800BBBA0D /* AddSelfProfileView.swift in Sources */,
 				D01A55562C1DFF3000C0B98D /* Models.swift in Sources */,
 				D0C845582C3052430079789F /* ProfileViewSocials.swift in Sources */,
 				D0DC9E682C39C3150028CFD1 /* ProfileViewConditional.swift in Sources */,
 				D0C845562C303F9D0079789F /* ProfileViewRelationship.swift in Sources */,
 				D0DF90782C24133700803AED /* AddProfileViewSocials.swift in Sources */,
+				D0B389932CC4D81500BBBA0D /* SettingsViewNilProfileCard.swift in Sources */,
 				D070B7152C1B684400442B16 /* Filterbutton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
