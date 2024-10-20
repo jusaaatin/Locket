@@ -12,6 +12,8 @@ struct SettingsView: View {
     @Binding var selfProfileDeleting: Bool
     @Binding var currentPage: locketPages
     let bindPerson: person?
+    @State var isShowingAddSelf: Bool = false
+    @Environment(\.dismiss) var dismiss
     
     private func dateToDM(input: Date) -> String {
         let DMFormatter = DateFormatter()
@@ -71,7 +73,22 @@ struct SettingsView: View {
             }
         } else {
             NavigationView {
-                
+                ScrollView {
+                    Button(action: {
+                        isShowingAddSelf = true
+                    }, label: {
+                        SettingsViewNilProfileCard().padding()
+                    })
+                    .sheet(isPresented: $isShowingAddSelf) {
+                        AddSelfProfileView(debugOn: false)
+                    }
+                    .onChange(of: isShowingAddSelf) { oldValue, newValue in
+                        if oldValue == true && newValue == false {
+                           // dismiss()
+                        }
+                    }
+                }
+                .navigationTitle("Settings")
             }
         }
     }
