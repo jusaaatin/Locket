@@ -82,11 +82,11 @@ struct SettingsView: View {
                     .sheet(isPresented: $isShowingAddSelf) {
                         AddSelfProfileView(debugOn: false)
                     }
-                    .onChange(of: isShowingAddSelf) { oldValue, newValue in
-                        if oldValue == true && newValue == false {
-                           // dismiss()
-                        }
-                    }
+                    Image(systemName: "figure.dance")
+                        .font(.system(size: 60, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.gray.opacity(0.5))
+                        .padding()
+                        .padding(.bottom, 30)
                 }
                 .navigationTitle("Settings")
             }
