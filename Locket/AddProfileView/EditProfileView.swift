@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 import Combine
 import Photos
 import PhotosUI
@@ -74,6 +75,7 @@ struct EditProfileView: View {
 
     
     func saveToSocialsArray() {
+        socialsArray.removeAll(keepingCapacity: true)
         if additionalSocialsCount >= 0 {
             for i in 0...additionalSocialsCount {
                 if !isHidden[i] {
@@ -95,11 +97,6 @@ struct EditProfileView: View {
         if accentColor == Color("Foreground-match") {
             return true
         } else { return false }
-    }
-    func generatePersonID() -> Int{
-        let currentDate: Date = .now
-        let currentSince1970 = currentDate.timeIntervalSince1970
-        return Int(currentSince1970)
     }
     func checklistOk() -> Bool {
         if (
@@ -142,8 +139,11 @@ struct EditProfileView: View {
         bindedPerson.relationshipStatus = relationshipStatus
         bindedPerson.currentRelationshipStartDate = currentRelationshipStartDate
         bindedPerson.personDescription = personDescription
-        bindedPerson.priority = priority == -1 ? priority : bindedPerson.returnPriority()
-        bindedPerson.prioritySetter()
+        if priority == -1 {
+            bindedPerson.priority = -1
+        } else {
+            bindedPerson.prioritySetter()
+        }
     }
     func returnSocialString(social: [socials], which: Int) -> [String] {
         if which == 1 {
@@ -156,15 +156,12 @@ struct EditProfileView: View {
         return social.map { $0.socialPlatform }
     }
     func dateToDMY(input: Date, type: Int) -> String {
-        let DMYFormatter = DateFormatter()
-        if type == 1{
-            DMYFormatter.dateFormat = "d"
-        } else if type == 2 {
-            DMYFormatter.dateFormat = "MM"
-        } else {
-            DMYFormatter.dateFormat = "y"
+        let components = Calendar.current.dateComponents([.day, .month, .year], from: input)
+        switch type {
+        case 1: return String(components.day ?? 0)
+        case 2: return String(components.month ?? 0)
+        default: return String(components.year ?? 0)
         }
-        return DMYFormatter.string(from: input)
     }
     
     var body: some View {
@@ -412,16 +409,16 @@ struct EditProfileView: View {
                 hexInputColor = bindedPerson.hexAccentColor
                 initialAccentIsDefFg = bindedPerson.accentColorIsDefaultForeground
                 shownThumbnail = bindedPerson.shownThumbnail
-                slideImages = bindedPerson.slideImages ?? [Data]()
+                slideImages = bindedPerson.slideImages ?? []
                 socialPlatform.removeAll()
                 stringPRE.removeAll()
                 stringMAIN.removeAll()
                 isHidden.removeAll()
                 additionalSocialsCount = -1
                 visibleSocialsCount = 0
-                socialPlatform.append(contentsOf: returnSocialType(social: bindedPerson.socials ?? [socials]()))
-                stringPRE.append(contentsOf: returnSocialString(social: bindedPerson.socials ?? [socials](), which: 1))
-                stringMAIN.append(contentsOf: returnSocialString(social: bindedPerson.socials ?? [socials](), which: 2))
+                socialPlatform.append(contentsOf: returnSocialType(social: bindedPerson.socials ?? []))
+                stringPRE.append(contentsOf: returnSocialString(social: bindedPerson.socials ?? [], which: 1))
+                stringMAIN.append(contentsOf: returnSocialString(social: bindedPerson.socials ?? [], which: 2))
                 if let socialsCountSH = bindedPerson.socials{
                     additionalSocialsCount += socialsCountSH.count
                     visibleSocialsCount += socialsCountSH.count

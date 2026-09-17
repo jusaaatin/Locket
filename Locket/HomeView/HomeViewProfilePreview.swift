@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import DataCompression
 
 struct HomeViewProfilePreview: View {
     
@@ -22,9 +21,7 @@ struct HomeViewProfilePreview: View {
     var selecting: Bool
     
     private func dateToDM(input: Date) -> String {
-        let DMFormatter = DateFormatter()
-        DMFormatter.dateFormat = "d MMM"
-        return DMFormatter.string(from: input)
+        input.formatted(.dateTime.day().month(.abbreviated))
     }
     private func returnRightIconString() -> String {
         switch relationshipStatus {
@@ -64,11 +61,15 @@ struct HomeViewProfilePreview: View {
     }
     
     var body: some View {
+        let birthdayToday = bindPerson.isBirthdayToday()
+        let birthdayTomorrow = bindPerson.isBirthdayTomorrow()
+        let anniversaryToday = bindPerson.isAnniversaryToday()
+        let anniversaryTomorrow = bindPerson.isAnniversaryTomorrow()
+
         VStack {
             ZStack {
                 VStack {
-                    let thumb = shownThumbnail
-                    if thumb == Data() {
+                    if shownThumbnail.isEmpty {
                         Image("demofood12")
                             .resizable()
                             .scaledToFill()
@@ -76,8 +77,7 @@ struct HomeViewProfilePreview: View {
                             .clipped()
                             .padding(.bottom, -11)
                     } else {
-                        let decompressedThumb = (thumb.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
-                        if let uithumb = UIImage(data: decompressedThumb) {
+                        if let uithumb = StoredImageCache.image(from: shownThumbnail) {
                             Image(uiImage: uithumb)
                                 .resizable()
                                 .scaledToFill()
@@ -97,19 +97,19 @@ struct HomeViewProfilePreview: View {
                         .foregroundStyle(accentColor)
                         .frame(width:CGFloat(mainWidth))
                         .frame(height: 39)
-                    if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
+                    if birthdayToday || birthdayTomorrow {
                         HStack {
                             Image(systemName: "gift")
                                 .frame(height: 12)
-                            Text(bindPerson.isBirthdayToday() ? "Today" : "Tomorrow")
+                            Text(birthdayToday ? "Today" : "Tomorrow")
                         }
                         .font(.system(size: 12, weight: .semibold, design: .monospaced))
                         .foregroundStyle(.red.mix(with: .white, by: 0.3))
                         .offset(y: mainWidth == 200 ? 5: 0)
-                    } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
+                    } else if anniversaryToday || anniversaryTomorrow {
                         HStack {
                             Text("Anniversary").padding(.leading, -5)
-                            Text(bindPerson.isAnniversaryToday() ? "Today" : "Tomorrow").padding(.trailing, -5)
+                            Text(anniversaryToday ? "Today" : "Tomorrow").padding(.trailing, -5)
                         }
                         .font(.system(size: 11, weight: .semibold, design: .monospaced))
                         .foregroundStyle(.red.mix(with: .white, by: 0.3))
@@ -131,12 +131,12 @@ struct HomeViewProfilePreview: View {
                 } else {
                     VStack {
                         HStack {
-                            if bindPerson.isPinned() || bindPerson.isBirthdayToday() || bindPerson.isAnniversaryToday() || bindPerson.isBirthdayTomorrow() || bindPerson.isAnniversaryTomorrow() {
+                            if bindPerson.isPinned() || birthdayToday || anniversaryToday || birthdayTomorrow || anniversaryTomorrow {
                                 Group {
-                                    if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
+                                    if birthdayToday || birthdayTomorrow {
                                         Image(systemName: "gift")
                                             .font(.system(size: 16))
-                                    } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
+                                    } else if anniversaryToday || anniversaryTomorrow {
                                         Image(systemName: "party.popper.fill")
                                             .font(.system(size: 12))
                                     } else if bindPerson.isPinned() {
@@ -233,5 +233,4 @@ struct HomeViewProfilePreview: View {
         }
     }
 }
-
 

@@ -138,7 +138,7 @@ struct AddProfileViewSocials: View {
             Text("DEBUG ON")
             Text("visible \(visibleSocialsCount)")
             Text("additional \(additionalSocialsCount)")
-            Text("isHidden \(isHidden)")
+            Text(verbatim: "isHidden \(isHidden)")
         }
     }
 }

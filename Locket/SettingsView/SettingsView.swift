@@ -15,11 +15,6 @@ struct SettingsView: View {
     @State var isShowingAddSelf: Bool = false
     @Environment(\.dismiss) var dismiss
     
-    private func dateToDM(input: Date) -> String {
-        let DMFormatter = DateFormatter()
-        DMFormatter.dateFormat = "d MMM"
-        return DMFormatter.string(from: input)
-    }
     private func returnAccentColor(isFgMatch: Bool, Hex: String) -> Color{
         if isFgMatch {
             return Color("Foreground-match")
@@ -30,7 +25,7 @@ struct SettingsView: View {
     
     var body: some View {
         if let selfPerson = bindPerson {
-            NavigationView {
+            NavigationStack {
                 ZStack {
             //      Color("Background-match").ignoresSafeArea()
                     ScrollView {
@@ -46,8 +41,8 @@ struct SettingsView: View {
                                     Hex: selfPerson.hexAccentColor),
                                 demo: false,
                                 mainImage: selfPerson.shownThumbnail,
-                                slideImages: selfPerson.slideImages ?? [Data](),
-                                socials: selfPerson.socials ?? [socials](),
+                                slideImages: selfPerson.slideImages ?? [],
+                                socials: selfPerson.socials ?? [],
                                 description: selfPerson.personDescription,
                                 creationDate: selfPerson.personModelCreationDate,
                                 priority: selfPerson.priority
@@ -72,7 +67,7 @@ struct SettingsView: View {
                 }
             }
         } else {
-            NavigationView {
+            NavigationStack {
                 ScrollView {
                     Button(action: {
                         isShowingAddSelf = true

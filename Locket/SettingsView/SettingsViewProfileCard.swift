@@ -18,9 +18,7 @@ struct SettingsViewProfileCard: View {
     let bindPerson: person
     
     private func dateToDM(input: Date) -> String {
-        let DMFormatter = DateFormatter()
-        DMFormatter.dateFormat = "d MMM"
-        return DMFormatter.string(from: input)
+        input.formatted(.dateTime.day().month(.abbreviated))
     }
     private func returnRightIconString() -> String {
         switch relationshipStatus {
@@ -67,9 +65,13 @@ struct SettingsViewProfileCard: View {
     }
     
     var body: some View {
+        let birthdayToday = bindPerson.isBirthdayToday()
+        let birthdayTomorrow = bindPerson.isBirthdayTomorrow()
+        let anniversaryToday = bindPerson.isAnniversaryToday()
+        let anniversaryTomorrow = bindPerson.isAnniversaryTomorrow()
+
         HStack {
-            let thumb = shownThumbnail
-            if thumb == Data() {
+            if shownThumbnail.isEmpty {
                 Image("demofood12")
                     .resizable()
                     .scaledToFill()
@@ -77,8 +79,7 @@ struct SettingsViewProfileCard: View {
                     .clipShape(Circle())
                     .clipped()
             } else {
-                let decompressedThumb = (thumb.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
-                if let uithumb = UIImage(data: decompressedThumb) {
+                if let uithumb = StoredImageCache.image(from: shownThumbnail) {
                     Image(uiImage: uithumb)
                         .resizable()
                         .scaledToFill()
@@ -96,19 +97,19 @@ struct SettingsViewProfileCard: View {
                         .foregroundStyle(Color.white)
                         .frame(height: 39)
                     Group {
-                        if bindPerson.isBirthdayToday() || bindPerson.isBirthdayTomorrow(){
+                        if birthdayToday || birthdayTomorrow {
                             HStack {
                                 Image(systemName: "gift")
                                     .frame(height: 10)
                                     .font(.system(size: 10, weight: .semibold, design: .monospaced))
-                                Text(bindPerson.isBirthdayToday() ? "Today" : "Tomorrow")
+                                Text(birthdayToday ? "Today" : "Tomorrow")
                                     .font(.system(size: 14, weight: .semibold, design: .monospaced))
                             }
                             .foregroundStyle(.red.mix(with: .white, by: 0.3))
-                        } else if bindPerson.isAnniversaryToday() || bindPerson.isAnniversaryTomorrow(){
+                        } else if anniversaryToday || anniversaryTomorrow {
                             HStack {
                                 Text("Anniversary").padding(.leading, -5)
-                                Text(bindPerson.isAnniversaryToday() ? "Today" : "Tomorrow").padding(.trailing, -5)
+                                Text(anniversaryToday ? "Today" : "Tomorrow").padding(.trailing, -5)
                             }
                             .font(.system(size: 13, weight: .semibold, design: .monospaced))
                             .foregroundStyle(.red.mix(with: .white, by: 0.3))

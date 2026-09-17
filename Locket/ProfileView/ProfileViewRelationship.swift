@@ -39,9 +39,7 @@ struct ProfileViewRelationship: View {
         }
     }
     func dateToDMY(input: Date) -> String {
-        let DMYFormatter = DateFormatter()
-        DMYFormatter.dateFormat = "d MMM y"
-        return DMYFormatter.string(from: input)
+        input.formatted(.dateTime.day().month(.abbreviated).year())
     }
     func generateTimeInterval(startDate: Date, endDate: Date?) -> Int {
         let startSince1970 = Int(startDate.timeIntervalSince1970)

@@ -6,33 +6,34 @@
 //
 
 import SwiftUI
-import _PhotosUI_SwiftUI
-import DataCompression
+import PhotosUI
 
 struct AddProfileViewImages: View {
     
     private func loadImages(from items: [PhotosPickerItem]) async {
-        Task {
-            for (idx, item) in items.enumerated() {
-                do {
-                    let image = try await item.loadTransferable(type: Data.self)
-                    let compressedImage = (image?.compress(withAlgorithm: .lzfse) ?? Data()) as Data
-                    let image2 = compressedImage
-                    guard image2 == shownThumbnail else {
-                        if slideImages.count < 16 {
-                            slideImages.append(image2)
-                        }
-                        if idx == items.endIndex - 1 || idx == 15{
-                            //handling last item
-                            imageLoadingDone = true
-                        }
-                        continue
-                        }
-                } catch {
-                    print("Failed to load image: \(error)")
+        imageLoadingDone = false
+        defer { imageLoadingDone = true }
+
+        var loadedImages: [Data] = []
+        loadedImages.reserveCapacity(min(items.count, 15))
+
+        for item in items.prefix(15) {
+            guard !Task.isCancelled else { return }
+            do {
+                guard let imageData = try await item.loadTransferable(type: Data.self) else { continue }
+                let encodedImage = await Task.detached(priority: .userInitiated) {
+                    StoredImageEncoder.encode(imageData, maxPixelSize: 2_048)
+                }.value
+                if encodedImage != shownThumbnail {
+                    loadedImages.append(encodedImage)
                 }
+            } catch {
+                print("Failed to load image: \(error.localizedDescription)")
             }
         }
+
+        guard !Task.isCancelled else { return }
+        slideImages = loadedImages
     }
     
     @Binding var imageLoadingDone: Bool
@@ -48,7 +49,7 @@ struct AddProfileViewImages: View {
             ZStack {
                 Rectangle().frame(width: 102, height: 75).zIndex(2).foregroundStyle(Color.gray.mix(with:Color("Background-match"), by: 0.7))
                 PhotosPicker(selection: $selectedThumbnail, matching: .any(of: [.images, .not(.livePhotos)])) {
-                    if shownThumbnail == Data() {
+                    if shownThumbnail.isEmpty {
                         ZStack {
                             MeshGradient(
                                 width: 3,
@@ -81,9 +82,7 @@ struct AddProfileViewImages: View {
                                 .stroke(.thickMaterial.opacity(0.8), lineWidth: 3)
                         )
                     } else {
-                        let thumb = shownThumbnail
-                        let decompressedThumb = (thumb.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
-                        if let uithumb = UIImage(data: decompressedThumb) {
+                        if let uithumb = StoredImageCache.image(from: shownThumbnail) {
                             Image(uiImage: uithumb)
                                 .resizable()
                                 .scaledToFill()
@@ -93,12 +92,15 @@ struct AddProfileViewImages: View {
                         }
                     }
                 }.zIndex(3)
-                    .onChange(of: selectedThumbnail) { oldthumb ,newthumb in
-                        if oldthumb != newthumb {
+                    .onChange(of: selectedThumbnail) { oldThumbnail, newThumbnail in
+                        if oldThumbnail != newThumbnail {
                             Task {
-                                if let thumbdata = try? await newthumb?.loadTransferable(type:Data.self) {
-                                    let compressedThumb = (thumbdata.compress(withAlgorithm: .lzfse) ?? Data()) as Data
-                                    shownThumbnail = compressedThumb
+                                imageLoadingDone = false
+                                defer { imageLoadingDone = true }
+                                if let thumbnailData = try? await newThumbnail?.loadTransferable(type: Data.self) {
+                                    shownThumbnail = await Task.detached(priority: .userInitiated) {
+                                        StoredImageEncoder.encode(thumbnailData, maxPixelSize: 1_024)
+                                    }.value
                                 }
                             }
                         }
@@ -142,29 +144,19 @@ struct AddProfileViewImages: View {
                                     .stroke(.thickMaterial.opacity(0.8), lineWidth: 3)
                             )
                         })
-                        .onChange(of: selectedSlideImages) { old, new in
-                            if old != new {
-                                slideImages.removeAll()
-                            }
-                        }
                         .photosPicker(isPresented: $showSlidePhotosPicker, selection: $selectedSlideImages, maxSelectionCount: 15, selectionBehavior: .ordered, matching: .images)
-                        .onChange(of: selectedSlideImages) { old, new in
-                            imageLoadingDone = false
-                        }
-                        .task(id: selectedSlideImages, {
+                        .task(id: selectedSlideImages) {
                             await loadImages(from: selectedSlideImages)
-                        })
+                        }
                         ZStack {
                             HStack {
-                                ForEach(Array(slideImages), id: \.self) { i in
+                                ForEach(slideImages.indices, id: \.self) { index in
                                     Button(action: {
                                         withAnimation(.bouncy) {
                                             
                                         }
                                     }, label: { 
-                                        let selectedSlideData = i
-                                        let decompressedImageSlide = (selectedSlideData.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
-                                        if let uiSlideImage = UIImage(data: decompressedImageSlide) {
+                                        if let uiSlideImage = StoredImageCache.image(from: slideImages[index]) {
                                             Image(uiImage: uiSlideImage)
                                                 .resizable()
                                                 .scaledToFill()
@@ -234,7 +226,7 @@ struct AddProfileViewImages: View {
                 VStack(alignment: .trailing) {
                     Text("selected: \(selectedSlideImages.count)")
                     Text("slide: \(slideImages.count)")
-                    Text("\(imageLoadingDone)")
+                    Text(imageLoadingDone ? "true" : "false")
                 }
             }
         }

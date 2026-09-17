@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SelfProfileView: View {
     
@@ -49,14 +50,7 @@ struct SelfProfileView: View {
         }
     }
     func dateToDMY(input: Date) -> String {
-        let DMYFormatter = DateFormatter()
-        DMYFormatter.dateFormat = "d MMM y"
-        return DMYFormatter.string(from: input)
-    }
-    func generatePersonID() -> Int{
-        let currentDate: Date = .now
-        let currentSince1970 = currentDate.timeIntervalSince1970
-        return Int(currentSince1970)
+        input.formatted(.dateTime.day().month(.abbreviated).year())
     }
     func accentColorDefaultFgCheck() -> Bool{
         if accentColor == Color("Foreground-match") {
@@ -85,7 +79,7 @@ struct SelfProfileView: View {
                                     isFgMatch: bindPerson.accentColorIsDefaultForeground,
                                     Hex: bindPerson.hexAccentColor)
                                 mainImage = bindPerson.shownThumbnail
-                                slideImages = bindPerson.slideImages ?? [Data]()
+                                slideImages = bindPerson.slideImages ?? []
                                 socials = bindPerson.socials ?? []
                                 priority = bindPerson.priority
                                 updater += 1
@@ -140,7 +134,7 @@ struct SelfProfileView: View {
                                     .padding(.bottom, -5)
                                 Spacer()
                             }.padding(.top, 40)
-                            ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: .now, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: .bestie, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [Data](), modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
+                            ProfileViewDebug(bindPerson: bindPerson, updater: updater, demoStartDate: .now, name: name, birthday: birthday, accentColor: accentColor, mainImage: mainImage, slideImages: slideImages, socials: socials, description: description, priority: priority, currentRSStatus: .bestie, modelDemoStartDate: bindPerson.currentRelationshipStartDate, modelName: bindPerson.name, modelBirthday: bindPerson.birthday, modelHexAccentColor: bindPerson.hexAccentColor, modelMainImage: bindPerson.shownThumbnail, modelSlideImages: bindPerson.slideImages ?? [], modelSocials: bindPerson.socials ?? [], modelDescription: bindPerson.personDescription, modelPriority: bindPerson.priority, modelCurrentRSStatus: bindPerson.relationshipStatus, isPinned: bindPerson.isPinned(), isBirthdayToday: bindPerson.isBirthdayToday(), isAnniversaryToday: bindPerson.isAnniversaryToday(), isBirthdayTomorrow: bindPerson.isBirthdayTomorrow(), isAnniversaryTomorrow: bindPerson.isAnniversaryTomorrow(), isSelf: bindPerson.isSelfProfile(), UUID: bindPerson.personUUID, personID: bindPerson.personid, accentIsDefaultFg: bindPerson.accentColorIsDefaultForeground)
                                 .id(updater)
                                 .padding([.bottom, .leading, .trailing])
                                 .padding(.top, -30)
@@ -207,7 +201,6 @@ struct SelfProfileView: View {
                     NavigationLink {
                         EditProfileView(debugOn: debug, bindedPerson: bindPerson)
                             .navigationBarBackButtonHidden()
-                            .id(UUID())
                     } label: {
                         HStack {
                             Text("Edit").bold()
@@ -220,7 +213,6 @@ struct SelfProfileView: View {
                                 .frame(height: 32)
                         }
                     }
-                    .id(UUID())
                     Menu {
                         Section {
                             Button(action: {
@@ -275,7 +267,6 @@ struct SelfProfileView: View {
                         }
                         .frame(width: 42, height: 42)
                     }.padding(.leading, -4)
-                    .id(UUID())
                 }.padding()
             }
             .ignoresSafeArea()

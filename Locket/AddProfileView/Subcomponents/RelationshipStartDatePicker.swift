@@ -19,15 +19,12 @@ enum currentlyFocused: Int, Hashable{
 struct RelationshipStartDatePicker: View {
     
     func dateToDMY(input: Date, type: Int) -> Int {
-        let DMYFormatter = DateFormatter()
-        if type == 1 {
-            DMYFormatter.dateFormat = "d"
-        } else if type == 2 {
-            DMYFormatter.dateFormat = "M"
-        } else {
-            DMYFormatter.dateFormat = "y"
+        let components = Calendar.current.dateComponents([.day, .month, .year], from: input)
+        switch type {
+        case 1: return components.day ?? 0
+        case 2: return components.month ?? 0
+        default: return components.year ?? 0
         }
-        return Int(DMYFormatter.string(from: input)) ?? 0
     }
     
 

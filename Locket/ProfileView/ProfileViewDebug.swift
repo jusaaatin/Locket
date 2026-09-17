@@ -78,7 +78,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("AccentColor:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(accentColor)")
+                    Text(verbatim: String(describing: accentColor))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()
@@ -118,7 +118,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("Relationship status:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(currentRSStatus)")
+                    Text(verbatim: String(describing: currentRSStatus))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()
@@ -186,7 +186,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("accentIsDefaultForeground:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(accentIsDefaultFg)")
+                    Text(verbatim: String(accentIsDefaultFg))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()
@@ -226,7 +226,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("Relationship status:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(modelCurrentRSStatus)")
+                    Text(verbatim: String(describing: modelCurrentRSStatus))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()
@@ -250,7 +250,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("isPinned:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(isPinned)")
+                    Text(verbatim: String(isPinned))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()
@@ -258,7 +258,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("isBirthdayToday:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(isBirthdayToday)")
+                    Text(verbatim: String(isBirthdayToday))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()
@@ -266,7 +266,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("isAnniversaryToday:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(isAnniversaryToday)")
+                    Text(verbatim: String(isAnniversaryToday))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()
@@ -274,7 +274,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("isBirthdayTomorrow:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(isBirthdayTomorrow)")
+                    Text(verbatim: String(isBirthdayTomorrow))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()
@@ -282,7 +282,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("isAnniversaryTomorrow:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(isAnniversaryTomorrow)")
+                    Text(verbatim: String(isAnniversaryTomorrow))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()
@@ -290,7 +290,7 @@ struct ProfileViewDebug: View {
                 HStack {
                     Text("isSelf:")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
-                    Text("\(isSelf)")
+                    Text(verbatim: String(isSelf))
                         .lineLimit(1)
                         .font(.system(size: 18, weight: .regular, design: .rounded))
                     Spacer()

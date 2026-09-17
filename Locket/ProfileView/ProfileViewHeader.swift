@@ -54,9 +54,7 @@ struct ProfileViewHeader: View {
     }
     
     func dateToDMY(input: Date) -> String {
-        let DMYFormatter = DateFormatter()
-        DMYFormatter.dateFormat = "d MMM y"
-        return DMYFormatter.string(from: input)
+        input.formatted(.dateTime.day().month(.abbreviated).year())
     }
     
     let currentRSStatus: RelationshipStatus

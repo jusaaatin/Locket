@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 import Combine
 import Photos
 import PhotosUI
@@ -62,6 +63,7 @@ struct AddSelfProfileView: View {
     @State var imageLoadingDone = true
     
     func saveToSocialsArray() {
+        socialsArray.removeAll(keepingCapacity: true)
         if additionalSocialsCount >= 0 {
             for i in 0...additionalSocialsCount {
                 if !isHidden[i] {
@@ -83,11 +85,6 @@ struct AddSelfProfileView: View {
         if accentColor == Color("Foreground-match") {
             return true
         } else { return false }
-    }
-    func generatePersonID() -> Int{
-        let currentDate: Date = .now
-        let currentSince1970 = currentDate.timeIntervalSince1970
-        return Int(currentSince1970)
     }
     func checklistOk() -> Bool {
         if (

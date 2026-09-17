@@ -44,142 +44,47 @@ struct HomeView: View {
         }
     }
     private func deletePerson(person: person) {
-        print("delete triggered for \(person.name)")
         modelContext.delete(person)
     }
     private func deleteSelected() {
-        if hiddenShown {
-            for person in personmodel {
-                if person.personid < 0 {
-                    modelContext.delete(person)
-                }
-            }
-        } else {
-            for person in normalPerson {
-                if person.personid < 0 {
-                    modelContext.delete(person)
-                }
-            }
+        for person in selectedPeople {
+            modelContext.delete(person)
         }
+        selectedPersonIDs.removeAll()
     }
     private func pinOrUnpinSelected() {
-        if hiddenShown {
-            if allSelectedArePinned {
-                // unpin all
-                for person in personmodel.filter({$0.personid < 0}) {
-                    //selected and pinned
-                    person.pinToggle()
-                }
-            } else {
-                // pin unpinned peopele
-                for person in personmodel.filter({$0.personid < 0}) {
-                    //selected
-                    if !person.isPinned() {
-                        // not pinned
-                        person.pinToggle()
-                    }
-                }
-            }
-        } else {
-            if allSelectedArePinned {
-                // unpin all
-                for person in normalPerson.filter({$0.personid < 0}) {
-                    //selected and pinned
-                    person.pinToggle()
-                }
-            } else {
-                // pin unpinned peopele
-                for person in normalPerson.filter({$0.personid < 0}) {
-                    //selected
-                    if !person.isPinned() {
-                        // not pinned
-                        person.pinToggle()
-                    }
-                }
+        let shouldUnpin = allSelectedArePinned
+        for person in selectedPeople {
+            if shouldUnpin ? person.isPinned() : !person.isPinned() {
+                person.pinToggle()
+                person.prioritySetter()
             }
         }
     }
     private func hideOrUnhideSelected() {
-        if hiddenShown {
-            if allSelectedAreHidden {
-                // unhide all
-                for person in personmodel.filter({$0.personid < 0}) {
-                    //selected and hidden
-                    person.hiddenToggle()
-                }
-            } else {
-                // hide unpinned peopele
-                for person in personmodel.filter({$0.personid < 0}) {
-                    //selected
-                    if !person.isHiddenProfile() {
-                        // not pinned
-                        person.hiddenToggle()
-                    }
-                }
-            }
-        } else {
-            if allSelectedAreHidden {
-                // unhide all
-                for person in normalPerson.filter({$0.personid < 0}) {
-                    //selected and hidden
-                    person.hiddenToggle()
-                }
-            } else {
-                // hide unpinned peopele
-                for person in normalPerson.filter({$0.personid < 0}) {
-                    //selected
-                    if !person.isHiddenProfile() {
-                        // not pinned
-                        person.hiddenToggle()
-                    }
-                }
+        let shouldUnhide = allSelectedAreHidden
+        for person in selectedPeople {
+            if shouldUnhide ? person.isHiddenProfile() : !person.isHiddenProfile() {
+                person.hiddenToggle()
+                person.prioritySetter()
             }
         }
     }
     private func selectOrDeselectAll() {
-        if hiddenShown {
-            if allSelected {
-                for person in personmodel {
-                    if person.personid < 0 {
-                        person.personid.negate()
-                    }
-                }
-            } else {
-                for person in personmodel {
-                    if person.personid > 0 {
-                        person.personid.negate()
-                    }
-                }
-            }
+        if allSelected {
+            selectedPersonIDs.removeAll()
         } else {
-            if allSelected {
-                for person in normalPerson {
-                    if person.personid < 0 {
-                        person.personid.negate()
-                    }
-                }
-            } else {
-                for person in normalPerson {
-                    if person.personid > 0 {
-                        person.personid.negate()
-                    }
-                }
-            }
+            selectedPersonIDs = Set(displayedPeople.map(\.personUUID))
         }
     }
     private func deselectAll() {
-        if hiddenShown {
-            for person in personmodel {
-                if person.personid < 0 {
-                    person.personid.negate()
-                }
-            }
+        selectedPersonIDs.removeAll()
+    }
+    private func toggleSelection(for person: person) {
+        if selectedPersonIDs.contains(person.personUUID) {
+            selectedPersonIDs.remove(person.personUUID)
         } else {
-            for person in normalPerson {
-                if person.personid < 0 {
-                    person.personid.negate()
-                }
-            }
+            selectedPersonIDs.insert(person.personUUID)
         }
     }
     
@@ -195,6 +100,7 @@ struct HomeView: View {
     @State var isPresented: Bool = false
     @State var selfProfileIsPresented: Bool = false
     @State var selfProfileDeleting: Bool = false
+    @State private var selectedPersonIDs: Set<UUID> = []
     
     @Namespace var homeViewNamespace
     @Binding var currentPage: locketPages
@@ -202,151 +108,71 @@ struct HomeView: View {
     @Query(sort: \person.priority, order: .reverse) var unQueriedPerson: [person]
     
     var selfProfileExists: Bool {
-        if selfPerson == nil {
-            return false
-        } else {
-            return true
-        }
+        selfPerson != nil
     } // does self profile exist?
     var hiddenProfileExists: Bool {
-        if hiddenPerson == [] {
-            return false
-        } else {
-            return true
-        }
+        !hiddenPerson.isEmpty
     } // does hidden profile exist?
     var personmodel: [person]{
-        if searchString.isEmpty == false {
-            if searchFilter == .showAll {
-                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.isSelfProfile() != true && $0.isHiddenProfile()}
-            } else {
-                return unQueriedPerson.filter { $0.name.contains(searchString) && $0.isSelfProfile() != true && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
-            }
-        } else {
-            if searchFilter == .showAll {
-                return unQueriedPerson.filter {$0.isSelfProfile() != true}
-            } else {
-                return unQueriedPerson.filter {$0.isSelfProfile() != true && $0.relationshipStatus == filterStateToRelationshipStatus(state: searchFilter)}
-            }
+        let searchTerm = searchString.trimmingCharacters(in: .whitespacesAndNewlines)
+        let relationship = filterStateToRelationshipStatus(state: searchFilter)
+        let filtered = unQueriedPerson.filter { person in
+            guard !person.isSelfProfile() else { return false }
+            let matchesSearch = searchTerm.isEmpty || person.name.localizedCaseInsensitiveContains(searchTerm)
+            let matchesRelationship = relationship == nil || person.relationshipStatus == relationship
+            return matchesSearch && matchesRelationship
+        }
+
+        switch sortOrder {
+        case .aToZ:
+            return filtered.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        case .zToA:
+            return filtered.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedDescending }
+        case .createdNewest:
+            return filtered.sorted { $0.personModelCreationDate > $1.personModelCreationDate }
+        case .createdOldest:
+            return filtered.sorted { $0.personModelCreationDate < $1.personModelCreationDate }
+        case .birthdayFirstToLast:
+            return filtered.sorted { nextBirthday(for: $0.birthday) < nextBirthday(for: $1.birthday) }
         }
     } // unqueried person, filtered by searchstring and filterstate
     var selfPerson: person? {
-        for person in unQueriedPerson {
-            if person.isSelfProfile() {
-                return person
-            }
-        }
-        return nil
+        unQueriedPerson.first(where: { $0.isSelfProfile() })
     } // self person (own profile)
     var normalPerson: [person] {
-        var innerNormalPerson: [person] = []
-        for person in personmodel {
-            if !person.isHiddenProfile() {
-                innerNormalPerson.append(person)
-            }
-        }
-        if innerNormalPerson != [] {
-            return innerNormalPerson
-        } else { return [] }
-        
+        personmodel.filter { !$0.isHiddenProfile() }
     } // people taken from personmodel, unhidden
     var hiddenPerson: [person] {
-        var innerHiddenPerson: [person] = []
-        for person in personmodel {
-            if person.isHiddenProfile() {
-                innerHiddenPerson.append(person)
-            }
-        }
-        return innerHiddenPerson
-        
+        personmodel.filter { $0.isHiddenProfile() }
     } // people taken from personmodel, hidden
+    var displayedPeople: [person] {
+        hiddenShown ? personmodel : normalPerson
+    }
+    var selectedPeople: [person] {
+        displayedPeople.filter { selectedPersonIDs.contains($0.personUUID) }
+    }
     var allSelected: Bool {
-        if hiddenShown {
-            if personmodel == [] {
-                return false
-            } else {
-                for person in personmodel {
-                    if person.personid > 0 {
-                        return false
-                    }
-                }
-            }
-        } else {
-            if normalPerson == [] {
-                return false
-            } else {
-                for person in normalPerson {
-                    if person.personid > 0 {
-                        return false
-                    }
-                }
-            }
-        }
-        return true
+        !displayedPeople.isEmpty && displayedPeople.allSatisfy { selectedPersonIDs.contains($0.personUUID) }
     }
     var oneSelected: Bool {
-        if hiddenShown {
-            for person in personmodel {
-                if person.personid < 0 {
-                    return true
-                }
-            }
-        } else {
-            for person in normalPerson {
-                if person.personid < 0 {
-                    return true
-                }
-            }
-        }
-        return false
+        !selectedPeople.isEmpty
     }
     var allSelectedArePinned: Bool {
-        if hiddenShown {
-            if personmodel == [] {
-                return false
-            } else {
-                for person in personmodel.filter({ $0.personid < 0 }) {
-                    if !person.isPinned() {
-                        return false
-                    }
-                }
-            }
-        } else {
-            if normalPerson == [] {
-                return false
-            } else {
-                for person in normalPerson.filter({ $0.personid < 0 }) {
-                    if !person.isPinned() {
-                        return false
-                    }
-                }
-            }
-        }
-        return true
+        !selectedPeople.isEmpty && selectedPeople.allSatisfy { $0.isPinned() }
     }
     var allSelectedAreHidden: Bool {
-        if hiddenShown {
-            if personmodel == [] {
-                return false
-            } else {
-                for person in personmodel.filter({ $0.personid < 0 }) {
-                    if !person.isHiddenProfile() {
-                        return false
-                    }
-                }
-            }
-        } else {
-            if normalPerson == [] {
-                return false
-            } else {
-                for person in normalPerson.filter({ $0.personid < 0 }) {
-                    if !person.isHiddenProfile() {
-                        return false
-                    }
-                }
-            }
-        }
-        return true
+        !selectedPeople.isEmpty && selectedPeople.allSatisfy { $0.isHiddenProfile() }
+    }
+
+    private func nextBirthday(for birthday: Date) -> Date {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: .now)
+        let birthdayComponents = calendar.dateComponents([.month, .day], from: birthday)
+        return calendar.nextDate(
+            after: calendar.date(byAdding: .day, value: -1, to: today) ?? today,
+            matching: birthdayComponents,
+            matchingPolicy: .nextTime
+        ) ?? .distantFuture
     }
     
     
@@ -378,8 +204,8 @@ struct HomeView: View {
                                         Hex: person.hexAccentColor),
                                     demo: false,
                                     mainImage: person.shownThumbnail,
-                                    slideImages: person.slideImages ?? [Data](),
-                                    socials: person.socials ?? [socials](),
+                                    slideImages: person.slideImages ?? [],
+                                    socials: person.socials ?? [],
                                     description: person.personDescription,
                                     creationDate: person.personModelCreationDate,
                                     priority: person.priority,
@@ -388,7 +214,7 @@ struct HomeView: View {
                                 .navigationBarBackButtonHidden()
                                 .navigationTransition(
                                     .zoom(
-                                        sourceID: person.personid,
+                                        sourceID: person.personUUID,
                                         in: homeViewNamespace)
                                 )
                                 .onAppear {
@@ -410,21 +236,20 @@ struct HomeView: View {
                                         selecting: selecting)
                                     if selecting {
                                         Button(action: {
-                                            print("pressed")
-                                            person.personid.negate()
+                                            toggleSelection(for: person)
                                         }, label: {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 20)
                                                     .frame(width:CGFloat(getWidth()), height:CGFloat(218*getWidth()/160))
                                                     .foregroundStyle(.blue.mix(with: .white, by: 0.1))
-                                                    .opacity(person.personid > 0 ? 0 : 0.2)
+                                                    .opacity(selectedPersonIDs.contains(person.personUUID) ? 0.2 : 0)
                                                 VStack {
                                                     HStack {
                                                         Spacer()
                                                         ZStack {
                                                             Circle()
-                                                                .foregroundStyle(person.personid > 0 ? .gray.mix(with: .black, by: 0.2) : .blue)
-                                                                .opacity(person.personid > 0 ? 0.8 : 1)
+                                                                .foregroundStyle(selectedPersonIDs.contains(person.personUUID) ? .blue : .gray.mix(with: .black, by: 0.2))
+                                                                .opacity(selectedPersonIDs.contains(person.personUUID) ? 1 : 0.8)
                                                                 .frame(width: 28, height: 28)
                                                                 .padding(6)
                                                                 .offset(y: 2)
@@ -432,7 +257,7 @@ struct HomeView: View {
                                                                 .font(.system(size: 12, weight: .semibold, design: .monospaced))
                                                                 .offset(x: 0, y: 2)
                                                                 .foregroundStyle(.white)
-                                                                .opacity(person.personid > 0 ? 0 : 1)
+                                                                .opacity(selectedPersonIDs.contains(person.personUUID) ? 1 : 0)
                                                         }
                                                     }
                                                     Spacer()
@@ -448,7 +273,7 @@ struct HomeView: View {
                                 }
                             }
                             .buttonStyle(PlainButtonStyle())
-                            .matchedTransitionSource(id: person.personid, in: homeViewNamespace)
+                            .matchedTransitionSource(id: person.personUUID, in: homeViewNamespace)
                         }
                         if hiddenProfileExists {
                             if hiddenShown {
@@ -472,8 +297,8 @@ struct HomeView: View {
                                                 Hex: person.hexAccentColor),
                                             demo: false,
                                             mainImage: person.shownThumbnail,
-                                            slideImages: person.slideImages ?? [Data](),
-                                            socials: person.socials ?? [socials](),
+                                            slideImages: person.slideImages ?? [],
+                                            socials: person.socials ?? [],
                                             description: person.personDescription,
                                             creationDate: person.personModelCreationDate,
                                             priority: person.priority,
@@ -482,7 +307,7 @@ struct HomeView: View {
                                         .navigationBarBackButtonHidden()
                                         .navigationTransition(
                                             .zoom(
-                                                sourceID: person.personid,
+                                                sourceID: person.personUUID,
                                                 in: homeViewNamespace)
                                         )
                                         .onAppear {
@@ -504,21 +329,20 @@ struct HomeView: View {
                                                 selecting: selecting)
                                             if selecting {
                                                 Button(action: {
-                                                    print("pressed")
-                                                    person.personid.negate()
+                                                    toggleSelection(for: person)
                                                 }, label: {
                                                     ZStack {
                                                         RoundedRectangle(cornerRadius: 20)
                                                             .frame(width:CGFloat(getWidth()), height:CGFloat(218*getWidth()/160))
                                                             .foregroundStyle(.blue.mix(with: .white, by: 0.1))
-                                                            .opacity(person.personid > 0 ? 0 : 0.2)
+                                                            .opacity(selectedPersonIDs.contains(person.personUUID) ? 0.2 : 0)
                                                         VStack {
                                                             HStack {
                                                                 Spacer()
                                                                 ZStack {
                                                                     Circle()
-                                                                        .foregroundStyle(person.personid > 0 ? .gray.mix(with: .black, by: 0.2) : .blue)
-                                                                        .opacity(person.personid > 0 ? 0.8 : 1)
+                                                                        .foregroundStyle(selectedPersonIDs.contains(person.personUUID) ? .blue : .gray.mix(with: .black, by: 0.2))
+                                                                        .opacity(selectedPersonIDs.contains(person.personUUID) ? 1 : 0.8)
                                                                         .frame(width: 28, height: 28)
                                                                         .padding(6)
                                                                         .offset(y: 2)
@@ -526,7 +350,7 @@ struct HomeView: View {
                                                                         .font(.system(size: 12, weight: .semibold, design: .monospaced))
                                                                         .offset(x: 0, y: 2)
                                                                         .foregroundStyle(.white)
-                                                                        .opacity(person.personid > 0 ? 0 : 1)
+                                                                        .opacity(selectedPersonIDs.contains(person.personUUID) ? 1 : 0)
                                                                 }
                                                             }
                                                             Spacer()
@@ -542,7 +366,7 @@ struct HomeView: View {
                                         }
                                     }
                                     .buttonStyle(PlainButtonStyle())
-                                    .matchedTransitionSource(id: person.personid, in: homeViewNamespace)
+                                    .matchedTransitionSource(id: person.personUUID, in: homeViewNamespace)
                                 }
                             } else {
                                 Button(action: {
@@ -559,7 +383,7 @@ struct HomeView: View {
                                 }).buttonStyle(PlainButtonStyle())
                             }
                         }
-                    }.id(UUID())
+                    }
                     if hiddenShown && hiddenProfileExists {
                         Button(action: {
                             hiddenShown = false
@@ -608,10 +432,9 @@ struct HomeView: View {
                         Button(action: {
                             selfProfileIsPresented = true
                         }, label: {
-                            if let selfPFPData = selfPerson?.shownThumbnail {
-                                let decompressedImage = (selfPFPData.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
-                                let selfPFP = UIImage(data: decompressedImage)
-                                Image(uiImage: selfPFP ?? UIImage())
+                            if let selfPFPData = selfPerson?.shownThumbnail,
+                               let selfPFP = StoredImageCache.image(from: selfPFPData) {
+                                Image(uiImage: selfPFP)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width:38, height:38)
@@ -772,4 +595,3 @@ struct HomeView: View {
     @Previewable @State var currentPage: locketPages = .home
     HomeView(currentPage: $currentPage)
 }
-

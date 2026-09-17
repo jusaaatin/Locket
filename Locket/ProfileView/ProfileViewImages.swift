@@ -6,16 +6,12 @@
 //
 
 import SwiftUI
-import DataCompression
 
 struct ProfileViewImages: View {
     
     let demo: Bool
     let mainImage: Data
     let slideImages: [Data]
-    
-    @State var allImages: [Data] = []
-    @State var demoImages: [String] = []
     
     let DEMOfoodCarouselImages = [
         "demofood1",
@@ -41,8 +37,12 @@ struct ProfileViewImages: View {
         return screenWidth < 500 ? CGFloat(0.2*Double(screenWidth)) : 103
     }
     
-    private func dataToUiImage(data: Data) -> UIImage {
-        return UIImage(data: data) ?? UIImage()
+    private var allImages: [Data] {
+        ([mainImage] + slideImages).filter { !$0.isEmpty }
+    }
+
+    private var demoImages: [String] {
+        DEMOfoodCarouselImageMain + DEMOfoodCarouselImages
     }
     
     @State var viewExpanded = false
@@ -70,18 +70,20 @@ struct ProfileViewImages: View {
                         })
                     }
                 } else {
-                    ForEach(allImages.prefix(viewExpanded ? 100 : 3), id: \.self) { image in
+                    let images = Array(allImages.prefix(viewExpanded ? 100 : 3))
+                    ForEach(images.indices, id: \.self) { index in
                         Button(action: {
                             
                         }, label: {
-                            let decompressedImageSlide = (image.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
-                            Image(uiImage: dataToUiImage(data: decompressedImageSlide))
-                                .resizable()
-                                .minimumScaleFactor(0.1)
-                                .scaledToFill()
-                                .frame(width:CGFloat(getWidth()), height: CGFloat(getWidth()))
-                                .clipShape(RoundedRectangle(cornerRadius: 16))
-                                .clipped()
+                            if let image = StoredImageCache.image(from: images[index]) {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .minimumScaleFactor(0.1)
+                                    .scaledToFill()
+                                    .frame(width:CGFloat(getWidth()), height: CGFloat(getWidth()))
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                                    .clipped()
+                            }
                         })
                     }
                 }
@@ -132,15 +134,6 @@ struct ProfileViewImages: View {
         //pro size80 18 width 393
         .background(Color.gray.mix(with:Color("Background-match"), by: 0.7))
         .clipShape(RoundedRectangle(cornerRadius: 20))
-        .onAppear() {
-            if demo {
-                demoImages.append(contentsOf: DEMOfoodCarouselImageMain)
-                demoImages.append(contentsOf: DEMOfoodCarouselImages)
-            } else {
-                allImages.append(mainImage)
-                allImages.append(contentsOf: slideImages)
-            }
-        }
     }
 }
 

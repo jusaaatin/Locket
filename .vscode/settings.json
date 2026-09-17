@@ -1,1 +1,9 @@
-{}
+{
+    "lldb.library": "/Applications/Xcode-beta.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB",
+    "lldb.launch.expressions": "native",
+    "swift.path": "/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+    "files.exclude": {
+        "**/.build": true,
+        "**/.DS_Store": true
+    }
+}

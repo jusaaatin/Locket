@@ -7,10 +7,9 @@
 
 import Foundation
 import SwiftUI
-#if os(iOS)
+import DataCompression
+import ImageIO
 import UIKit
-#endif
-import _PhotosUI_SwiftUI
 
 // profileview header 01
 func addOrSubtractDay(day:Int)->Date{
@@ -23,6 +22,68 @@ func addOrSubtractMonth(month:Int)->Date{
 
 func addOrSubtractYear(year:Int)->Date{
   return Calendar.current.date(byAdding: .year, value: year, to: Date())!
+}
+
+/// Generates a positive identifier without the one-second collision window of
+/// the previous timestamp-based IDs.
+func generatePersonID() -> Int {
+    Int.random(in: 1...Int.max)
+}
+
+/// Keeps image decoding out of repeated SwiftUI body evaluations and bounds
+/// memory use. Existing LZFSE-backed records remain readable.
+enum StoredImageCache {
+    // NSCache is internally synchronized. The unsafe annotation documents that
+    // guarantee for Swift's strict global-concurrency checking.
+    nonisolated(unsafe) private static let cache: NSCache<NSData, UIImage> = {
+        let cache = NSCache<NSData, UIImage>()
+        cache.totalCostLimit = 96 * 1_024 * 1_024
+        cache.countLimit = 80
+        return cache
+    }()
+
+    static func image(from storedData: Data) -> UIImage? {
+        guard !storedData.isEmpty else { return nil }
+
+        let key = storedData as NSData
+        if let cachedImage = cache.object(forKey: key) {
+            return cachedImage
+        }
+
+        // Fall back to the original data so future/raw image records are also
+        // displayed if compression fails or is intentionally skipped.
+        let imageData = storedData.decompress(withAlgorithm: .lzfse) ?? storedData
+        guard let image = UIImage(data: imageData) else { return nil }
+
+        let pixelCost = Int(image.size.width * image.scale * image.size.height * image.scale * 4)
+        cache.setObject(image, forKey: key, cost: pixelCost)
+        return image
+    }
+}
+
+enum StoredImageEncoder {
+    /// Downsamples photo-library originals before lossless storage compression.
+    /// This avoids decoding multi-megapixel originals for small cards.
+    static func encode(_ originalData: Data, maxPixelSize: Int) -> Data {
+        guard
+            let source = CGImageSourceCreateWithData(originalData as CFData, nil),
+            let thumbnail = CGImageSourceCreateThumbnailAtIndex(
+                source,
+                0,
+                [
+                    kCGImageSourceCreateThumbnailFromImageAlways: true,
+                    kCGImageSourceCreateThumbnailWithTransform: true,
+                    kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
+                    kCGImageSourceShouldCacheImmediately: true
+                ] as CFDictionary
+            )
+        else {
+            return originalData.compress(withAlgorithm: .lzfse) ?? originalData
+        }
+
+        let resizedData = UIImage(cgImage: thumbnail).jpegData(compressionQuality: 0.9) ?? originalData
+        return resizedData.compress(withAlgorithm: .lzfse) ?? resizedData
+    }
 }
 
 
@@ -234,10 +295,15 @@ extension View {
 }
 
 public func DMYtoDate(day: String, month: String, year: String) -> Date {
-    let combinedDate = "\(day)/\(month)/\(year)"
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "dd/MM/yy"
-    return dateFormatter.date(from: combinedDate) ?? .now
+    guard
+        let day = Int(day),
+        let month = Int(month),
+        let year = Int(year),
+        let date = Calendar.current.date(from: DateComponents(year: year, month: month, day: day))
+    else {
+        return .now
+    }
+    return date
 }
 
 let defaultColors: [Color] = [
@@ -302,4 +368,3 @@ func pickercolorOutput(selected: selectedColor, pickerselection: Color) -> Color
         return Color("Foreground-match")
     }
 }
-

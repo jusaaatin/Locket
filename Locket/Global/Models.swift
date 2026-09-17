@@ -8,19 +8,6 @@
 import Foundation
 import SwiftData
 import SwiftUI
-import _PhotosUI_SwiftUI
-
-func dateToDMY(input: Date, type: Int) -> String {
-    let DMYFormatter = DateFormatter()
-    if type == 1{
-        DMYFormatter.dateFormat = "d"
-    } else if type == 2 {
-        DMYFormatter.dateFormat = "MM"
-    } else {
-        DMYFormatter.dateFormat = "y"
-    }
-    return DMYFormatter.string(from: input)
-}
 
 @Model
 final class person: Identifiable {
@@ -81,31 +68,19 @@ final class person: Identifiable {
         else { priority = 18 }
     }
     func isPinned() -> Bool {
-        if priority == 1 || priority == 3 || priority == 5 || priority == 11 || priority == 13 || priority == 15 /* pinned */{
-            return true
-        } else if priority == 0 || priority == 2 || priority == 4 || priority == 10 || priority == 12 || priority == 14 /* unpinned */{
-            return false
-        } else { return false }
+        [1, 3, 5, 11, 13, 15].contains(priority)
     }
-    func isBirthdayToday() -> Bool {
-        if dateToDMY(input: birthday, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-            return true
-        } else { return false }
+    func isBirthdayToday(referenceDate: Date = .now) -> Bool {
+        birthday.occursOnDayAndMonth(of: referenceDate)
     }
-    func isBirthdayTomorrow() -> Bool {
-        if dateToDMY(input: birthday, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: birthday, type: 2) == dateToDMY(input: Date.now, type: 2) {
-            return true
-        } else { return false }
+    func isBirthdayTomorrow(referenceDate: Date = .now) -> Bool {
+        birthday.occursOnDayAndMonth(of: Calendar.current.date(byAdding: .day, value: 1, to: referenceDate) ?? referenceDate)
     }
-    func isAnniversaryToday() -> Bool {
-        if dateToDMY(input: currentRelationshipStartDate, type: 1) == dateToDMY(input: Date.now, type: 1) && dateToDMY(input: currentRelationshipStartDate, type: 2) == dateToDMY(input: Date.now, type: 2) {
-            return true
-        } else { return false }
+    func isAnniversaryToday(referenceDate: Date = .now) -> Bool {
+        currentRelationshipStartDate.occursOnDayAndMonth(of: referenceDate)
     }
-    func isAnniversaryTomorrow() -> Bool {
-        if dateToDMY(input: currentRelationshipStartDate, type: 1) == dateToDMY(input: addOrSubtractDay(day: 1), type: 1) && dateToDMY(input: currentRelationshipStartDate, type: 2) == dateToDMY(input: addOrSubtractDay(day: 1), type: 2) {
-            return true
-        } else { return false }
+    func isAnniversaryTomorrow(referenceDate: Date = .now) -> Bool {
+        currentRelationshipStartDate.occursOnDayAndMonth(of: Calendar.current.date(byAdding: .day, value: 1, to: referenceDate) ?? referenceDate)
     }
     func isSelfProfile() -> Bool {
         if priority == 18 { return true }
@@ -159,6 +134,14 @@ final class person: Identifiable {
   
 }
 
+private extension Date {
+    func occursOnDayAndMonth(of otherDate: Date, calendar: Calendar = .current) -> Bool {
+        let components = calendar.dateComponents([.month, .day], from: self)
+        let otherComponents = calendar.dateComponents([.month, .day], from: otherDate)
+        return components.month == otherComponents.month && components.day == otherComponents.day
+    }
+}
+
 
 
 @Model
@@ -173,8 +156,8 @@ final class events {
     var eventLocationLong: Float?
     var eventLocationLat: Float?
     
-    var eventThumbnailImage: Data //import one image for your event
-    var eventSlideImages: [Data]?
+    @Attribute(.externalStorage) var eventThumbnailImage: Data //import one image for your event
+    @Attribute(.externalStorage) var eventSlideImages: [Data]?
     
     var peopleid: [Int]? //everyone involved in the event
     

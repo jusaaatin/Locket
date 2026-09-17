@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import DataCompression
 
 let screenWidth: Int = Int(UIScreen.main.bounds.width)
 
@@ -49,12 +48,11 @@ struct ProfileViewHeaderImage: View {
     
     private func dataGenerateImages(mainImage: Data, slideImages: [Data]) -> [Data]{
         var allImages: [Data] = []
-        allImages.append(mainImage)
-        allImages.append(contentsOf: slideImages.shuffled())
+        if !mainImage.isEmpty {
+            allImages.append(mainImage)
+        }
+        allImages.append(contentsOf: slideImages.filter { !$0.isEmpty })
         return allImages
-    }
-    private func dataToUiImage(data: Data) -> UIImage {
-        return UIImage(data: data) ?? UIImage()
     }
     
     @GestureState private var zoom = 1.0
@@ -77,20 +75,22 @@ struct ProfileViewHeaderImage: View {
                         )
                 }
             } else {
-                ForEach(dataGenerateImages(mainImage: mainImage, slideImages: slideImages), id: \.self) { dataImage in
-                    let decompressedImage = (dataImage.decompress(withAlgorithm: .lzfse) ?? Data()) as Data
-                    Image(uiImage: dataToUiImage(data: decompressedImage))
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: CGFloat(screenWidth > 440 ? screenWidth/2 : screenWidth))
-                        .clipped()
-                        .scaleEffect(zoom)
-                        .gesture(
-                            MagnifyGesture()
-                            .updating($zoom) { value, gestureState, transaction in
-                            gestureState = value.magnification
-                            }
-                        )
+                let images = dataGenerateImages(mainImage: mainImage, slideImages: slideImages)
+                ForEach(images.indices, id: \.self) { index in
+                    if let image = StoredImageCache.image(from: images[index]) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: CGFloat(screenWidth > 440 ? screenWidth/2 : screenWidth))
+                            .clipped()
+                            .scaleEffect(zoom)
+                            .gesture(
+                                MagnifyGesture()
+                                .updating($zoom) { value, gestureState, transaction in
+                                gestureState = value.magnification
+                                }
+                            )
+                    }
                 }
             }
         }
@@ -104,4 +104,3 @@ struct ProfileViewHeaderImage: View {
 #Preview {
     ProfileViewHeaderImage(demo: true, mainImage: Data(), slideImages: [Data]())
 }
-

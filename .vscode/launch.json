@@ -1,15 +1,11 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "lldb",
+            "type": "node-terminal",
             "request": "launch",
-            "name": "Debug",
-            "program": "${workspaceFolder}/<executable file>",
-            "args": [],
+            "name": "Locket: Build and Run iOS Simulator",
+            "command": "\"${workspaceFolder}/scripts/run-simulator.sh\"",
             "cwd": "${workspaceFolder}"
         }
     ]

@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import Locket
 
 final class LocketTests: XCTestCase {
 
@@ -17,19 +18,39 @@ final class LocketTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testPersonFlagsToggleWithoutChangingIdentity() throws {
+        let subject = person(priority: 0, personid: generatePersonID())
+        let originalID = subject.personid
+
+        subject.pinToggle()
+        XCTAssertTrue(subject.isPinned())
+        subject.hiddenToggle()
+        XCTAssertTrue(subject.isHiddenProfile())
+        subject.hiddenToggle()
+        subject.pinToggle()
+
+        XCTAssertFalse(subject.isPinned())
+        XCTAssertFalse(subject.isHiddenProfile())
+        XCTAssertEqual(subject.personid, originalID)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testTomorrowBirthdayAcrossYearBoundary() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let referenceDate = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: 12, day: 31)))
+        let birthday = try XCTUnwrap(calendar.date(from: DateComponents(year: 2000, month: 1, day: 1)))
+        let subject = person(personid: generatePersonID(), birthday: birthday)
+
+        XCTAssertTrue(subject.isBirthdayTomorrow(referenceDate: referenceDate))
+    }
+
+    func testDateInputPreservesFourDigitYear() {
+        let date = DMYtoDate(day: "17", month: "9", year: "2026")
+        let components = Calendar.current.dateComponents([.day, .month, .year], from: date)
+
+        XCTAssertEqual(components.day, 17)
+        XCTAssertEqual(components.month, 9)
+        XCTAssertEqual(components.year, 2026)
     }
 
 }
